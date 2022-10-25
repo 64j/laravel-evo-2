@@ -42,7 +42,8 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
 			"@php artisan key:generate --ansi",
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
-        ]
+        ],
+        "serve": "php -S 0.0.0.0:3000 index.php"
     },
     "extra": {
         "laravel": {
