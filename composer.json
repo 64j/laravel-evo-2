@@ -23,9 +23,9 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/src/",
+            "Manager\\": "manager/src/",
             "Database\\Factories\\": "app/database/factories/",
-            "Database\\Seeders\\": "app/database/seeders/",
-            "Manager\\": "manager/src/"
+            "Database\\Seeders\\": "app/database/seeders/"
         }
     },
     "autoload-dev": {
