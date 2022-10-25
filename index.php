@@ -44,10 +44,12 @@ require __DIR__.'/vendor/autoload.php';
 |
 */
 
+$managerDir = 'manager';
+
 $app = require_once __DIR__ . (
-    str_starts_with($_SERVER['REQUEST_URI'], '/manager')
+    str_starts_with($_SERVER['REQUEST_URI'], '/' . $managerDir)
         ?
-        '/manager'
+        '/' . $managerDir
         :
         '/app'
     ) .
