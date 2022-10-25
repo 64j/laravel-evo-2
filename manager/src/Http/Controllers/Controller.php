@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as RoutingController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\View;
 use JsonSerializable;
 use Manager\Core;
 
@@ -44,7 +43,8 @@ class Controller extends RoutingController
      */
     public function handle(Request $request)
     {
-        $controllerNamespace = $this->app->getRouteNamespace() . '\\';
+        //$controllerNamespace = $this->app->getRouteNamespace() . '\\';
+        $controllerNamespace = '\\Manager\\Http\\Controllers\\';
 
         if ($request->isMethod('post') || $request->isMethod('put')) {
             $controller = $request->has('method') ? $controllerNamespace . $request->input('method') : null;
@@ -56,7 +56,9 @@ class Controller extends RoutingController
         if (Auth::check()) {
             return $this->app->call($controllerNamespace . 'Home@index');
         } else {
-            return $this->app->call($controllerNamespace . 'Auth@formLogin');
+            redirect()
+                ->guest(route('login'))
+                ->send();
         }
     }
 

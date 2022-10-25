@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Document</title>
-    <script defer="defer" src="./public/static/app.js"></script>
-    <link href="./public/static/app.css" rel="stylesheet">
+    <script defer="defer" src="./public/dist/app.js"></script>
+    <link href="./public/dist/app.css" rel="stylesheet">
     <script>
       localStorage['EVO.HOST'] = location.href.replace(location.hash, '').replace('/manager/', '/')
       localStorage['EVO.TOKEN'] = '{{ session('_token') }}'

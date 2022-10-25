@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
-class AuthController extends Controller
+class Auth extends Controller
 {
     /**
      * @return ContractView
