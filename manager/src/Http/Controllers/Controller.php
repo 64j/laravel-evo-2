@@ -43,7 +43,7 @@ class Controller extends RoutingController
      */
     public function handle(Request $request)
     {
-        $controllerNamespace = '\\Manager\\Http\\Controllers\\';
+        $controllerNamespace = 'Manager\\Http\\Controllers\\';
 
         if ($request->isMethod('post')) {
             $controller = $request->has('method') ? $controllerNamespace . $request->input('method') : null;
