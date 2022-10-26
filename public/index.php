@@ -47,7 +47,7 @@ require __DIR__.'/../vendor/autoload.php';
 $environment = 'manager';
 
 $app = require_once dirname(__DIR__) . (
-    !!stripos($_SERVER['REQUEST_URI'], '/' . $environment)
+    stripos($_SERVER['REQUEST_URI'], '/' . $environment) !== false
         ?
         '/' . $environment
         :
