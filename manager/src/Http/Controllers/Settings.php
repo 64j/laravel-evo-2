@@ -52,9 +52,9 @@ class Settings extends Controller
     public function read(): JsonResponse
     {
         return $this->ok([
-            'permissions' => $this->userService->getAuthPermissions(),
-            'user' => $this->userService->getAuthUser(),
             'config' => $this->settingsService->get(),
+            'user' => $this->userService->getAuthUser(),
+            'permissions' => $this->userService->getAuthPermissions(),
             'categories' => $this->categoryService->list(),
             'lexicon' => __('global'),
         ]);
