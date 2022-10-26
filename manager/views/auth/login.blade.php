@@ -25,13 +25,16 @@
             -webkit-text-fill-color: #fff !important;
         }
     </style>
+    <script>
+      localStorage['EVO.HOST'] = '{{ trim(route('home'), '/') . '/' }}'
+    </script>
 </head>
 <body>
 
 <div class="main w-100 h-100 d-flex flex-nowrap bg-dark">
 
     <div class="col-auto sidebar p-5 bg-dark bg-opacity-75 text-white text-opacity-75">
-        <form action="{{ url('login') }}">
+        <form>
 
             <div class="form-group form-floating mb-3">
                 <input name="host"
