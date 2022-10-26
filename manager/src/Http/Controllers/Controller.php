@@ -15,7 +15,6 @@ use Illuminate\Routing\Controller as RoutingController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use JsonSerializable;
-use Manager\Core;
 
 class Controller extends RoutingController
 {
@@ -24,7 +23,7 @@ class Controller extends RoutingController
     use ValidatesRequests;
 
     /**
-     * @var Application|Core
+     * @var Application
      */
     protected Application $app;
 
@@ -34,6 +33,13 @@ class Controller extends RoutingController
     public function __construct(Application $app)
     {
         $this->app = $app;
+
+        if (Auth::check()) {
+            // Взять локаль из настроек юзера
+            $this->app->setLocale('ru');
+        } else {
+            // Определить локаль
+        }
     }
 
     /**

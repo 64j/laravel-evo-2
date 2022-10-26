@@ -43,6 +43,7 @@ class Auth extends Controller
 
             $request->session()->regenerate();
             $request->session()->put('_token', $token);
+            $request->session()->put('userAttributes', FacadeAuth::user()->attributes->toArray());
 
             if ($request->expectsJson()) {
                 return [
