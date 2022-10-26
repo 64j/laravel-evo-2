@@ -39,7 +39,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->setRootControllerNamespace();
 
-        $this->configureRateLimiting();
+        //$this->configureRateLimiting();
 
         $this->routes(function () {
             Route::namespace($this->namespace)
