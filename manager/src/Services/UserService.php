@@ -8,6 +8,7 @@ use App\Models\Permissions;
 use App\Models\User;
 use App\Models\UserAttribute;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
 
 class UserService
 {
@@ -16,6 +17,7 @@ class UserService
      */
     public function getAuthUser(): array
     {
+        /** @var UserAttribute $attributes */
         $attributes = UserAttribute::query()
             ->whereHas('user', fn($query) => $query->whereKey(Auth::user()->getKey()))
             ->first();
@@ -53,6 +55,10 @@ class UserService
                         ->where('role_id', $role)
                 )
                 ->get()
+                ->each(
+                    fn(Permissions $item) => $item->name =
+                        Lang::has('global.' . $item->lang_key) ? Lang::get('global.' . $item->lang_key) : $item->name
+                )
                 ->keyBy('key')
                 ->toArray()
         );

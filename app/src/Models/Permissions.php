@@ -7,6 +7,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @property string $name
+ * @property string $lang_key
+ */
 class Permissions extends Model
 {
     /**

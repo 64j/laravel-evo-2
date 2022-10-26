@@ -46,6 +46,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * Virtual
  * @property-read Carbon $created_at
  * @property-read Carbon $updated_at
+ * @property-write string $username
  */
 class UserAttribute extends Model
 {
