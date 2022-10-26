@@ -16,9 +16,9 @@ class Kernel extends HttpKernel
      * @var array<int, class-string|string>
      */
     protected $middleware = [
+        \Fruitcake\Cors\HandleCors::class,
         // \Manager\Http\Middleware\TrustHosts::class,
         \Manager\Http\Middleware\TrustProxies::class,
-        \Fruitcake\Cors\HandleCors::class,
         \Manager\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Manager\Http\Middleware\TrimStrings::class,
@@ -43,7 +43,6 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            \Fruitcake\Cors\HandleCors::class,
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             //'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,

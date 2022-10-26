@@ -56,6 +56,8 @@ $app = require_once dirname(__DIR__) . (
     '/bootstrap/app.php';
 
 $kernel = $app->make(Kernel::class);
+//header('Access-Control-Allow-Origin: *');
+//header('Access-Control-Allow-Headers: *');
 
 $response = $kernel->handle(
     $request = Request::capture()
