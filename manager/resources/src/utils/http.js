@@ -34,7 +34,7 @@ export default {
       return response.json()
     }
 
-    if (response.status !== 404) {
+    if (response.status === 401) {
       if (location.hash !== '#/login') {
         store.dispatch('Settings/del').then(() => {
           store.dispatch('MultiTabs/delAllTabs').then(() => {
