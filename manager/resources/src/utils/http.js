@@ -38,7 +38,9 @@ export default {
       if (location.hash !== '#/login') {
         store.dispatch('Settings/del').then(() => {
           store.dispatch('MultiTabs/delAllTabs').then(() => {
-            router.push({ name: 'AuthLogin' }).then(() => {})
+            router.push({ name: 'AuthLogin' }).then(() => {
+              this.logout()
+            })
           })
         })
       }
@@ -126,6 +128,13 @@ export default {
         return response
       }) || this.token(null)
     }).catch(this.handlerCatch)
+  },
+
+  logout () {
+    fetch(this.baseUrl + 'manager/logout', {
+      method: 'post',
+      headers: this.setHeaders()
+    }).then(() => {})
   },
 
   bootstrap (data) {
