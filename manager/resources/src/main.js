@@ -25,6 +25,9 @@ store.dispatch('Settings/get').then(settings => {
       },
       lang (key, def) {
         return settings.lexicon[key] || def
+      },
+      categories() {
+        return settings.categories || {}
       }
     }
   })

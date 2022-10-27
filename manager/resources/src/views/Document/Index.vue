@@ -161,7 +161,7 @@
               <label class="col-md-3 col-lg-2">{{ lang('page_data_contentType') }}</label>
               <div class="col-md-9 col-lg-10">
                 <select v-model="data.contentType" class="form-select" onchange="documentDirty=true;">
-                  <option v-for="(type, i) in $store.state.Settings.config.custom_contenttype.split(',')" :key="`type-`+i" :value="type">{{ type }}</option>
+                  <option v-for="(type, i) in config('custom_contenttype').split(',')" :key="`type-`+i" :value="type">{{ type }}</option>
                 </select>
               </div>
             </div>
@@ -258,7 +258,7 @@ export default {
   },
   computed: {
     title () {
-      return (this.data?.pagetitle || this.$store.state['Settings'].lang('new_resource')) + (this.data?.id ? ' <small>(' + this.data.id + ')</small>' : '')
+      return (this.data?.pagetitle || this.lang('new_resource')) + (this.data?.id ? ' <small>(' + this.data.id + ')</small>' : '')
     }
   },
   mounted () {
@@ -320,7 +320,7 @@ export default {
       })
     },
     delete () {
-      if (confirm(this.$store.state['Settings'].lang('confirm_delete_resource'))) {
+      if (confirm(this.lang('confirm_delete_resource'))) {
         http.delete(this.controller, this.data).then(result => {
           if (result) {
             this.action('cancel')

@@ -39,38 +39,38 @@ export default {
       meta: null,
       columns: {
         icon: {
-          title: this.$store.state['Settings'].lang('icon'),
+          title: this.lang('icon'),
           value: '<i class="fa fa-user-circle"/>',
           link: true
         },
         username: {
-          title: this.$store.state['Settings'].lang('name'),
+          title: this.lang('name'),
           link: true
         },
         fullname: {
-          title: this.$store.state['Settings'].lang('user_full_name')
+          title: this.lang('user_full_name')
         },
         role: {
-          title: this.$store.state['Settings'].lang('role')
+          title: this.lang('role')
         },
         email: {
-          title: this.$store.state['Settings'].lang('email')
+          title: this.lang('email')
         },
         lastlogin: {
-          title: this.$store.state['Settings'].lang('user_prevlogin')
+          title: this.lang('user_prevlogin')
         },
         logincount: {
-          title: this.$store.state['Settings'].lang('user_logincount')
+          title: this.lang('user_logincount')
         },
         blocked: {
-          title: this.$store.state['Settings'].lang('user_block'),
+          title: this.lang('user_block'),
           value: {
-            0: this.$store.state['Settings'].lang('no'),
-            1: this.$store.state['Settings'].lang('yes')
+            0: this.lang('no'),
+            1: this.lang('yes')
           }
         },
         delete: {
-          title: this.$store.state['Settings'].lang('delete'),
+          title: this.lang('delete'),
           value: '<i class="fa fa-trash-alt remove text-danger"/>'
         }
       },
@@ -79,7 +79,7 @@ export default {
   },
   computed: {
     title () {
-      return this.$store.state['Settings'].lang('user_management_title')
+      return this.lang('user_management_title')
     }
   },
   mounted () {

@@ -28,12 +28,12 @@
               </label>
               <div class="col-md-9 col-lg-10">
                 <label>
-                  <input v-model="$store.state.Settings.config.site_status" type="radio" value="1" class="form-check-input">
+                  <input v-model="config('site_status')" type="radio" value="1" class="form-check-input">
                   {{ lang('online') }}
                 </label>
                 <br>
                 <label>
-                  <input v-model="$store.state.Settings.config.site_status" type="radio" value="0" class="form-check-input">
+                  <input v-model="config('site_status')" type="radio" value="0" class="form-check-input">
                   {{ lang('offline') }}
                 </label>
               </div>
@@ -46,7 +46,7 @@
                 <small>[(site_name)]</small>
               </label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="$store.state.Settings.config.site_name" type="text" maxlength="255" class="form-control">
+                <input v-model="config('site_name')" type="text" maxlength="255" class="form-control">
                 <div class="small text-muted">{{ lang('sitename_message') }}</div>
               </div>
             </div>
@@ -58,7 +58,7 @@
                 <small>[(emailsender)]</small>
               </label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="$store.state.Settings.config.emailsender" type="text" maxlength="255" class="form-control">
+                <input v-model="config('emailsender')" type="text" maxlength="255" class="form-control">
                 <div class="small text-muted">{{ lang('emailsender_message') }}</div>
               </div>
             </div>
@@ -70,7 +70,7 @@
                 <small>[(site_start)]</small>
               </label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="$store.state.Settings.config.site_start" type="text" maxlength="255" class="form-control">
+                <input v-model="config('site_start')" type="text" maxlength="255" class="form-control">
                 <div class="small text-muted">{{ lang('sitestart_message') }}</div>
               </div>
             </div>
@@ -82,7 +82,7 @@
                 <small>[(error_page)]</small>
               </label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="$store.state.Settings.config.error_page" type="text" maxlength="255" class="form-control">
+                <input v-model="config('error_page')" type="text" maxlength="255" class="form-control">
                 <div class="small text-muted">{{ lang('errorpage_message') }}</div>
               </div>
             </div>
@@ -152,13 +152,13 @@ export default {
   },
   computed: {
     title () {
-      return this.$store.state['Settings'].lang('settings_title')
+      return this.lang('settings_title')
     }
   },
   mounted () {
     this.$emit('titleTab', {
       icon: this.icon,
-      title: this.$store.state['Settings'].lang('settings_title')
+      title: this.lang('settings_title')
     })
     this.read()
   },

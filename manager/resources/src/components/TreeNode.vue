@@ -59,11 +59,11 @@ export default {
           }
           break
 
-        case node.id === this.$store.state['Settings'].config['site_start']:
+        case node.id === this.config['site_start']:
           icon = 'fa fa-home'
           break
 
-        case node.id === this.$store.state['Settings'].config['error_page']:
+        case node.id === this.config['error_page']:
           icon = 'fa fa-exclamation-triangle'
           break
 
@@ -80,19 +80,19 @@ export default {
     },
     title (node) {
       let title = ''
-      title += this.$store.state['Settings'].lang('pagetitle') + ': ' + node.pagetitle
-      title += '\n' + this.$store.state['Settings'].lang('id') + ': ' + node.id
-      title += '\n' + this.$store.state['Settings'].lang('resource_opt_menu_title') + ': ' + node.menutitle
-      title += '\n' + this.$store.state['Settings'].lang('resource_opt_menu_index') + ': ' + node.menuindex
-      title += '\n' + this.$store.state['Settings'].lang('alias') + ': ' + (node.alias || '-')
-      title += '\n' + this.$store.state['Settings'].lang('template') + ': ' + node.templatename
-      title += '\n' + this.$store.state['Settings'].lang('publish_date') + ': ' + (node.pub_date ? (new Date(node.pub_date * 1000)).toLocaleString() : '')
-      title += '\n' + this.$store.state['Settings'].lang('unpublish_date') + ': ' + (node.unpub_date ? (new Date(node.unpub_date * 1000)).toLocaleString() : '')
-      title += '\n' + this.$store.state['Settings'].lang('page_data_web_access') + ': ' + (node.privateweb ? this.$store.state['Settings'].lang('private') : this.$store.state['Settings'].lang('public'))
-      title += '\n' + this.$store.state['Settings'].lang('page_data_mgr_access') + ': ' + (node.privatemgr ? this.$store.state['Settings'].lang('private') : this.$store.state['Settings'].lang('public'))
-      title += '\n' + this.$store.state['Settings'].lang('resource_opt_richtext') + ': ' + (node.richtext ? this.$store.state['Settings'].lang('yes') : this.$store.state['Settings'].lang('no'))
-      title += '\n' + this.$store.state['Settings'].lang('page_data_searchable') + ': ' + (node.searchable ? this.$store.state['Settings'].lang('yes') : this.$store.state['Settings'].lang('no'))
-      title += '\n' + this.$store.state['Settings'].lang('page_data_cacheable') + ': ' + (node.searchable ? this.$store.state['Settings'].lang('yes') : this.$store.state['Settings'].lang('no'))
+      title += this.lang('pagetitle') + ': ' + node.pagetitle
+      title += '\n' + this.lang('id') + ': ' + node.id
+      title += '\n' + this.lang('resource_opt_menu_title') + ': ' + node.menutitle
+      title += '\n' + this.lang('resource_opt_menu_index') + ': ' + node.menuindex
+      title += '\n' + this.lang('alias') + ': ' + (node.alias || '-')
+      title += '\n' + this.lang('template') + ': ' + node.templatename
+      title += '\n' + this.lang('publish_date') + ': ' + (node.pub_date ? (new Date(node.pub_date * 1000)).toLocaleString() : '')
+      title += '\n' + this.lang('unpublish_date') + ': ' + (node.unpub_date ? (new Date(node.unpub_date * 1000)).toLocaleString() : '')
+      title += '\n' + this.lang('page_data_web_access') + ': ' + (node.privateweb ? this.lang('private') : this.lang('public'))
+      title += '\n' + this.lang('page_data_mgr_access') + ': ' + (node.privatemgr ? this.lang('private') : this.lang('public'))
+      title += '\n' + this.lang('resource_opt_richtext') + ': ' + (node.richtext ? this.lang('yes') : this.lang('no'))
+      title += '\n' + this.lang('page_data_searchable') + ': ' + (node.searchable ? this.lang('yes') : this.lang('no'))
+      title += '\n' + this.lang('page_data_cacheable') + ': ' + (node.searchable ? this.lang('yes') : this.lang('no'))
 
       return title
     },

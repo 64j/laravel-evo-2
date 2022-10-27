@@ -25,7 +25,7 @@
                 <div class="col-md-9 col-lg-10">
                   <div class="form-control-name clearfix">
                     <input v-model="data.name" type="text" maxlength="100" class="form-control form-control-lg" onchange="documentDirty=true;"/>
-                      <label v-if="$store.state.Settings.permissions['save_role']" :title="lang('lock_snippet_msg')">
+                      <label v-if="hasPermissions('save_role')" :title="lang('lock_snippet_msg')">
                         <input v-model="data.locked" type="checkbox" :false-value="0" :true-value="1"/>
                         <i class="fa fa-lock" :class="[data.locked ? 'text-danger' : 'text-muted']"></i>
                       </label>
@@ -45,7 +45,7 @@
                 <label class="col-md-3 col-lg-2">{{ lang('existing_category') }}</label>
                 <div class="col-md-9 col-lg-10">
                   <select v-model="data.category" class="form-select" onchange="documentDirty=true;">
-                    <option v-for="category in $store.state.Settings.categories" :key="category.id" :value="category.id">
+                    <option v-for="category in categories()" :key="category.id" :value="category.id">
                       {{ category.category }}
                     </option>
                   </select>
@@ -61,9 +61,9 @@
 
             </div>
 
-            <div v-if="$store.state.Settings.permissions['save_role']">
+            <div v-if="hasPermissions('save_role')">
 
-              <div v-if="$store.state.Settings.user.role === 1" class="form-row mb-1">
+              <div v-if="user('role') === 1" class="form-row mb-1">
                 <div class="form-check">
                   <input v-model="data.disabled" type="checkbox" class="form-check-input" id="disabled" :false-value="0" :true-value="1">
                   <label class="form-check-label" for="disabled">{{ lang('disabled') }}</label>
@@ -173,7 +173,7 @@ export default {
   },
   computed: {
     title () {
-      return (this.data.name ? this.data.name : this.$store.state['Settings'].lang('new_snippet')) + (this.data.id ? ' <small>(' + this.data.id + ')</small>' : '')
+      return (this.data.name ? this.data.name : this.lang('new_snippet')) + (this.data.id ? ' <small>(' + this.data.id + ')</small>' : '')
     }
   },
   mounted () {
@@ -218,7 +218,7 @@ export default {
       })
     },
     delete() {
-      if (confirm(this.$store.state['Settings'].lang('confirm_delete_snippet'))) {
+      if (confirm(this.lang('confirm_delete_snippet'))) {
         http.delete(this.controller, { id: this.data.id }).then(result => {
           if (result) {
             this.action('cancel')

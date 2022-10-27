@@ -1,5 +1,5 @@
-// import store from '@/store'
-// import router from '@/router'
+import store from '@/store'
+import router from '@/router'
 import { toRaw } from 'vue'
 
 export default {
@@ -34,15 +34,15 @@ export default {
       return response.json()
     }
 
-    // if (response.status !== 404) {
-    //   if (location.hash !== '#/login') {
-    //     store.dispatch('Settings/del').then(() => {
-    //       store.dispatch('MultiTabs/delAllTabs').then(() => {
-    //         router.push({ name: 'AuthLogin' })
-    //       })
-    //     })
-    //   }
-    // }
+    if (response.status !== 404) {
+      if (location.hash !== '#/login') {
+        store.dispatch('Settings/del').then(() => {
+          store.dispatch('MultiTabs/delAllTabs').then(() => {
+            router.push({ name: 'AuthLogin' })
+          })
+        })
+      }
+    }
 
     return {}
   },
@@ -103,14 +103,54 @@ export default {
   },
 
   login (data) {
-    data = Object.assign(data, {
-      method: 'Auth@login'
-    })
-    return fetch(this.setUrl(), {
-      method: 'put',
-      body: this.setBody(data || ''),
-      headers: this.setHeaders(),
+    return fetch(this.baseUrl + 'manager/login', {
+      method: 'post',
+      body: JSON.stringify(data),
+      headers: {
+        'Cache': 'no-cache',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
       credentials: 'same-origin'
     }).then(this.handlerResponse).catch(this.handlerCatch)
+  },
+
+  settings (data) {
+    data = Object.assign(data || {}, {
+      method: 'Settings@read'
+    })
+    return fetch(this.setUrl(), {
+      method: 'post',
+      body: this.setBody(data),
+      headers: this.setHeaders(),
+    }).then(response => {
+      if (response.ok) {
+        return response.json()
+      }
+
+      // switch (response.status) {
+      //   case 404:
+      //     if (location.hash !== '#/login') {
+      //       store.dispatch('Settings/del').then(() => {
+      //         store.dispatch('MultiTabs/delAllTabs').then(() => {
+      //           router.push({ name: 'AuthLogin' })
+      //         })
+      //       })
+      //     }
+      //     break;
+      // }
+
+      return {}
+
+      // if (response.status !== 404) {
+      //   if (location.hash !== '#/login') {
+      //     store.dispatch('Settings/del').then(() => {
+      //       store.dispatch('MultiTabs/delAllTabs').then(() => {
+      //         router.push({ name: 'AuthLogin' })
+      //       })
+      //     })
+      //   }
+      // }
+    }).catch(this.handlerCatch)
   }
 }

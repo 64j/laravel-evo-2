@@ -31,7 +31,8 @@
         <div class="row">
           <div class="col">
             <div class="form-check">
-              <input v-model="data.rememberme" type="checkbox" class="form-check-input" id="rememberme" :false-value="0" :true-value="1">
+              <input v-model="data.remember" type="checkbox" class="form-check-input" id="rememberme" :false-value="0"
+                     :true-value="1">
               <label class="form-check-label" for="rememberme">Remember me</label>
             </div>
           </div>
@@ -49,7 +50,7 @@
 
 <script>
 import http from '@/utils/http'
-import store from '@/store'
+// import store from '@/store'
 
 export default {
   name: 'AuthLogin',
@@ -60,7 +61,7 @@ export default {
         ajax: 1,
         username: '',
         password: '',
-        rememberme: 1,
+        remember: 1,
         host: localStorage['EVO.HOST'] || location.origin + '/'
       },
       hosts: localStorage['EVO.HOSTS'] && JSON.parse(localStorage['EVO.HOSTS']) || {}
@@ -70,53 +71,48 @@ export default {
     submit () {
       this.isErrors = false
 
-      try {
-        this.data.host = (new URL(this.data.host)).origin + '/'
-      } catch (e) {
-        this.isErrors = true
-      }
-
-      http.baseUrl = this.data.host
+      http.baseUrl = this.data.host = this.data.host.replace(/\/$/, '') + '/'
 
       http.login(this.data).then(result => {
         if (result.token) {
           localStorage['EVO.TOKEN'] = result.token
-          http.post('Settings@get').then(result => {
+
+          if (this.data.remember) {
+            if (!this.hosts[this.data.host]) {
+              this.hosts[this.data.host] = this.data.host
+            }
+            localStorage['EVO.HOSTS'] = JSON.stringify(this.hosts)
+            localStorage['EVO.HOST'] = this.data.host
+          }
+
+          http.settings().then(result => {
             if (result.data) {
-              if (this.data.rememberme) {
-                if (!this.hosts[this.data.host]) {
-                  this.hosts[this.data.host] = this.data.host
-                }
-                localStorage['EVO.HOSTS'] = JSON.stringify(this.hosts)
-                localStorage['EVO.HOST'] = this.data.host
-              }
-              store.dispatch('Settings/set', result.data).then(settings => {
-                if (result.data.config['lang_code'] && settings) {
-                  //i18n.global.locale.value = settings.config['lang_code']
-                }
+              this.$store.dispatch('Settings/set', result.data).then(() => {
                 this.$router.push({ name: 'DashboardIndex' })
               })
             } else {
               this.isErrors = true
             }
           })
+
         } else {
           this.isErrors = true
         }
-        if (result.redirect) {
-          location.href = result.redirect
-        }
       })
     },
+
     listOpen(event) {
       event.currentTarget.parentElement.classList.add('active')
     },
+
     listClose(event) {
       event.currentTarget.parentElement.classList.remove('active')
     },
+
     listSelect(event) {
       this.data.host = event.target.innerText
     },
+
     listRemoveItem(event) {
       let host = event.target.parentElement.innerText
       for (let i in this.hosts) {

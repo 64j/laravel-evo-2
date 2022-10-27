@@ -26,52 +26,52 @@ export default {
       tabs: [
         {
           id: 'Templates',
-          title: this.$store.state['Settings'].lang('templates'),
+          title: this.lang('templates'),
           icon: 'fa fa-newspaper',
           component: () => import('@/views/Template/List'),
-          hidden: !this.$store.state.Settings.permissions['edit_template']
+          hidden: !this.hasPermissions('edit_template')
         },
         {
           id: 'Variables',
-          title: this.$store.state['Settings'].lang('tmplvars'),
+          title: this.lang('tmplvars'),
           icon: 'fa fa-list-alt',
           component: () => import('@/views/Tv/List'),
-          hidden: !this.$store.state.Settings.permissions['edit_template'] || !this.$store.state.Settings.permissions['edit_snippet'] || !this.$store.state.Settings.permissions['edit_chunk'] || !this.$store.state.Settings.permissions['edit_plugin']
+          hidden: !this.hasPermissions(['edit_template', 'edit_snippet', 'edit_chunk', 'edit_plugin'])
         },
         {
           id: 'Chunks',
-          title: this.$store.state['Settings'].lang('htmlsnippets'),
+          title: this.lang('htmlsnippets'),
           icon: 'fa fa-th-large',
           component: () => import('@/views/Chunk/List'),
-          hidden: !this.$store.state.Settings.permissions['edit_chunk']
+          hidden: !this.hasPermissions('edit_chunk')
         },
         {
           id: 'Snippets',
-          title: this.$store.state['Settings'].lang('snippets'),
+          title: this.lang('snippets'),
           icon: 'fa fa-code',
           component: () => import('@/views/Snippet/List'),
-          hidden: !this.$store.state.Settings.permissions['edit_snippet']
+          hidden: !this.hasPermissions('edit_snippet')
         },
         {
           id: 'Plugins',
-          title: this.$store.state['Settings'].lang('plugins'),
+          title: this.lang('plugins'),
           icon: 'fa fa-plug',
           component: () => import('@/views/Plugin/List'),
-          hidden: !this.$store.state.Settings.permissions['edit_plugin']
+          hidden: !this.hasPermissions('edit_plugin')
         },
         {
           id: 'Modules',
-          title: this.$store.state['Settings'].lang('modules'),
+          title: this.lang('modules'),
           icon: 'fa fa-cubes',
           component: () => import('@/views/Module/List'),
-          hidden: !this.$store.state.Settings.permissions['edit_module']
+          hidden: !this.hasPermissions('edit_module')
         }
       ],
     }
   },
   computed: {
     title () {
-      return this.$store.state['Settings'].lang('elements')
+      return this.lang('elements')
     }
   },
   mounted () {

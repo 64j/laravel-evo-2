@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-// import store from '@/store'
+import store from '@/store'
 
 const routes = [
   {
@@ -7,6 +7,7 @@ const routes = [
     name: 'DashboardIndex',
     component: () => import('@/views/Dashboard/Index'),
     meta: {
+      layout: 'DefaultLayout',
       fixTab: true,
       title: '',
       icon: 'fa fa-home',
@@ -136,14 +137,14 @@ const routes = [
     name: 'HelpIndex',
     component: () => import('@/views/Help/Index')
   },
-  // {
-  //   path: '/login',
-  //   name: 'AuthLogin',
-  //   component: () => import('@/views/Auth/Login'),
-  //   meta: {
-  //     noTab: true
-  //   }
-  // },
+  {
+    path: '/login',
+    name: 'AuthLogin',
+    component: () => import('@/views/Auth/Login'),
+    meta: {
+      noTab: true
+    }
+  },
   {
     path: '/logout',
     name: 'AuthLogout',
@@ -177,33 +178,33 @@ const router = createRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   if (store.state['Settings'].user.role) {
-//     if (to?.redirectedFrom?.name === 'AuthLogout') {
-//       store.dispatch('Settings/del').then(() => {
-//         store.dispatch('MultiTabs/delAllTabs').then(() => {
-//           next({ name: 'AuthLogin' })
-//         })
-//       })
-//     } else if (to.name === 'AuthLogin') {
-//       next('/')
-//     } else {
-//       next()
-//     }
-//   } else if (!store.state['Settings'].user.role) {
-//     if (to.name !== 'AuthLogin') {
-//       store.dispatch('Settings/del').then(() => {
-//         store.dispatch('MultiTabs/delAllTabs').then(() => {
-//           next({ name: 'AuthLogin' })
-//         })
-//       })
-//     } else {
-//       next()
-//     }
-//   } else {
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if (store.state['Settings'].user.role) {
+    if (to?.redirectedFrom?.name === 'AuthLogout') {
+      store.dispatch('Settings/del').then(() => {
+        store.dispatch('MultiTabs/delAllTabs').then(() => {
+          next({ name: 'AuthLogin' })
+        })
+      })
+    } else if (to.name === 'AuthLogin') {
+      next('/')
+    } else {
+      next()
+    }
+  } else if (!store.state['Settings'].user.role) {
+    if (to.name !== 'AuthLogin') {
+      store.dispatch('Settings/del').then(() => {
+        store.dispatch('MultiTabs/delAllTabs').then(() => {
+          next({ name: 'AuthLogin' })
+        })
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
 
 router.onError((handler) => {
   console.log('error:', handler)

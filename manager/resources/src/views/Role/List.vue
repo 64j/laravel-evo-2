@@ -40,14 +40,14 @@ export default {
           link: true
         },
         name: {
-          title: this.$store.state['Settings'].lang('role'),
+          title: this.lang('role'),
           link: true
         },
         description: {
-          title: this.$store.state['Settings'].lang('description')
+          title: this.lang('description')
         },
         delete: {
-          title: this.$store.state['Settings'].lang('delete'),
+          title: this.lang('delete'),
           value: '<i class="fa fa-trash-alt remove text-danger"/>'
         }
       }
@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     title () {
-      return this.$store.state['Settings'].lang('role_management_title')
+      return this.lang('role_management_title')
     }
   },
   mounted () {

@@ -34,10 +34,8 @@ const actions = {
   },
   get ({ commit, state }) {
     return new Promise(resolve => {
-      return http.read('Settings').then(result => {
-        if (result.data) {
-          commit('SET_SETTINGS', result.data)
-        }
+      return http.settings().then(result => {
+        commit('SET_SETTINGS', result.data || {})
         resolve(state)
       })
     })
