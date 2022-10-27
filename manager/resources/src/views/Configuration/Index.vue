@@ -4,7 +4,7 @@
 
     <form name="mutate" v-show="loading">
 
-      <TitleView :title="lang('settings_title')" :icon="data.icon"/>
+      <TitleView :title="lang('settings_title')" :icon="icon"/>
 
       <Tabs
         id="Configuration"
@@ -28,12 +28,14 @@
               </label>
               <div class="col-md-9 col-lg-10">
                 <label>
-                  <input v-model="config('site_status')" type="radio" value="1" class="form-check-input">
+                  <input v-model="data['site_status']" type="radio" value="1"
+                         class="form-check-input">
                   {{ lang('online') }}
                 </label>
                 <br>
                 <label>
-                  <input v-model="config('site_status')" type="radio" value="0" class="form-check-input">
+                  <input v-model="data['site_status']" type="radio" value="0"
+                         class="form-check-input">
                   {{ lang('offline') }}
                 </label>
               </div>
@@ -46,7 +48,7 @@
                 <small>[(site_name)]</small>
               </label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="config('site_name')" type="text" maxlength="255" class="form-control">
+                <input v-model="data['site_name']" type="text" maxlength="255" class="form-control">
                 <div class="small text-muted">{{ lang('sitename_message') }}</div>
               </div>
             </div>
@@ -58,7 +60,8 @@
                 <small>[(emailsender)]</small>
               </label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="config('emailsender')" type="text" maxlength="255" class="form-control">
+                <input v-model="data['emailsender']" type="text" maxlength="255"
+                       class="form-control">
                 <div class="small text-muted">{{ lang('emailsender_message') }}</div>
               </div>
             </div>
@@ -70,7 +73,8 @@
                 <small>[(site_start)]</small>
               </label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="config('site_start')" type="text" maxlength="255" class="form-control">
+                <input v-model="data['site_start']" type="text" maxlength="255"
+                       class="form-control">
                 <div class="small text-muted">{{ lang('sitestart_message') }}</div>
               </div>
             </div>
@@ -82,7 +86,8 @@
                 <small>[(error_page)]</small>
               </label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="config('error_page')" type="text" maxlength="255" class="form-control">
+                <input v-model="data['error_page']" type="text" maxlength="255"
+                       class="form-control">
                 <div class="small text-muted">{{ lang('errorpage_message') }}</div>
               </div>
             </div>
@@ -146,7 +151,7 @@ export default {
       controller: 'Configuration',
       icon: 'fa fa-cogs',
       loading: false,
-      data: {},
+      data: this.$store.state['Settings'].config,
       meta: {}
     }
   },
@@ -167,7 +172,8 @@ export default {
 
     },
     read () {
-      this.setData({})
+      this.loading = true
+      //this.setData({})
       // http.post(this.controller + '@read', this.data).then(result => {
       //   this.setData(result)
       // })

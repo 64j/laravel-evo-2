@@ -50,7 +50,7 @@
 
 <script>
 import http from '@/utils/http'
-// import store from '@/store'
+import store from '@/store'
 
 export default {
   name: 'AuthLogin',
@@ -74,9 +74,7 @@ export default {
       http.baseUrl = this.data.host = this.data.host.replace(/\/$/, '') + '/'
 
       http.login(this.data).then(result => {
-        if (result.token) {
-          localStorage['EVO.TOKEN'] = result.token
-
+        if (result) {
           if (this.data.remember) {
             if (!this.hosts[this.data.host]) {
               this.hosts[this.data.host] = this.data.host
@@ -85,16 +83,13 @@ export default {
             localStorage['EVO.HOST'] = this.data.host
           }
 
-          http.settings().then(result => {
-            if (result.data) {
-              this.$store.dispatch('Settings/set', result.data).then(() => {
-                this.$router.push({ name: 'DashboardIndex' })
-              })
+          store.dispatch('Settings/get').then(settings => {
+            if (settings.user.role) {
+              this.$router.push({ name: 'DashboardIndex' })
             } else {
               this.isErrors = true
             }
           })
-
         } else {
           this.isErrors = true
         }

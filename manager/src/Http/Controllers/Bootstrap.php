@@ -10,7 +10,7 @@ use Manager\Services\CategoryService;
 use Manager\Services\SettingsService;
 use Manager\Services\UserService;
 
-class Settings extends Controller
+class Bootstrap extends Controller
 {
     /**
      * @var SettingsService
@@ -49,7 +49,7 @@ class Settings extends Controller
     /**
      * @return JsonResponse
      */
-    public function read(): JsonResponse
+    public function run(): JsonResponse
     {
         return $this->ok([
             'config' => $this->settingsService->get(),

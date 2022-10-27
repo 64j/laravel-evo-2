@@ -7,28 +7,24 @@ import { defineAsyncComponent } from 'vue'
 
 export default {
   name: 'App',
-  data () {
-    return {
-      Layouts: {}
-    }
-  },
   computed: {
     key () {
       return this.getKey()
     },
     layout () {
+      return this.getLayout()
+    }
+  },
+  methods: {
+    getLayout () {
       if (this.user('role')) {
         return defineAsyncComponent(() => import('@/layouts/DefaultLayout'))
       } else {
         return defineAsyncComponent(() => import('@/layouts/BlankLayout'))
       }
-    }
-  },
-  methods: {
+    },
     getKey (route) {
-      route = route || this.$route
-      return route.path
-      //return route.meta['groupTab'] || route.name === 'DashboardIndex' ? route.name : route.path
+      return (route || this.$route)['path']
     }
   }
 }

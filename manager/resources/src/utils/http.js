@@ -25,7 +25,7 @@ export default {
       'Cache': 'no-cache',
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + localStorage['EVO.TOKEN'] || '',
+      'Authorization': 'Bearer ' + this.token()
     }, headers || {})
   },
 
@@ -38,7 +38,7 @@ export default {
       if (location.hash !== '#/login') {
         store.dispatch('Settings/del').then(() => {
           store.dispatch('MultiTabs/delAllTabs').then(() => {
-            router.push({ name: 'AuthLogin' })
+            router.push({ name: 'AuthLogin' }).then(() => {})
           })
         })
       }
@@ -53,6 +53,17 @@ export default {
     }
   },
 
+  token (token) {
+    if (typeof token === 'undefined') {
+      return localStorage.getItem('EVO.TOKEN') || ''
+    } else if (null === token) {
+      return localStorage.removeItem('EVO.TOKEN')
+    }
+    localStorage.setItem('EVO.TOKEN', token)
+
+    return token
+  },
+
   fetch (method, url, body) {
     if (method === 'get') {
       body = null
@@ -65,8 +76,7 @@ export default {
     return fetch(this.setUrl(), {
       method: method,
       body: this.setBody(body || ''),
-      headers: this.setHeaders(),
-      credentials: 'same-origin'
+      headers: this.setHeaders()
     }).then(this.handlerResponse).catch(this.handlerCatch)
   },
 
@@ -105,52 +115,20 @@ export default {
   login (data) {
     return fetch(this.baseUrl + 'manager/login', {
       method: 'post',
-      body: JSON.stringify(data),
-      headers: {
-        'Cache': 'no-cache',
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      credentials: 'same-origin'
-    }).then(this.handlerResponse).catch(this.handlerCatch)
+      body: this.setBody(data),
+      headers: this.setHeaders()
+    }).then(response => {
+      return response.ok && response.json().then(response => {
+        if (response['token']) {
+          this.token(response['token'])
+        }
+
+        return response
+      }) || this.token(null)
+    }).catch(this.handlerCatch)
   },
 
-  settings (data) {
-    data = Object.assign(data || {}, {
-      method: 'Settings@read'
-    })
-    return fetch(this.setUrl(), {
-      method: 'post',
-      body: this.setBody(data),
-      headers: this.setHeaders(),
-    }).then(response => {
-      if (response.ok) {
-        return response.json()
-      }
-
-      // switch (response.status) {
-      //   case 404:
-      //     if (location.hash !== '#/login') {
-      //       store.dispatch('Settings/del').then(() => {
-      //         store.dispatch('MultiTabs/delAllTabs').then(() => {
-      //           router.push({ name: 'AuthLogin' })
-      //         })
-      //       })
-      //     }
-      //     break;
-      // }
-
-      return {}
-
-      // if (response.status !== 404) {
-      //   if (location.hash !== '#/login') {
-      //     store.dispatch('Settings/del').then(() => {
-      //       store.dispatch('MultiTabs/delAllTabs').then(() => {
-      //         router.push({ name: 'AuthLogin' })
-      //       })
-      //     })
-      //   }
-      // }
-    }).catch(this.handlerCatch)
+  bootstrap (data) {
+    return this.fetch('post', 'Bootstrap@run', data).catch(this.handlerCatch)
   }
 }

@@ -17,13 +17,13 @@ return [
 
     'paths' => ['/manager/api', '/manager/login'],
 
-    'allowed_methods' => ['*'],
-
     'allowed_origins' => ['*'],
 
-    'allowed_origins_patterns' => [],
+    'allowed_methods' => ['*'],
 
     'allowed_headers' => ['*'],
+
+    'allowed_origins_patterns' => [],
 
     'exposed_headers' => [],
 
