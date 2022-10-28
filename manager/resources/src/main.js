@@ -8,8 +8,6 @@ import '@fortawesome/fontawesome-free/css/all.css'
 const app = createApp(App)
 
 store.dispatch('Settings/get').then(settings => {
-  app.provide('test', (k) => settings[k] || null)
-
   app.mixin({
     methods: {
       hasPermissions (permissions) {
@@ -20,13 +18,13 @@ store.dispatch('Settings/get').then(settings => {
         }
       },
       config (key) {
-        return settings.config[key] || null
+        return key && settings.config[key] || null
       },
       user (key) {
-        return settings.user[key] || null
+        return key && settings.user[key] || null
       },
       lang (key, def) {
-        return settings.lexicon[key] || def
+        return key && settings.lexicon[key] || def
       },
       categories() {
         return settings.categories || {}
