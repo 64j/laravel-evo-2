@@ -117,7 +117,6 @@ export default {
         if (response['token']) {
           this.token(response['token'])
         }
-
         return response
       }) || this.token(null)
     }).catch(this.handlerCatch)
