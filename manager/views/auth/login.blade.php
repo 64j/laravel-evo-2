@@ -15,8 +15,11 @@
         .sidebar { width: 30rem; max-width: 100%; }
         .active .input-list { display: block; }
         .input-list { display: none; z-index: 10; }
+        .input-list > div { cursor: pointer; }
         .input-list > div:hover { background: var(--bs-primary); color: var(--bs-light); }
-        .input-list-remove { cursor: pointer }
+        .input-list-remove { width: 1.5rem; height: 1.5rem; font-size: 1.5rem; font-weight: 600; }
+        .input-list > div:hover .input-list-remove { background: var(--bs-light) }
+        .input-list > div:hover .input-list-remove:hover { background: var(--bs-danger); color: var(--bs-light) !important; }
         input:-webkit-autofill,
         input:-webkit-autofill:hover,
         input:-webkit-autofill:focus,
@@ -112,7 +115,7 @@
         list += `
             <div class="px-3 py-2 d-flex align-items-center justify-content-between" onmousedown="listSelect(event)">
                 <span>${hosts[i]}</span>
-                <span class="input-list-remove text-danger float-end" onmousedown="listRemoveItem(event)">&times;</span>
+                <span class="input-list-remove text-danger float-end rounded-circle d-inline-flex align-items-center justify-content-center" onmousedown="listRemoveItem(event)">&times;</span>
             </div>`
       }
       list += `</div>`;
@@ -130,12 +133,12 @@
   }
 
   function listSelect(event) {
-    host.value = event.target.firstElementChild.innerText
+    host.value = event.currentTarget.firstElementChild.innerText
   }
 
   function listRemoveItem(event) {
     event.stopPropagation()
-    let hostName = event.target.parentElement.firstElementChild.innerText
+    let hostName = event.currentTarget.parentElement.firstElementChild.innerText
     for (let i in hosts) {
       if (hosts[i] === hostName) {
         delete hosts[i]
