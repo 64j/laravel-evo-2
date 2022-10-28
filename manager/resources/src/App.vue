@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     getLayout () {
-      if (this.user('role')) {
+      if (this.$store.state['Settings'].user.role) {
         return defineAsyncComponent(() => import('@/layouts/DefaultLayout'))
       } else {
         return defineAsyncComponent(() => import('@/layouts/BlankLayout'))
