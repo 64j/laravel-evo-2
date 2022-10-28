@@ -1,5 +1,4 @@
 import store from '@/store'
-import router from '@/router'
 import { toRaw } from 'vue'
 
 export default {
@@ -36,13 +35,7 @@ export default {
 
     if (response.status === 401) {
       if (location.hash !== '#/login') {
-        store.dispatch('Settings/del').then(() => {
-          store.dispatch('MultiTabs/delAllTabs').then(() => {
-            router.push({ name: 'AuthLogin' }).then(() => {
-              this.logout()
-            })
-          })
-        })
+        store.dispatch('Settings/del').then(() => {})
       }
     }
 

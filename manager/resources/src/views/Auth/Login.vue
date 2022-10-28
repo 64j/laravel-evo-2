@@ -1,39 +1,58 @@
 <template>
   <div class="main w-100 h-100 d-flex flex-nowrap bg-dark">
-    <notifications style="top: .5rem"/>
-
     <div class="col-auto sidebar p-5 bg-dark bg-opacity-75 text-white text-opacity-75">
       <form @submit.prevent="submit">
 
-        <div class="mb-3">
-          <label class="mb-1">Valid hostnames</label>
-          <div class="position-relative parent-input-list">
-            <input v-model="data.host" @focus="listOpen" @blur="listClose" type="text" class="form-control form-control-lg rounded-0 bg-transparent text-white" :class="{'border-danger': isErrors}">
-            <div class="input-list position-absolute w-100 bg-light text-dark">
-              <div v-for="(host, k) in hosts" :key="k" class="px-3 py-2 d-flex align-items-center justify-content-between" @mousedown="listSelect">
-                <span>{{ host }}</span>
-                <i class="fa fa-remove text-danger float-end" @mousedown.stop="listRemoveItem" />
-              </div>
+        <div class="form-group form-floating mb-3">
+          <input v-model="data.host"
+                 type="text"
+                 id="floatingHost"
+                 class="form-control form-control-lg rounded-0 border-light bg-transparent text-white"
+                 @focus="listOpen"
+                 @blur="listClose"
+                 placeholder="Hostname"
+                 :class="{'border-danger': isErrors}">
+          <label for="floatingHost">Valid hostnames</label>
+
+          <div class="input-list position-absolute w-100 bg-light text-dark">
+            <div v-for="(host, k) in hosts" :key="k" class="px-3 py-2 d-flex align-items-center justify-content-between" @mousedown="listSelect">
+              <span>{{ host }}</span>
+              <i class="fa fa-remove text-danger float-end input-list-remove" @mousedown.stop="listRemoveItem" />
             </div>
           </div>
         </div>
 
-        <div class="mb-3">
-          <label class="mb-1">Username</label>
-          <input v-model="data.username" type="text" class="form-control form-control-lg rounded-0 bg-transparent text-white" :class="{'border-danger': isErrors}">
+        <div class="form-group form-floating mb-3">
+          <input v-model="data.username"
+                 type="text"
+                 id="floatingName"
+                 class="form-control form-control-lg rounded-0 border-light bg-transparent text-white"
+                 placeholder="Username"
+                 :class="{'border-danger': isErrors}"
+                 autofocus>
+          <label for="floatingName">Username</label>
         </div>
 
-        <div class="mb-3">
-          <label class="mb-1">Password</label>
-          <input v-model="data.password" type="password" class="form-control form-control-lg rounded-0 bg-transparent text-white" :class="{'border-danger': isErrors}">
+        <div class="form-group form-floating mb-3">
+          <input v-model="data.password"
+                 type="password"
+                 id="floatingPassword"
+                 class="form-control form-control-lg rounded-0 border-light bg-transparent text-white"
+                 placeholder="Password"
+                 :class="{'border-danger': isErrors}">
+          <label for="floatingPassword">Password</label>
         </div>
 
-        <div class="row">
+        <div class="row align-items-center">
           <div class="col">
             <div class="form-check">
-              <input v-model="data.remember" type="checkbox" class="form-check-input" id="rememberme" :false-value="0"
+              <input v-model="data.remember"
+                     type="checkbox"
+                     id="remember"
+                     class="form-check-input rounded-0 border-light bg-transparent"
+                     :false-value="0"
                      :true-value="1">
-              <label class="form-check-label" for="rememberme">Remember me</label>
+              <label class="form-check-label" for="remember">Remember me</label>
             </div>
           </div>
           <div class="col-auto">
@@ -131,6 +150,14 @@ export default {
 .main { background: url("https://picsum.photos/1600/900") 50% 50% no-repeat; background-size: cover }
 .sidebar { width: 30rem; max-width: 100%; }
 .active .input-list { display: block; }
-.input-list { display: none; }
+.input-list { display: none; z-index: 10; }
 .input-list > div:hover { background: var(--bs-primary); color: var(--bs-light); }
+.input-list-remove { cursor: pointer }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 2rem black inset !important;
+  -webkit-text-fill-color: #fff !important;
+}
 </style>

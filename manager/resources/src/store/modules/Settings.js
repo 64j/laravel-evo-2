@@ -1,47 +1,47 @@
 import http from '@/utils/http'
+import router from '@/router'
+import store from '@/store'
 
 const state = {
   user: {},
   config: {},
-  categories: {},
-  permissions: {},
   lexicon: {},
-  lang(key, d) {
-    return this.lexicon[key] || d
-  }
+  categories: {},
+  permissions: {}
 }
 
 const mutations = {
-  SET_SETTINGS: (state, settings) => {
+  set: (state, settings) => {
     for (let i in settings) {
       state[i] = settings[i]
     }
   },
-  DEL_SETTINGS: (state) => {
+  del: (state) => {
     for (let i in state) {
       state[i] = {}
     }
     http.token(null)
+    store.dispatch('MultiTabs/delAllTabs').then(() => router.push({ name: 'AuthLogin' }))
   }
 }
 
 const actions = {
   set ({ commit, state }, settings) {
     return new Promise(resolve => {
-      commit('SET_SETTINGS', settings)
+      commit('set', settings)
       resolve(state)
     })
   },
   get ({ commit, state }) {
     return new Promise(resolve => {
       return http.bootstrap().then(result => {
-        commit('SET_SETTINGS', result.data || {})
+        commit('set', result.data || {})
         resolve(state)
       })
     })
   },
   del ({ commit }) {
-    commit('DEL_SETTINGS')
+    commit('del')
   }
 }
 

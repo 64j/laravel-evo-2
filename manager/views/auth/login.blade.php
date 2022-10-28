@@ -75,7 +75,7 @@
                 @endif
             </div>
 
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="col">
                     <div class="form-check">
                         <input name="remember"

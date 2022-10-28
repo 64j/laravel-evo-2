@@ -179,25 +179,18 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (store.state['Settings'].user.role) {
+  const role = store.state['Settings'].user.role
+  if (role) {
     if (to?.redirectedFrom?.name === 'AuthLogout') {
-      store.dispatch('Settings/del').then(() => {
-        store.dispatch('MultiTabs/delAllTabs').then(() => {
-          next({ name: 'AuthLogin' })
-        })
-      })
+      store.dispatch('Settings/del').then(() => next)
     } else if (to.name === 'AuthLogin') {
       next('/')
     } else {
       next()
     }
-  } else if (!store.state['Settings'].user.role) {
+  } else if (!role) {
     if (to.name !== 'AuthLogin') {
-      store.dispatch('Settings/del').then(() => {
-        store.dispatch('MultiTabs/delAllTabs').then(() => {
-          next({ name: 'AuthLogin' })
-        })
-      })
+      store.dispatch('Settings/del').then(() => next)
     } else {
       next()
     }
