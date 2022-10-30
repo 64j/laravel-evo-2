@@ -4,14 +4,18 @@
 
     <form name="mutate" v-show="loading">
 
-      <TitleView :title="title" icon="fa fa-file" :message="lang('create_resource_title')"/>
+      <TitleView
+          :id="data.id"
+          :title="data.pagetitle || lang('new_resource')"
+          icon="fa fa-file"
+          :message="lang('create_resource_title')"/>
 
       <Tabs
-        id="doc"
-        :tabs="[
-          { id: 'General', title: lang('settings_general') },
-          { id: 'Settings', title: lang('settings_page_settings') }
-        ]">
+          id="doc"
+          :tabs="[
+            { id: 'General', title: lang('settings_general') },
+            { id: 'Settings', title: lang('settings_page_settings') }
+          ]">
         <template #General>
           <div class="container-fluid container-body pt-3">
 
@@ -21,7 +25,8 @@
               </label>
               <div class="col-md-9 col-lg-10">
                 <div class="form-control-name clearfix">
-                  <input v-model="data.pagetitle" type="text" maxlength="100" class="form-control form-control-lg" onchange="documentDirty=true;">
+                  <input v-model="data.pagetitle" type="text" maxlength="100" class="form-control form-control-lg"
+                         onchange="documentDirty=true;">
                 </div>
               </div>
             </div>
@@ -29,35 +34,40 @@
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('long_title') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.longtitle" type="text" maxlength="255" class="form-control" onchange="documentDirty=true;">
+                <input v-model="data.longtitle" type="text" maxlength="255" class="form-control"
+                       onchange="documentDirty=true;">
               </div>
             </div>
 
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('resource_description') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.description" type="text" maxlength="255" class="form-control" onchange="documentDirty=true;">
+                <input v-model="data.description" type="text" maxlength="255" class="form-control"
+                       onchange="documentDirty=true;">
               </div>
             </div>
 
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('resource_alias') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.alias" type="text" maxlength="100" class="form-control" onchange="documentDirty=true;">
+                <input v-model="data.alias" type="text" maxlength="100" class="form-control"
+                       onchange="documentDirty=true;">
               </div>
             </div>
 
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('link_attributes') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.link_attributes" type="text" maxlength="255" class="form-control" onchange="documentDirty=true;">
+                <input v-model="data.link_attributes" type="text" maxlength="255" class="form-control"
+                       onchange="documentDirty=true;">
               </div>
             </div>
 
             <div class="row form-row mb-1" v-if="data.type === 'reference'">
               <label class="col-md-3 col-lg-2">{{ lang('weblink') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.link_attributes" type="text" maxlength="255" class="form-control" onchange="documentDirty=true;">
+                <input v-model="data.link_attributes" type="text" maxlength="255" class="form-control"
+                       onchange="documentDirty=true;">
               </div>
             </div>
 
@@ -73,7 +83,8 @@
               <div class="col-md-9 col-lg-10">
                 <select v-model="data.template" class="form-select" onchange="documentDirty=true;">
                   <option :value="0">(blank)</option>
-                  <optgroup v-for="category in meta.templates" :key="`template-category`+category.id" :label="category.title">
+                  <optgroup v-for="category in meta.templates" :key="`template-category`+category.id"
+                            :label="category.title">
                     <option v-for="template in category.items" :key="template.id" :value="template.id">
                       {{ template.name }}
                     </option>
@@ -85,21 +96,24 @@
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('resource_opt_menu_title') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.menutitle" type="text" maxlength="255" class="form-control" onchange="documentDirty=true;">
+                <input v-model="data.menutitle" type="text" maxlength="255" class="form-control"
+                       onchange="documentDirty=true;">
               </div>
             </div>
 
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('resource_opt_menu_index') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.menuindex" type="text" maxlength="6" class="form-control" onchange="documentDirty=true;">
+                <input v-model="data.menuindex" type="text" maxlength="6" class="form-control"
+                       onchange="documentDirty=true;">
               </div>
             </div>
 
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('resource_opt_show_menu') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.hidemenu" type="checkbox" class="form-check-input" onchange="documentDirty=true;" :false-value="1" :true-value="0">
+                <input v-model="data.hidemenu" type="checkbox" class="form-check-input" onchange="documentDirty=true;"
+                       :false-value="1" :true-value="0">
               </div>
             </div>
 
@@ -129,21 +143,24 @@
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('resource_opt_published') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.published" type="checkbox" class="form-check-input" onchange="documentDirty=true;" :false-value="0" :true-value="1">
+                <input v-model="data.published" type="checkbox" class="form-check-input" onchange="documentDirty=true;"
+                       :false-value="0" :true-value="1">
               </div>
             </div>
 
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('page_data_publishdate') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.pub_date" type="text" maxlength="255" class="form-control" onchange="documentDirty=true;">
+                <input v-model="data.pub_date" type="text" maxlength="255" class="form-control"
+                       onchange="documentDirty=true;">
               </div>
             </div>
 
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('page_data_unpublishdate') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.unpub_date" type="text" maxlength="255" class="form-control" onchange="documentDirty=true;">
+                <input v-model="data.unpub_date" type="text" maxlength="255" class="form-control"
+                       onchange="documentDirty=true;">
               </div>
             </div>
 
@@ -161,7 +178,9 @@
               <label class="col-md-3 col-lg-2">{{ lang('page_data_contentType') }}</label>
               <div class="col-md-9 col-lg-10">
                 <select v-model="data.contentType" class="form-select" onchange="documentDirty=true;">
-                  <option v-for="(type, i) in config('custom_contenttype').split(',')" :key="`type-`+i" :value="type">{{ type }}</option>
+                  <option v-for="(type, i) in config('custom_contenttype').split(',')" :key="`type-`+i" :value="type">
+                    {{ type }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -179,49 +198,56 @@
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('resource_opt_folder') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.isfolder" type="checkbox" class="form-check-input" onchange="documentDirty=true;" :false-value="0" :true-value="1">
+                <input v-model="data.isfolder" type="checkbox" class="form-check-input" onchange="documentDirty=true;"
+                       :false-value="0" :true-value="1">
               </div>
             </div>
 
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('resource_opt_alvisibled') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.alias_visible" type="checkbox" class="form-check-input" onchange="documentDirty=true;" :false-value="0" :true-value="1">
+                <input v-model="data.alias_visible" type="checkbox" class="form-check-input"
+                       onchange="documentDirty=true;" :false-value="0" :true-value="1">
               </div>
             </div>
 
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('resource_opt_richtext') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.richtext" type="checkbox" class="form-check-input" onchange="documentDirty=true;" :false-value="0" :true-value="1">
+                <input v-model="data.richtext" type="checkbox" class="form-check-input" onchange="documentDirty=true;"
+                       :false-value="0" :true-value="1">
               </div>
             </div>
 
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('track_visitors_title') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.donthit" type="checkbox" class="form-check-input" onchange="documentDirty=true;" :false-value="1" :true-value="0">
+                <input v-model="data.donthit" type="checkbox" class="form-check-input" onchange="documentDirty=true;"
+                       :false-value="1" :true-value="0">
               </div>
             </div>
 
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('page_data_searchable') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.searchable" type="checkbox" class="form-check-input" onchange="documentDirty=true;" :false-value="0" :true-value="1">
+                <input v-model="data.searchable" type="checkbox" class="form-check-input" onchange="documentDirty=true;"
+                       :false-value="0" :true-value="1">
               </div>
             </div>
 
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('page_data_cacheable') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.cacheable" type="checkbox" class="form-check-input" onchange="documentDirty=true;" :false-value="0" :true-value="1">
+                <input v-model="data.cacheable" type="checkbox" class="form-check-input" onchange="documentDirty=true;"
+                       :false-value="0" :true-value="1">
               </div>
             </div>
 
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">{{ lang('resource_opt_emptycache') }}</label>
               <div class="col-md-9 col-lg-10">
-                <input v-model="data.syncsite" type="checkbox" class="form-check-input" onchange="documentDirty=true;" :false-value="0" :true-value="1">
+                <input v-model="data.syncsite" type="checkbox" class="form-check-input" onchange="documentDirty=true;"
+                       :false-value="0" :true-value="1">
               </div>
             </div>
 
@@ -254,11 +280,6 @@ export default {
         id: this.$route.params && this.$route.params.id || null
       },
       meta: {}
-    }
-  },
-  computed: {
-    title () {
-      return (this.data?.pagetitle || this.lang('new_resource')) + (this.data?.id ? ' <small>(' + this.data.id + ')</small>' : '')
     }
   },
   mounted () {

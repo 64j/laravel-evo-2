@@ -5,16 +5,20 @@
 
     <form name="mutate" v-show="loading">
 
-      <TitleView :title="title" icon="fa fa-code" :message="lang('snippet_msg')"/>
+      <TitleView
+          :id="data.id"
+          :title="data.name || lang('new_snippet')"
+          icon="fa fa-code"
+          :message="lang('snippet_msg')"/>
 
       <Tabs
-        id="snippet"
-        :tabs="[
-          { id: 'Snippet', title: lang('settings_general') },
-          { id: 'Config', title: lang('settings_config') },
-          { id: 'Props', title: lang('settings_properties') },
-          { id: 'DocBlock', title: lang('information') }
-        ]">
+          id="snippet"
+          :tabs="[
+            { id: 'Snippet', title: lang('settings_general') },
+            { id: 'Config', title: lang('settings_config') },
+            { id: 'Props', title: lang('settings_properties') },
+            { id: 'DocBlock', title: lang('information') }
+          ]">
         <!-- General -->
         <template #Snippet>
           <div class="container-fluid container-body pt-3">
@@ -24,11 +28,12 @@
                 <label class="col-md-3 col-lg-2">{{ lang('snippet_name') }}</label>
                 <div class="col-md-9 col-lg-10">
                   <div class="form-control-name clearfix">
-                    <input v-model="data.name" type="text" maxlength="100" class="form-control form-control-lg" onchange="documentDirty=true;"/>
-                      <label v-if="hasPermissions('save_role')" :title="lang('lock_snippet_msg')">
-                        <input v-model="data.locked" type="checkbox" :false-value="0" :true-value="1"/>
-                        <i class="fa fa-lock" :class="[data.locked ? 'text-danger' : 'text-muted']"></i>
-                      </label>
+                    <input v-model="data.name" type="text" maxlength="100" class="form-control form-control-lg"
+                           onchange="documentDirty=true;"/>
+                    <label v-if="hasPermissions('save_role')" :title="lang('lock_snippet_msg')">
+                      <input v-model="data.locked" type="checkbox" :false-value="0" :true-value="1"/>
+                      <i class="fa fa-lock" :class="[data.locked ? 'text-danger' : 'text-muted']"></i>
+                    </label>
                   </div>
                   <small class="form-text text-danger hide" id="savingMessage"></small>
                 </div>
@@ -37,7 +42,8 @@
               <div class="row form-row mb-1">
                 <label class="col-md-3 col-lg-2">{{ lang('snippet_desc') }}</label>
                 <div class="col-md-9 col-lg-10">
-                  <input v-model="data.description" type="text" maxlength="255" class="form-control" onchange="documentDirty=true;"/>
+                  <input v-model="data.description" type="text" maxlength="255" class="form-control"
+                         onchange="documentDirty=true;"/>
                 </div>
               </div>
 
@@ -55,7 +61,8 @@
               <div class="row form-row mb-1">
                 <label class="col-md-3 col-lg-2">{{ lang('new_category') }}</label>
                 <div class="col-md-9 col-lg-10">
-                  <input v-model="data.newcategory" type="text" maxlength="45" class="form-control" onchange="documentDirty=true;"/>
+                  <input v-model="data.newcategory" type="text" maxlength="45" class="form-control"
+                         onchange="documentDirty=true;"/>
                 </div>
               </div>
 
@@ -65,14 +72,16 @@
 
               <div v-if="user('role') === 1" class="form-row mb-1">
                 <div class="form-check">
-                  <input v-model="data.disabled" type="checkbox" class="form-check-input" id="disabled" :false-value="0" :true-value="1">
+                  <input v-model="data.disabled" type="checkbox" class="form-check-input" id="disabled" :false-value="0"
+                         :true-value="1">
                   <label class="form-check-label" for="disabled">{{ lang('disabled') }}</label>
                 </div>
               </div>
 
               <div class="form-row mb-1">
                 <div class="form-check">
-                  <input v-model="data.parse_docblock" type="checkbox" class="form-check-input" id="parse_docblock" :false-value="0" :true-value="1">
+                  <input v-model="data.parse_docblock" type="checkbox" class="form-check-input" id="parse_docblock"
+                         :false-value="0" :true-value="1">
                   <label class="form-check-label" for="parse_docblock">{{ lang('parse_docblock') }}</label>
                 </div>
                 <small v-if="data.parse_docblock" class="text-danger d-block" v-html="lang('parse_docblock_msg')"/>
@@ -97,7 +106,9 @@
         <template #Config>
           <div class="container-fluid container-body py-3">
             <div class="form-group">
-              <a href="javascript:;" class="btn btn-sm btn-primary" onclick="setDefaults(this);return false;">{{ lang('set_default_all') }}</a>
+              <a href="javascript:;" class="btn btn-sm btn-primary" onclick="setDefaults(this);return false;">{{
+                  lang('set_default_all')
+                }}</a>
             </div>
             <div id="displayparamrow">
               <div id="displayparams"></div>
@@ -120,12 +131,16 @@
               </div>
             </div>
             <div class="form-group">
-              <a href="javascript:;" class="btn btn-sm btn-primary" onclick='tpSnippet.pages[1].select();showParameters(this);return false;'>{{ lang('update_params') }}</a>
+              <a href="javascript:;" class="btn btn-sm btn-primary"
+                 onclick='tpSnippet.pages[1].select();showParameters(this);return false;'>{{
+                  lang('update_params')
+                }}</a>
             </div>
           </div>
           <!-- HTML text editor start -->
           <div class="section-editor clearfix">
-            <textarea v-model="data.properties" dir="ltr" class="form-control" rows="20" onChange="showParameters(this);documentDirty=true;"/>
+            <textarea v-model="data.properties" dir="ltr" class="form-control" rows="20"
+                      onChange="showParameters(this);documentDirty=true;"/>
           </div>
           <!-- HTML text editor end -->
         </template>
@@ -171,11 +186,6 @@ export default {
       }
     }
   },
-  computed: {
-    title () {
-      return (this.data.name ? this.data.name : this.lang('new_snippet')) + (this.data.id ? ' <small>(' + this.data.id + ')</small>' : '')
-    }
-  },
   mounted () {
     this.$emit('titleTab', {
       icon: this.icon,
@@ -204,20 +214,20 @@ export default {
           break
       }
     },
-    create() {
+    create () {
       http.create(this.controller, this.data).then(this.setData)
     },
-    read() {
+    read () {
       http.read(this.controller, this.data).then(result => {
         this.setData(result)
       })
     },
-    update() {
+    update () {
       http.update(this.controller, this.data).then(result => {
         this.setData(result)
       })
     },
-    delete() {
+    delete () {
       if (confirm(this.lang('confirm_delete_snippet'))) {
         http.delete(this.controller, { id: this.data.id }).then(result => {
           if (result) {
@@ -226,11 +236,11 @@ export default {
         })
       }
     },
-    setData(result) {
+    setData (result) {
       this.data = result.data
       this.meta = result.meta
 
-      for (let i in result.meta.events || {}) {
+      for (let i in result.meta?.events || {}) {
         this.events[i] = Array.isArray(result.meta.events[i]) ? result.meta.events[i].join('') : result.meta.events[i]
       }
       this.$emit('titleTab', this.title)

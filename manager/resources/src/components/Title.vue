@@ -3,6 +3,7 @@
     <h1 class="title h4 m-0">
       <i v-if="icon" class="me-3" :class="icon"/>
       <span v-html="title"/>
+      <small v-if="id" class="ms-2">({{ id }})</small>
       <i v-if="message" class="fa fa-question-circle position-relative tooltip-help ms-3 small" @click="show=!show"/>
     </h1>
     <div v-if="message" v-show="show" class="alert alert-info m-0 mt-3" v-html="message"/>
@@ -13,6 +14,9 @@
 export default {
   name: 'TitleView',
   props: {
+    id: {
+      type: [String, Number]
+    },
     title: {
       type: String
     },

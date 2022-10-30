@@ -4,7 +4,10 @@
 
     <form name="mutate" v-show="loading">
 
-      <TitleView :title="title" :icon="icon"/>
+      <TitleView
+          :id="data.id"
+          :title="data.name || lang('role_title')"
+          :icon="icon"/>
 
       <div class="container-fluid container-body px-4">
 
@@ -12,7 +15,8 @@
           <label class="col-md-3 col-lg-2">{{ lang('role_name') }}</label>
           <div class="col-md-9 col-lg-10">
             <div class="form-control-name">
-              <input v-model="data.name" type="text" maxlength="50" class="form-control" onchange="documentDirty=true;"/>
+              <input v-model="data.name" type="text" maxlength="50" class="form-control"
+                     onchange="documentDirty=true;"/>
             </div>
             <small class="form-text text-danger hide" id="savingMessage"></small>
           </div>
@@ -21,7 +25,8 @@
         <div class="row form-row mb-3">
           <label class="col-md-3 col-lg-2">{{ lang('resource_description') }}</label>
           <div class="col-md-9 col-lg-10">
-            <input v-model="data.description" type="text" maxlength="255" class="form-control" onchange="documentDirty=true;"/>
+            <input v-model="data.description" type="text" maxlength="255" class="form-control"
+                   onchange="documentDirty=true;"/>
           </div>
         </div>
 
@@ -32,7 +37,8 @@
                 <h5 class="mb-3">{{ categoryItem.lang ? lang(categoryItem.lang) : categoryItem.title }}</h5>
                 <div v-for="(item, j) in categoryItem.items" :key="j">
                   <div class="form-check">
-                    <input v-model="data[j]" type="checkbox" class="form-check-input" :id="j" :false-value="0" :true-value="1" :disabled="item.disabled">
+                    <input v-model="data[j]" type="checkbox" class="form-check-input" :id="j" :false-value="0"
+                           :true-value="1" :disabled="item.disabled">
                     <label class="form-check-label" :for="j">{{ item.lang ? lang(item.lang) : item.title }}</label>
                   </div>
                 </div>
@@ -71,11 +77,6 @@ export default {
       }
     }
   },
-  computed: {
-    title () {
-      return (this.data.name ? this.data.name : this.lang('role_title')) + (this.data.id ? ' <small>(' + this.data.id + ')</small>' : '')
-    }
-  },
   mounted () {
     this.$emit('titleTab', {
       icon: this.icon,
@@ -104,20 +105,20 @@ export default {
           break
       }
     },
-    create() {
+    create () {
       http.create(this.controller, this.data).then(this.setData)
     },
-    read() {
+    read () {
       http.read(this.controller, this.data).then(result => {
         this.setData(result)
       })
     },
-    update() {
+    update () {
       http.update(this.controller, this.data).then(result => {
         this.setData(result)
       })
     },
-    delete() {
+    delete () {
       if (confirm(this.lang('confirm_delete_role'))) {
         http.delete(this.controller, { id: this.data.id }).then(result => {
           if (result) {
@@ -126,7 +127,7 @@ export default {
         })
       }
     },
-    setData(result) {
+    setData (result) {
       this.data = result.data
       this.meta = result.meta
       this.$emit('titleTab', this.title)

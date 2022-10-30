@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <TitleView :title="title" icon="fa fa-th"/>
+    <TitleView :title="lang('elements')" icon="fa fa-th"/>
 
     <Tabs
       id="resources"
@@ -67,11 +67,6 @@ export default {
           hidden: !this.hasPermissions('edit_module')
         }
       ],
-    }
-  },
-  computed: {
-    title () {
-      return this.lang('elements')
     }
   },
   mounted () {

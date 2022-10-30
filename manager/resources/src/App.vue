@@ -3,8 +3,6 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue'
-
 export default {
   name: 'App',
   computed: {
@@ -12,17 +10,10 @@ export default {
       return this.getKey()
     },
     layout () {
-      return this.getLayout()
+      return this.$route['meta'].layout || 'DefaultLayout'
     }
   },
   methods: {
-    getLayout () {
-      if (this.$store.state['Settings'].user.role) {
-        return defineAsyncComponent(() => import('@/layouts/DefaultLayout'))
-      } else {
-        return defineAsyncComponent(() => import('@/layouts/BlankLayout'))
-      }
-    },
     getKey (route) {
       return (route || this.$route)['path']
     }

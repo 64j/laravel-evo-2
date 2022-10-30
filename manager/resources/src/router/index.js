@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import store from '@/store'
+//import store from '@/store'
 
 const routes = [
   {
@@ -142,6 +142,7 @@ const routes = [
     name: 'AuthLogin',
     component: () => import('@/views/Auth/Login'),
     meta: {
+      layout: 'BlankLayout',
       noTab: true
     }
   },
@@ -153,7 +154,10 @@ const routes = [
   {
     path: '/auth/password/change',
     name: 'AuthPasswordChange',
-    component: () => import('@/views/Auth/PasswordChange')
+    component: () => import('@/views/Auth/PasswordChange'),
+    meta: {
+      layout: 'BlankLayout'
+    }
   },
   {
     path: '/:pathMatch(.*)*',
@@ -178,26 +182,26 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  const role = store.state['Settings'].user.role
-  if (role) {
-    if (to?.redirectedFrom?.name === 'AuthLogout') {
-      store.dispatch('Settings/del').then(() => next)
-    } else if (to.name === 'AuthLogin') {
-      next('/')
-    } else {
-      next()
-    }
-  } else if (!role) {
-    if (to.name !== 'AuthLogin') {
-      store.dispatch('Settings/del').then(() => next)
-    } else {
-      next()
-    }
-  } else {
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   const role = store.state['Settings'].user.role
+//   if (role) {
+//     if (to?.redirectedFrom?.name === 'AuthLogout') {
+//       store.dispatch('Settings/del').then(() => next)
+//     } else if (to.name === 'AuthLogin') {
+//       next('/')
+//     } else {
+//       next()
+//     }
+//   } else if (!role) {
+//     if (to.name !== 'AuthLogin') {
+//       store.dispatch('Settings/del').then(() => next)
+//     } else {
+//       next()
+//     }
+//   } else {
+//     next()
+//   }
+// })
 
 router.onError((handler) => {
   console.log('error:', handler)

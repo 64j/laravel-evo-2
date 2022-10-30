@@ -5,7 +5,11 @@
 
     <form name="mutate" v-show="loading">
 
-      <TitleView :title="title" icon="fa fa-th-large" :message="lang('htmlsnippet_msg')"/>
+      <TitleView
+          :id="data.id"
+          :title="data.name || lang('new_htmlsnippet')"
+          icon="fa fa-th-large"
+          :message="lang('htmlsnippet_msg')"/>
 
       <Tabs
         id="chunk"
@@ -104,11 +108,6 @@ export default {
       data: {
         id: this.$route.params && this.$route.params.id || null
       }
-    }
-  },
-  computed: {
-    title () {
-      return (this.data.name ? this.data.name : this.lang('new_htmlsnippet')) + (this.data.id ? ' <small>(' + this.data.id + ')</small>' : '')
     }
   },
   mounted () {

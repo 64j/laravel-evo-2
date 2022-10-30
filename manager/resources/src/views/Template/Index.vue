@@ -5,11 +5,15 @@
 
     <form name="mutate" v-show="loading">
 
-      <TitleView :title="title" icon="fa fa-code" :message="lang('template_msg')"/>
+      <TitleView
+          :id="data.id"
+          :title="data.templatename || lang('new_template')"
+          icon="fa fa-code"
+          :message="lang('template_msg')"/>
 
       <Tabs
-        id="template"
-        :tabs="[
+          id="template"
+          :tabs="[
           { id: 'Template', title: lang('settings_general') },
           { id: 'Tvs', title: lang('template_assignedtv_tab') },
         ]">
@@ -164,11 +168,6 @@ export default {
         selectable: 1
       },
       tvSelected: []
-    }
-  },
-  computed: {
-    title () {
-      return (this.data.templatename ? this.data.templatename : this.lang('new_template')) + (this.data.id ? ' <small>(' + this.data.id + ')</small>' : '')
     }
   },
   mounted () {
