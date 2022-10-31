@@ -48,7 +48,7 @@ export default {
       }
     }
   },
-  mounted () {
+  created () {
     this.list()
   },
   methods: {

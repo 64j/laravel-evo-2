@@ -136,7 +136,18 @@ export default {
     }).then(() => {})
   },
 
-  bootstrap (data) {
+  bootstrap () {
+    return fetch(this.setUrl(), {
+      method: 'post',
+      body: this.setBody({
+        method: 'Bootstrap@run',
+        params: []
+      }),
+      headers: this.setHeaders()
+    })
+  },
+
+  bootstrap2 (data) {
     return this.fetch('post', 'Bootstrap@run', data)
   }
 }

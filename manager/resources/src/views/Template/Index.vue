@@ -177,7 +177,7 @@ export default {
       tvSelected: []
     }
   },
-  mounted () {
+  created () {
     this.$emit('titleTab', {
       icon: this.icon,
       title: ''

@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import store from '@/store'
+import http from '@/utils/http'
 
 const routes = [
   {
@@ -255,44 +256,67 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  if (store.getters['Auth/role']) {
-    if (to?.redirectedFrom?.name === 'AuthLogout') {
-      //
-    } else if (to.name === 'AuthLogin') {
-      next('/')
-    } else {
-      next()
-    }
-  } else if (!store.getters['Auth/role']) {
-    if (to.name !== 'AuthLogin') {
-      router.push({ name: 'AuthLogin' })
-    } else {
-      next()
-    }
-  } else {
-    next()
+router.beforeEach(async (to) => {
+  if (!store.getters['Auth/isAuth']) {
+    const response = await http.bootstrap()
+
+    response.ok && response.json().then(result => {
+      store.dispatch('Auth/set', {
+        user: result.data.user || {},
+        permissions: result.data.permissions || {},
+        isAuth: true
+      })
+
+      store.dispatch('Config/set', {
+        config: result.data.config || {},
+        categories: result.data.categories || {}
+      })
+
+      store.dispatch('Lang/set', result.data.lexicon || {})
+    })
+
+    if (!response.ok && to.name !== 'AuthLogin') return { name: 'AuthLogin' }
   }
-  //console.log(to, from, next)
-//   const role = store.state['Settings'].user.role
-//   if (role) {
+})
+
+// router.beforeEach((to, from, next) => {
+//   if (store.getters['Auth/role']) {
 //     if (to?.redirectedFrom?.name === 'AuthLogout') {
-//       store.dispatch('Settings/del').then(() => next)
+//       //
 //     } else if (to.name === 'AuthLogin') {
 //       next('/')
 //     } else {
 //       next()
 //     }
-//   } else if (!role) {
+//   } else if (!store.getters['Auth/role']) {
 //     if (to.name !== 'AuthLogin') {
-//       store.dispatch('Settings/del').then(() => next)
+//       router.push({ name: 'AuthLogin' })
 //     } else {
 //       next()
 //     }
 //   } else {
 //     next()
 //   }
-})
+//   //console.log(to, from, next)
+// //   const role = store.state['Settings'].user.role
+// //   if (role) {
+// //     if (to?.redirectedFrom?.name === 'AuthLogout') {
+// //       store.dispatch('Settings/del').then(() => next)
+// //     } else if (to.name === 'AuthLogin') {
+// //       next('/')
+// //     } else {
+// //       next()
+// //     }
+// //   } else if (!role) {
+// //     if (to.name !== 'AuthLogin') {
+// //       store.dispatch('Settings/del').then(() => next)
+// //     } else {
+// //       next()
+// //     }
+// //   } else {
+// //     next()
+// //   }
+// })
 
 router.onError((handler) => {
   console.log('error:', handler)

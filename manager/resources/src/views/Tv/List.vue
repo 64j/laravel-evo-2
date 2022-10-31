@@ -34,7 +34,7 @@ export default {
       }
     }
   },
-  mounted () {
+  created () {
     http.list(this.controller, { categories: true }).then(result => this.data = result.data)
   },
   methods: {

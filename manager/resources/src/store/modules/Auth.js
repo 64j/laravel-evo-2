@@ -6,7 +6,8 @@ const state = {
   user: {},
   permissions: {},
   errors: {},
-  token: null
+  token: null,
+  isAuth: false
 }
 
 const mutations = {
@@ -18,6 +19,12 @@ const mutations = {
       config: data.config || {},
       categories: data.categories || {}
     }).then(() => {})
+  },
+
+  set (state, data) {
+    state.isAuth = data.isAuth || false
+    state.user = data.user || {}
+    state.permissions = data.permissions || {}
   },
 
   login (state, data) {
@@ -51,16 +58,16 @@ const mutations = {
 }
 
 const actions = {
-  check ({ commit, state }) {
-    return new Promise(resolve => {
-      return http.bootstrap().then(result => {
-        commit('check', result.data || {})
-        resolve(state)
-      })
-    })
+  check () {
+    return http.bootstrap()
+  },
+
+  set ({ commit }, data) {
+    commit('set', data)
   },
 
   login ({ commit }, data) {
+    console.log(commit)
     return http.login(data).then()
   },
 
@@ -89,16 +96,20 @@ const getters = {
     }
   },
 
-  user: () => {
+  user: (state) => {
     return state?.user || {}
   },
 
-  role: () => {
+  role: (state) => {
     return state?.user?.role || null
   },
 
-  username () {
+  username (state) {
     return state?.user?.username || null
+  },
+
+  isAuth (state) {
+    return state.isAuth
   }
 }
 

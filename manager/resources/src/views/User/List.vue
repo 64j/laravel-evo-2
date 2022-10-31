@@ -82,7 +82,7 @@ export default {
       return this.$store.getters['Lang/get']('user_management_title')
     }
   },
-  mounted () {
+  created () {
     this.$emit('titleTab', {
       icon: this.icon,
       title: this.title

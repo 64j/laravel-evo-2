@@ -48,7 +48,7 @@ export default {
   components: { CustomKeepAlive },
   data () {
     return {
-      tabs: this.$store.state.MultiTabs.values
+      tabs: this.$store.getters['MultiTabs/values']
     }
   },
   computed: {
@@ -56,7 +56,7 @@ export default {
       return this.tabKey()
     },
     keys () {
-      return this.$store.state.MultiTabs.keys
+      return this.$store.getters['MultiTabs/keys']
     }
   },
   watch: {
@@ -64,7 +64,7 @@ export default {
       this.addTab()
     }
   },
-  mounted () {
+  created () {
     this.initTabs()
     this.addTab()
   },
@@ -74,6 +74,7 @@ export default {
     },
     isActive (tab) {
       const active = tab.name === this.$route.name && (tab?.meta?.groupTab || !tab?.meta?.groupTab && diff(tab.params, this.$route.params))
+      tab.active = active
       if (active) {
         const title = tab.title && tab.title.replace(/<\/?[^>]+>/ig, '').trim() || ''
         document.title = (title && title + ' - ' || '') + this.$store.getters['Config/get']('site_name') + ' (EVO CMS Manager)'
@@ -93,7 +94,7 @@ export default {
     },
     setTitleTab (data) {
       for (let i in this.tabs) {
-        if (this.isActive(this.tabs[i])) {
+        if (this.tabs[i].active/* this.isActive(this.tabs[i])*/) {
           if (typeof data === 'string') {
             this.tabs[i].title = data
           } else {

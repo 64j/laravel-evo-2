@@ -17,7 +17,7 @@ export default {
       data: null
     }
   },
-  mounted () {
+  created () {
     this.$emit('titleTab', {
       icon: this.icon,
       title: ''

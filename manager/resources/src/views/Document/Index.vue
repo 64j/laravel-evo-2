@@ -282,7 +282,7 @@ export default {
       meta: {}
     }
   },
-  mounted () {
+  created () {
     this.$emit('titleTab', {
       icon: this.icon,
       title: ''

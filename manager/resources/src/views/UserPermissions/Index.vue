@@ -67,7 +67,7 @@ export default {
       return this.$store.getters['Lang/get']('mgr_access_permissions')
     }
   },
-  mounted () {
+  created () {
     this.$emit('titleTab', {
       icon: this.icon,
       title: this.title

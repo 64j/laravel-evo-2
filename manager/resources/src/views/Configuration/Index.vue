@@ -160,7 +160,7 @@ export default {
       return this.$store.getters['Lang/get']('settings_title')
     }
   },
-  mounted () {
+  created () {
     this.$emit('titleTab', {
       icon: this.icon,
       title: this.$store.getters['Lang/get']('settings_title')

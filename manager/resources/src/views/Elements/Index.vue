@@ -69,7 +69,7 @@ export default {
       ],
     }
   },
-  mounted () {
+  created () {
     this.$emit('titleTab', {
       title: this.$store.getters['Lang/get']('elements'),
       icon: 'fa fa-th'

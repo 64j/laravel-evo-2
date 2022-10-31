@@ -115,9 +115,15 @@ const actions = {
   }
 }
 
+const getters = {
+  keys: (state) => state.keys,
+  values: (state) => state.values,
+}
+
 export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
+  getters
 }

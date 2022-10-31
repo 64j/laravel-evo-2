@@ -110,7 +110,7 @@ export default {
       }
     }
   },
-  mounted () {
+  created () {
     this.$emit('titleTab', {
       icon: this.icon,
       title: ''
