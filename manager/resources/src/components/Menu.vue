@@ -9,18 +9,18 @@
           </router-link>
         </li>
         <li class="parent"
-            v-if="$store.getters['Auth/hasPermissions'](['edit_template', 'edit_snippet', 'edit_chunk', 'edit_plugin'])">
-          <a>{{ $store.getters['Lang/get']('elements') }}</a>
+            v-if="hasPermissions(['edit_template', 'edit_snippet', 'edit_chunk', 'edit_plugin'])">
+          <a>{{ lang('elements') }}</a>
           <ul>
-            <li v-if="$store.getters['Auth/hasPermissions']('edit_template')" @mouseenter="getSubMenu('Template@list', list.templates)">
+            <li v-if="hasPermissions('edit_template')" @mouseenter="getSubMenu('Template@list', list.templates)">
               <router-link :to="{ name: 'ElementsIndex', query: { resourcesTab: 0 } }">
-                <i class="fa fa-newspaper"></i> {{ $store.getters['Lang/get']('manage_templates') }}
+                <i class="fa fa-newspaper"></i> {{ lang('manage_templates') }}
               </router-link>
               <ul v-if="list.templates.length">
                 <li @mouseenter="subMenuEnter">
                   <router-link :to="{ name: 'TemplateIndex', params: { id: '' } }">
                     <i class="fa fa-plus fa-fw"></i>
-                    {{ $store.getters['Lang/get']('new_template') }}
+                    {{ lang('new_template') }}
                   </router-link>
                 </li>
                 <li v-for="item in list.templates" :key="'item-template-' + item.id" @mouseenter="subMenuEnter">
@@ -31,15 +31,15 @@
                 </li>
               </ul>
             </li>
-            <li v-if="$store.getters['Auth/hasPermissions']('edit_snippet')" @mouseenter="getSubMenu('Tv@list', list.tvs)">
+            <li v-if="hasPermissions('edit_snippet')" @mouseenter="getSubMenu('Tv@list', list.tvs)">
               <router-link :to="{ name: 'ElementsIndex', query: { resourcesTab: 1 } }">
-                <i class="fa fa-list-alt"></i> {{ $store.getters['Lang/get']('tmplvars') }}
+                <i class="fa fa-list-alt"></i> {{ lang('tmplvars') }}
               </router-link>
               <ul v-if="list.tvs.length">
                 <li @mouseenter="subMenuEnter">
                   <router-link :to="{ name: 'TvIndex', params: { id: '' } }">
                     <i class="fa fa-plus fa-fw"></i>
-                    {{ $store.getters['Lang/get']('new_tmplvars') }}
+                    {{ lang('new_tmplvars') }}
                   </router-link>
                 </li>
                 <li v-for="item in list.tvs" :key="'item-tv-' + item.id" @mouseenter="subMenuEnter">
@@ -50,15 +50,15 @@
                 </li>
               </ul>
             </li>
-            <li v-if="$store.getters['Auth/hasPermissions']('edit_chunk')" @mouseenter="getSubMenu('Chunk@list', list.chunks)">
+            <li v-if="hasPermissions('edit_chunk')" @mouseenter="getSubMenu('Chunk@list', list.chunks)">
               <router-link :to="{ name: 'ElementsIndex', query: { resourcesTab: 2 } }">
-                <i class="fa fa-th-large"></i> {{ $store.getters['Lang/get']('manage_htmlsnippets') }}
+                <i class="fa fa-th-large"></i> {{ lang('manage_htmlsnippets') }}
               </router-link>
               <ul v-if="list.chunks.length">
                 <li @mouseenter="subMenuEnter">
                   <router-link :to="{ name: 'ChunkIndex', params: { id: '' } }">
                     <i class="fa fa-plus fa-fw"></i>
-                    {{ $store.getters['Lang/get']('new_htmlsnippet') }}
+                    {{ lang('new_htmlsnippet') }}
                   </router-link>
                 </li>
                 <li v-for="item in list.chunks" :key="'item-chunk-' + item.id" @mouseenter="subMenuEnter">
@@ -69,15 +69,15 @@
                 </li>
               </ul>
             </li>
-            <li v-if="$store.getters['Auth/hasPermissions']('edit_snippet')" @mouseenter="getSubMenu('Snippet@list', list.snippets)">
+            <li v-if="hasPermissions('edit_snippet')" @mouseenter="getSubMenu('Snippet@list', list.snippets)">
               <router-link :to="{ name: 'ElementsIndex', query: { resourcesTab: 3 } }">
-                <i class="fa fa-code"></i> {{ $store.getters['Lang/get']('manage_snippets') }}
+                <i class="fa fa-code"></i> {{ lang('manage_snippets') }}
               </router-link>
               <ul v-if="list.snippets.length">
                 <li @mouseenter="subMenuEnter">
                   <router-link :to="{ name: 'SnippetIndex', params: { id: '' } }">
                     <i class="fa fa-plus fa-fw"></i>
-                    {{ $store.getters['Lang/get']('new_snippet') }}
+                    {{ lang('new_snippet') }}
                   </router-link>
                 </li>
                 <li v-for="item in list.snippets" :key="'item-snippet-' + item.id" @mouseenter="subMenuEnter">
@@ -88,15 +88,15 @@
                 </li>
               </ul>
             </li>
-            <li v-if="$store.getters['Auth/hasPermissions']('edit_plugin')" @mouseenter="getSubMenu('Plugin@list', list.plugins)">
+            <li v-if="hasPermissions('edit_plugin')" @mouseenter="getSubMenu('Plugin@list', list.plugins)">
               <router-link :to="{ name: 'ElementsIndex', query: { resourcesTab: 4 } }">
-                <i class="fa fa-plug"></i> {{ $store.getters['Lang/get']('manage_plugins') }}
+                <i class="fa fa-plug"></i> {{ lang('manage_plugins') }}
               </router-link>
               <ul v-if="list.plugins.length">
                 <li @mouseenter="subMenuEnter">
                   <router-link :to="{ name: 'PluginIndex', params: { id: '' } }">
                     <i class="fa fa-plus fa-fw"></i>
-                    {{ $store.getters['Lang/get']('new_plugin') }}
+                    {{ lang('new_plugin') }}
                   </router-link>
                 </li>
                 <li v-for="item in list.plugins" :key="'item-plugin-' + item.id" @mouseenter="subMenuEnter">
@@ -107,19 +107,20 @@
                 </li>
               </ul>
             </li>
-            <li v-if="$store.getters['Auth/hasPermissions']('edit_module')" @mouseenter="getSubMenu('Module@list', list.modules)">
+            <li v-if="hasPermissions('edit_module')" @mouseenter="getSubMenu('Module@list', list.modules)">
               <router-link :to="{ name: 'ElementsIndex', query: { resourcesTab: 5 } }">
-                <i class="fa fa-cubes"></i> {{ $store.getters['Lang/get']('modules') }}
+                <i class="fa fa-cubes"></i> {{ lang('modules') }}
               </router-link>
               <ul v-if="list.modules.length">
                 <li @mouseenter="subMenuEnter">
                   <router-link :to="{ name: 'ModuleIndex', params: { id: '' } }">
                     <i class="fa fa-plus fa-fw"></i>
-                    {{ $store.getters['Lang/get']('new_module') }}
+                    {{ lang('new_module') }}
                   </router-link>
                 </li>
                 <li v-for="item in list.modules" :key="'item-module-' + item.id" @mouseenter="subMenuEnter">
-                  <router-link :to="{ name: 'ModuleIndex', params: { id: item.id } }" :class="{'fst-italic': item.locked, 'text-danger opacity-50': item.disabled}">
+                  <router-link :to="{ name: 'ModuleIndex', params: { id: item.id } }"
+                               :class="{'fst-italic': item.locked, 'text-danger opacity-50': item.disabled}">
                     {{ item.name }}
                     <small class="ms-1">({{ item.id }})</small>
                   </router-link>
@@ -128,11 +129,12 @@
             </li>
           </ul>
         </li>
-        <li class="parent" v-if="$store.getters['Auth/hasPermissions']('exec_module')" @mouseenter="getSubMenu('Module@list', list.modules)">
-          <a>{{ $store.getters['Lang/get']('modules') }}</a>
+        <li class="parent" v-if="hasPermissions('exec_module')" @mouseenter="getSubMenu('Module@list', list.modules)">
+          <a>{{ lang('modules') }}</a>
           <ul v-if="list.modules.length">
             <li v-for="item in list.modules" :key="'item-module-exec-' + item.id" @mouseenter="subMenuEnter">
-              <router-link :to="{ name: 'ModuleExec', params: { id: item.id } }" :class="{'fst-italic': item.locked, 'text-danger opacity-50': item.disabled}">
+              <router-link :to="{ name: 'ModuleExec', params: { id: item.id } }"
+                           :class="{'fst-italic': item.locked, 'text-danger opacity-50': item.disabled}">
                 <i class="fa fa-cube"></i>
                 {{ item.name }}
               </router-link>
@@ -140,37 +142,37 @@
           </ul>
         </li>
         <li class="parent"
-            v-if="$store.getters['Auth/hasPermissions']('edit_user', 'edit_web_user', 'edit_role', 'access_permissions', 'web_access_permissions')">
-          <a>{{ $store.getters['Lang/get']('users') }}</a>
+            v-if="hasPermissions('edit_user', 'edit_web_user', 'edit_role', 'access_permissions', 'web_access_permissions')">
+          <a>{{ lang('users') }}</a>
           <ul>
-            <li v-if="$store.getters['Auth/hasPermissions']('edit_user')">
+            <li v-if="hasPermissions('edit_user')">
               <router-link :to="{ name: 'UserList' }">
-                <i class="fa fa-user-circle"></i> {{ $store.getters['Lang/get']('users') }}
+                <i class="fa fa-user-circle"></i> {{ lang('users') }}
               </router-link>
             </li>
-            <li v-if="$store.getters['Auth/hasPermissions']('edit_role')">
+            <li v-if="hasPermissions('edit_role')">
               <router-link :to="{ name: 'RoleList' }">
-                <i class="fa fa-legal"></i> {{ $store.getters['Lang/get']('role_management_title') }}
+                <i class="fa fa-legal"></i> {{ lang('role_management_title') }}
               </router-link>
             </li>
-            <li v-if="$store.getters['Auth/hasPermissions']('access_permissions')">
+            <li v-if="hasPermissions('access_permissions')">
               <router-link :to="{ name: 'UserPermissionsIndex' }">
-                <i class="fa fa-universal-access"></i> {{ $store.getters['Lang/get']('manager_permissions') }}
+                <i class="fa fa-universal-access"></i> {{ lang('manager_permissions') }}
               </router-link>
             </li>
           </ul>
         </li>
-        <li class="parent" v-if="$store.getters['Auth/hasPermissions']('empty_cache')">
-          <a>{{ $store.getters['Lang/get']('tools') }}</a>
+        <li class="parent" v-if="hasPermissions('empty_cache')">
+          <a>{{ lang('tools') }}</a>
           <ul>
             <li>
               <router-link :to="{ name: 'ClearCacheIndex' }">
-                <i class="fa fa-recycle"></i> {{ $store.getters['Lang/get']('refresh_site') }}
+                <i class="fa fa-recycle"></i> {{ lang('refresh_site') }}
               </router-link>
             </li>
             <li>
               <router-link :to="{ name: 'SearchIndex' }">
-                <i class="fa fa-search"></i> {{ $store.getters['Lang/get']('search') }}
+                <i class="fa fa-search"></i> {{ lang('search') }}
               </router-link>
             </li>
           </ul>
@@ -184,53 +186,55 @@
           <ul>
             <li>
               <router-link :to="{ name: 'AuthPasswordChange' }">
-                <i class="fa fa-lock"></i> {{ $store.getters['Lang/get']('change_password') }}
+                <i class="fa fa-lock"></i> {{ lang('change_password') }}
               </router-link>
             </li>
             <li>
               <router-link :to="{ name: 'AuthLogout' }">
-                <i class="fa fa-sign-out"></i> {{ $store.getters['Lang/get']('logout') }}
+                <i class="fa fa-sign-out"></i> {{ lang('logout') }}
               </router-link>
             </li>
           </ul>
         </li>
-        <li class="parent" v-if="$store.getters['Auth/hasPermissions'](['settings', 'view_eventlog', 'logs', 'help'])">
+        <li class="parent" v-if="hasPermissions(['settings', 'view_eventlog', 'logs', 'help'])">
           <a><i class="fa fa-cogs m-0"></i></a>
           <ul>
-            <li v-if="$store.getters['Auth/hasPermissions']('settings')">
+            <li v-if="hasPermissions('settings')">
               <router-link :to="{ name: 'ConfigurationIndex' }">
-                <i class="fa fa-sliders"></i> {{ $store.getters['Lang/get']('edit_settings') }}
+                <i class="fa fa-sliders"></i> {{ lang('edit_settings') }}
               </router-link>
             </li>
             <li>
               <router-link :to="{ name: 'SchedulesIndex' }">
-                <i class="fa fa-calendar"></i> {{ $store.getters['Lang/get']('site_schedule') }}
+                <i class="fa fa-calendar"></i> {{ lang('site_schedule') }}
               </router-link>
             </li>
-            <li v-if="$store.getters['Auth/hasPermissions']('view_eventlog')">
+            <li v-if="hasPermissions('view_eventlog')">
               <router-link :to="{ name: 'EventLogList' }">
-                <i class="fa fa-exclamation-triangle"></i> {{ $store.getters['Lang/get']('eventlog_viewer') }}
+                <i class="fa fa-exclamation-triangle"></i> {{ lang('eventlog_viewer') }}
               </router-link>
             </li>
-            <template v-if="$store.getters['Auth/hasPermissions']('logs')">
+            <template v-if="hasPermissions('logs')">
               <li>
                 <router-link :to="{ name: 'SystemLogIndex' }">
-                  <i class="fa fa-user-secret"></i> {{ $store.getters['Lang/get']('view_logging') }}
+                  <i class="fa fa-user-secret"></i> {{ lang('view_logging') }}
                 </router-link>
               </li>
               <li>
                 <router-link :to="{ name: 'SystemInfoIndex' }">
-                  <i class="fa fa-info-circle"></i> {{ $store.getters['Lang/get']('view_sysinfo') }}
+                  <i class="fa fa-info-circle"></i> {{ lang('view_sysinfo') }}
                 </router-link>
               </li>
             </template>
-            <li v-if="$store.getters['Auth/hasPermissions']('help')">
+            <li v-if="hasPermissions('help')">
               <router-link :to="{ name: 'HelpIndex' }">
-                <i class="fa fa-question-circle"></i> {{ $store.getters['Lang/get']('help') }}
+                <i class="fa fa-question-circle"></i> {{ lang('help') }}
               </router-link>
             </li>
             <li>
-              <span class="justify-content-center text-muted small">{{ config('settings_version') }}</span>
+              <span class="justify-content-center text-muted small">
+                {{ $store.getters['Config/get']('settings_version') }}
+              </span>
             </li>
           </ul>
         </li>
@@ -277,6 +281,12 @@ export default {
     })
   },
   methods: {
+    lang (key) {
+      return this.$store.getters['Lang/get'](key)
+    },
+    hasPermissions (permissions) {
+      return this.$store.getters['Auth/hasPermissions'](permissions)
+    },
     click (event) {
       if (event.target.classList.contains('link-home')) {
         this.$el.parentElement.classList.remove('active')

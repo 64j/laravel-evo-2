@@ -6,8 +6,8 @@
           <i class="fa fa-plus"/>
           {{ txtNew }}
         </router-link>
-        <input type="text" class="form-control" :placeholder="lang('element_filter_msg')" @keyup="filter">
-        <a v-if="txtHelp" class="btn btn-outline-primary" @click="msg=!msg">{{ lang('help') }}</a>
+        <input type="text" class="form-control" :placeholder="$store.getters['Lang/get']('element_filter_msg')" @keyup="filter">
+        <a v-if="txtHelp" class="btn btn-outline-primary" @click="msg=!msg">{{ $store.getters['Lang/get']('help') }}</a>
       </div>
       <div class="m-0 mt-2 alert alert-info" v-html="txtHelp" v-if="msg"/>
     </div>

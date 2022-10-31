@@ -59,11 +59,11 @@ export default {
           }
           break
 
-        case node.id === this.config['site_start']:
+        case node.id === this.$store.getters['Config/get']('site_start'):
           icon = 'fa fa-home'
           break
 
-        case node.id === this.config['error_page']:
+        case node.id === this.$store.getters['Config/get']('error_page'):
           icon = 'fa fa-exclamation-triangle'
           break
 
@@ -80,19 +80,19 @@ export default {
     },
     title (node) {
       let title = ''
-      title += this.lang('pagetitle') + ': ' + node.pagetitle
-      title += '\n' + this.lang('id') + ': ' + node.id
-      title += '\n' + this.lang('resource_opt_menu_title') + ': ' + node.menutitle
-      title += '\n' + this.lang('resource_opt_menu_index') + ': ' + node.menuindex
-      title += '\n' + this.lang('alias') + ': ' + (node.alias || '-')
-      title += '\n' + this.lang('template') + ': ' + node.templatename
-      title += '\n' + this.lang('publish_date') + ': ' + (node.pub_date ? (new Date(node.pub_date * 1000)).toLocaleString() : '')
-      title += '\n' + this.lang('unpublish_date') + ': ' + (node.unpub_date ? (new Date(node.unpub_date * 1000)).toLocaleString() : '')
-      title += '\n' + this.lang('page_data_web_access') + ': ' + (node.privateweb ? this.lang('private') : this.lang('public'))
-      title += '\n' + this.lang('page_data_mgr_access') + ': ' + (node.privatemgr ? this.lang('private') : this.lang('public'))
-      title += '\n' + this.lang('resource_opt_richtext') + ': ' + (node.richtext ? this.lang('yes') : this.lang('no'))
-      title += '\n' + this.lang('page_data_searchable') + ': ' + (node.searchable ? this.lang('yes') : this.lang('no'))
-      title += '\n' + this.lang('page_data_cacheable') + ': ' + (node.searchable ? this.lang('yes') : this.lang('no'))
+      title += this.$store.getters['Lang/get']('pagetitle') + ': ' + node.pagetitle
+      title += '\n' + this.$store.getters['Lang/get']('id') + ': ' + node.id
+      title += '\n' + this.$store.getters['Lang/get']('resource_opt_menu_title') + ': ' + node.menutitle
+      title += '\n' + this.$store.getters['Lang/get']('resource_opt_menu_index') + ': ' + node.menuindex
+      title += '\n' + this.$store.getters['Lang/get']('alias') + ': ' + (node.alias || '-')
+      title += '\n' + this.$store.getters['Lang/get']('template') + ': ' + node.templatename
+      title += '\n' + this.$store.getters['Lang/get']('publish_date') + ': ' + (node.pub_date ? (new Date(node.pub_date * 1000)).toLocaleString() : '')
+      title += '\n' + this.$store.getters['Lang/get']('unpublish_date') + ': ' + (node.unpub_date ? (new Date(node.unpub_date * 1000)).toLocaleString() : '')
+      title += '\n' + this.$store.getters['Lang/get']('page_data_web_access') + ': ' + (node.privateweb ? this.$store.getters['Lang/get']('private') : this.$store.getters['Lang/get']('public'))
+      title += '\n' + this.$store.getters['Lang/get']('page_data_mgr_access') + ': ' + (node.privatemgr ? this.$store.getters['Lang/get']('private') : this.$store.getters['Lang/get']('public'))
+      title += '\n' + this.$store.getters['Lang/get']('resource_opt_richtext') + ': ' + (node.richtext ? this.$store.getters['Lang/get']('yes') : this.$store.getters['Lang/get']('no'))
+      title += '\n' + this.$store.getters['Lang/get']('page_data_searchable') + ': ' + (node.searchable ? this.$store.getters['Lang/get']('yes') : this.$store.getters['Lang/get']('no'))
+      title += '\n' + this.$store.getters['Lang/get']('page_data_cacheable') + ': ' + (node.searchable ? this.$store.getters['Lang/get']('yes') : this.$store.getters['Lang/get']('no'))
 
       return title
     },

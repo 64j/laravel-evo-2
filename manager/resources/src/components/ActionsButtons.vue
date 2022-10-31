@@ -19,7 +19,12 @@
 
 <script>
 export default {
-  name: 'ActionsButtons'
+  name: 'ActionsButtons',
+  methods: {
+    lang (key) {
+      return this.$store.getters['Lang/get'](key)
+    }
+  }
 }
 </script>
 

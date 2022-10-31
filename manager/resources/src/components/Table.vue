@@ -10,14 +10,14 @@
         </div>
         <div class="col-auto" v-if="modeSearch || modeList">
           <div class="input-group input-group-sm">
-            <input class="form-control form-control-sm" name="search" type="text" value="" :placeholder="lang('search')">
-            <a class="btn btn-outline-secondary" :title="lang('search')">
+            <input class="form-control form-control-sm" name="search" type="text" value="" :placeholder="$store.getters['Lang/get']('search')">
+            <a class="btn btn-outline-secondary" :title="$store.getters['Lang/get']('search')">
               <i class="fa fa-search"></i>
             </a>
-            <a class="btn btn-outline-secondary" :title="lang('reset')">
+            <a class="btn btn-outline-secondary" :title="$store.getters['Lang/get']('reset')">
               <i class="fa fa-refresh"></i>
             </a>
-            <a class="btn btn-outline-secondary" :title="lang('list_mode')">
+            <a class="btn btn-outline-secondary" :title="$store.getters['Lang/get']('list_mode')">
               <i class="fa fa-table"></i>
             </a>
           </div>

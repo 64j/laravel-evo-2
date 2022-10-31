@@ -11,30 +11,30 @@ app.use(store)
 app.use(Notifications)
 
 store.dispatch('Auth/check').then(() => {
-  app.mixin({
-    methods: {
-      hasPermissions (permissions) {
-        if (typeof permissions === 'object') {
-          return permissions.some(
-            permission => !this.$store.state['Settings'].permissions?.[permission]?.disabled || false)
-        } else {
-          return !this.$store.state['Settings'].permissions?.[permissions]?.disabled || false
-        }
-      },
-      config (key) {
-        return key && this.$store.state['Settings'].config[key] || null
-      },
-      user (key) {
-        return key && this.$store.state['Settings'].user[key] || null
-      },
-      lang (key, def) {
-        return key && this.$store.state['Settings'].lexicon[key] || def
-      },
-      categories () {
-        return this.$store.state['Settings'].categories || {}
-      }
-    }
-  })
+  // app.mixin({
+  //   methods: {
+  //     hasPermissions (permissions) {
+  //       if (typeof permissions === 'object') {
+  //         return permissions.some(
+  //           permission => !this.$store.state['Settings'].permissions?.[permission]?.disabled || false)
+  //       } else {
+  //         return !this.$store.state['Settings'].permissions?.[permissions]?.disabled || false
+  //       }
+  //     },
+  //     config (key) {
+  //       return key && this.$store.state['Settings'].config[key] || null
+  //     },
+  //     user (key) {
+  //       return key && this.$store.state['Settings'].user[key] || null
+  //     },
+  //     lang (key, def) {
+  //       return key && this.$store.state['Settings'].lexicon[key] || def
+  //     },
+  //     categories () {
+  //       return this.$store.state['Settings'].categories || {}
+  //     }
+  //   }
+  // })
 
   app.use(router)
   app.mount('#app')
