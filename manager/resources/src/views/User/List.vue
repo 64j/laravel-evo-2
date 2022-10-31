@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <TitleView :title="title" :icon="icon" :message="lang('user_management_msg')"/>
+    <TitleView :title="title" :icon="icon" :message="$store.getters['Lang/get']('user_management_msg')"/>
 
     <TableView
       :data="data"
@@ -15,7 +15,7 @@
       @getData="list">
       <router-link :to="{ name: element, params: { id: '' } }" class="btn btn-success btn-sm">
         <i class="fa fa-plus"></i>
-        {{ lang('new_user') }}
+        {{ $store.getters['Lang/get']('new_user') }}
       </router-link>
     </TableView>
 
@@ -39,38 +39,38 @@ export default {
       meta: null,
       columns: {
         icon: {
-          title: this.lang('icon'),
+          title: this.$store.getters['Lang/get']('icon'),
           value: '<i class="fa fa-user-circle"/>',
           link: true
         },
         username: {
-          title: this.lang('name'),
+          title: this.$store.getters['Lang/get']('name'),
           link: true
         },
         fullname: {
-          title: this.lang('user_full_name')
+          title: this.$store.getters['Lang/get']('user_full_name')
         },
         role: {
-          title: this.lang('role')
+          title: this.$store.getters['Lang/get']('role')
         },
         email: {
-          title: this.lang('email')
+          title: this.$store.getters['Lang/get']('email')
         },
         lastlogin: {
-          title: this.lang('user_prevlogin')
+          title: this.$store.getters['Lang/get']('user_prevlogin')
         },
         logincount: {
-          title: this.lang('user_logincount')
+          title: this.$store.getters['Lang/get']('user_logincount')
         },
         blocked: {
-          title: this.lang('user_block'),
+          title: this.$store.getters['Lang/get']('user_block'),
           value: {
-            0: this.lang('no'),
-            1: this.lang('yes')
+            0: this.$store.getters['Lang/get']('no'),
+            1: this.$store.getters['Lang/get']('yes')
           }
         },
         delete: {
-          title: this.lang('delete'),
+          title: this.$store.getters['Lang/get']('delete'),
           value: '<i class="fa fa-trash-alt remove text-danger"/>'
         }
       },
@@ -79,7 +79,7 @@ export default {
   },
   computed: {
     title () {
-      return this.lang('user_management_title')
+      return this.$store.getters['Lang/get']('user_management_title')
     }
   },
   mounted () {

@@ -14,9 +14,9 @@
       <Tabs
           id="template"
           :tabs="[
-          { id: 'Template', title: lang('settings_general') },
-          { id: 'Tvs', title: lang('template_assignedtv_tab') },
-        ]">
+            { id: 'Template', title: lang('settings_general') },
+            { id: 'Tvs', title: lang('template_assignedtv_tab') },
+          ]">
         <template #Template>
           <div class="container-fluid container-body pt-3">
             <div class="form-group">
@@ -24,11 +24,14 @@
               <div class="row form-row mb-1">
                 <label class="col-md-3 col-lg-2">
                   {{ lang('template_name') }}
-                  <small v-if="data.id === config('default_template')" class="text-danger d-block">{{ lang('defaulttemplate_title') }}</small>
+                  <small v-if="data.id === config('default_template')" class="text-danger d-block">{{
+                      lang('defaulttemplate_title')
+                    }}</small>
                 </label>
                 <div class="col-md-9 col-lg-10">
                   <div class="form-control-name clearfix">
-                    <input v-model="data.templatename" type="text" maxlength="100" class="form-control form-control-lg" onchange="documentDirty=true;">
+                    <input v-model="data['templatename']" type="text" maxlength="100"
+                           class="form-control form-control-lg" onchange="documentDirty=true;">
                     <label v-if="hasPermissions('save_role')" :title="lang('lock_snippet_msg')">
                       <input v-model="data.locked" type="checkbox" :false-value="0" :true-value="1"/>
                       <i class="fa fa-lock" :class="[data.locked ? 'text-danger' : 'text-muted']"></i>
@@ -41,14 +44,16 @@
               <div class="row form-row mb-1">
                 <label class="col-md-3 col-lg-2">{{ lang('alias') }}</label>
                 <div class="col-md-9 col-lg-10">
-                  <input v-model="data.templatealias" type="text" maxlength="255" class="form-control" onchange="documentDirty=true;">
+                  <input v-model="data['templatealias']" type="text" maxlength="255" class="form-control"
+                         onchange="documentDirty=true;">
                 </div>
               </div>
 
               <div class="row form-row mb-1">
                 <label class="col-md-3 col-lg-2">{{ lang('template_desc') }}</label>
                 <div class="col-md-9 col-lg-10">
-                  <input v-model="data.description" type="text" maxlength="255" class="form-control" onchange="documentDirty=true;">
+                  <input v-model="data.description" type="text" maxlength="255" class="form-control"
+                         onchange="documentDirty=true;">
                 </div>
               </div>
 
@@ -66,12 +71,14 @@
               <div class="row form-row mb-1">
                 <label class="col-md-3 col-lg-2">{{ lang('new_category') }}</label>
                 <div class="col-md-9 col-lg-10">
-                  <input v-model="data.newcategory" type="text" maxlength="45" class="form-control" onchange="documentDirty=true;">
+                  <input v-model="data.newcategory" type="text" maxlength="45" class="form-control"
+                         onchange="documentDirty=true;">
                 </div>
               </div>
 
               <div class="form-check mb-1" v-if="hasPermissions('save_role')">
-                <input v-model="data.selectable" type="checkbox" class="form-check-input" id="selectable" :false-value="0" :true-value="1">
+                <input v-model="data.selectable" type="checkbox" class="form-check-input" id="selectable"
+                       :false-value="0" :true-value="1">
                 <label class="form-check-label" for="selectable">{{ lang('template_selectable') }}</label>
               </div>
 
@@ -97,14 +104,14 @@
                 <template v-if="Object.values(meta?.selected || {}).length">
                   <hr class="bg-secondary m-0">
                   <Panel
-                    :data="meta.selected"
-                    class-name="px-0 mb-4"
-                    link-name="TvIndex"
-                    link-icon="fa fa-list-alt"
-                    checkbox="checkbox"
-                    :checkbox-checked="tvSelected"
-                    :hidden-categories="false"
-                    @action="action"
+                      :data="meta.selected"
+                      class-name="px-0 mb-4"
+                      link-name="TvIndex"
+                      link-icon="fa fa-list-alt"
+                      checkbox="checkbox"
+                      :checkbox-checked="tvSelected"
+                      :hidden-categories="false"
+                      @action="action"
                   />
                 </template>
 
@@ -112,19 +119,19 @@
               </div>
 
               <div class="row">
-                <template v-if="Object.values(meta?.unselected || {}).length">
+                <template v-if="Object.values(meta?.['unselected'] || {}).length">
                   <!--                  <hr class="bg-secondary">-->
                   <p class="m-0">{{ lang('template_notassigned_tv') }}</p>
 
                   <Panel
-                    :data="meta.unselected"
-                    class-name="px-0"
-                    link-name="TvIndex"
-                    link-icon="fa fa-list-alt"
-                    :search-input="true"
-                    checkbox="checkbox"
-                    :checkbox-checked="tvSelected"
-                    @action="action"
+                      :data="meta['unselected']"
+                      class-name="px-0"
+                      link-name="TvIndex"
+                      link-icon="fa fa-list-alt"
+                      :search-input="true"
+                      checkbox="checkbox"
+                      :checkbox-checked="tvSelected"
+                      @action="action"
                   />
                 </template>
               </div>
@@ -162,7 +169,7 @@ export default {
       loading: false,
       meta: {},
       data: {
-        id: this.$route.params && this.$route.params.id || null,
+        id: this.$route['params'] && this.$route['params']['id'] || null,
         category: 0,
         newcategory: null,
         selectable: 1
@@ -178,6 +185,18 @@ export default {
     this.read()
   },
   methods: {
+    lang (key) {
+      return this.$store.getters['Lang/get'](key)
+    },
+    config (key) {
+      return this.$store.getters['Config/get'](key)
+    },
+    hasPermissions (permissions) {
+      return this.$store.getters['Auth/hasPermissions'](permissions)
+    },
+    categories () {
+      return this.$store.getters['Config/categories']
+    },
     action (name, item) {
       switch (name) {
         case 'save':
@@ -254,7 +273,8 @@ export default {
         for (const i in this.meta.unselected) {
           for (const j in this.meta.unselected[i].items) {
             let tv = this.meta.unselected[i].items[j]
-            tv.prepend = '<input type="checkbox" name="assignedTv[]" value="' + tv.id + '" class="form-check-input me-2">'
+            tv.prepend = '<input type="checkbox" name="assignedTv[]" value="' + tv.id +
+                '" class="form-check-input me-2">'
           }
         }
       }

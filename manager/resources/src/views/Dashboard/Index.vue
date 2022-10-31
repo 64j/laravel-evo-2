@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid py-2">
-    <h1>{{ lang('home') }}</h1>
+    <h1>{{ $store.getters['Lang/get']('home') }}</h1>
   </div>
 </template>
 

@@ -5,8 +5,8 @@
     :search-input="true"
     link-name="TemplateIndex"
     link-icon="fa fa-newspaper"
-    :txt-new="lang('new_template')"
-    :txt-help="lang('template_management_msg')"
+    :txt-new="$store.getters['Lang/get']('new_template')"
+    :txt-help="$store.getters['Lang/get']('template_management_msg')"
     @action="action"
   />
 </template>
@@ -49,7 +49,7 @@ export default {
           break
 
         case 'delete':
-          if (confirm(this.lang('confirm_delete_template'))) {
+          if (confirm(this.$store.getters['Lang/get']('confirm_delete_template'))) {
             http.delete(this.controller, item).then(result => {
               if (result) {
                 delete category.items[item.id]

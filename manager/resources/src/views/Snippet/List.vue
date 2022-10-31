@@ -5,8 +5,8 @@
     :search-input="true"
     link-name="SnippetIndex"
     link-icon="fa fa-code"
-    :txt-new="lang('new_snippet')"
-    :txt-help="lang('snippet_management_msg')"
+    :txt-new="$store.getters['Lang/get']('new_snippet')"
+    :txt-help="$store.getters['Lang/get']('snippet_management_msg')"
     @action="action"
   />
 </template>
@@ -27,23 +27,23 @@ export default {
       actions: {
         copy: {
           icon: 'far fa-clone fa-fw',
-          title: this.lang('duplicate')
+          title: this.$store.getters['Lang/get']('duplicate')
         },
         disabled: {
           values: {
             0: {
               icon: 'far fa-times-circle text-danger',
-              title: this.lang('disabled')
+              title: this.$store.getters['Lang/get']('disabled')
             },
             1: {
               icon: 'far fa-check-circle text-success',
-              title: this.lang('enabled')
+              title: this.$store.getters['Lang/get']('enabled')
             }
           }
         },
         delete: {
           icon: 'fa fa-trash fa-fw text-danger',
-          title: this.lang('delete')
+          title: this.$store.getters['Lang/get']('delete')
         }
       }
     }

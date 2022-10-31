@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <TitleView :title="title" :icon="icon" :message="lang('role_management_msg')"/>
+    <TitleView :title="title" :icon="icon" :message="$store.getters['Lang/get']('role_management_msg')"/>
 
     <TableView
       :data="data"
@@ -11,7 +11,7 @@
       @getData="list">
       <router-link :to="{ name: element, params: { id: '' } }" class="btn btn-success btn-sm">
         <i class="fa fa-plus"></i>
-        {{ lang('new_role') }}
+        {{ $store.getters['Lang/get']('new_role') }}
       </router-link>
     </TableView>
 
@@ -40,14 +40,14 @@ export default {
           link: true
         },
         name: {
-          title: this.lang('role'),
+          title: this.$store.getters['Lang/get']('role'),
           link: true
         },
         description: {
-          title: this.lang('description')
+          title: this.$store.getters['Lang/get']('description')
         },
         delete: {
-          title: this.lang('delete'),
+          title: this.$store.getters['Lang/get']('delete'),
           value: '<i class="fa fa-trash-alt remove text-danger"/>'
         }
       }
@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     title () {
-      return this.lang('role_management_title')
+      return this.$store.getters['Lang/get']('role_management_title')
     }
   },
   mounted () {

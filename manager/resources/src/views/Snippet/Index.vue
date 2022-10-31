@@ -7,17 +7,17 @@
 
       <TitleView
           :id="data.id"
-          :title="data.name || lang('new_snippet')"
+          :title="data.name || $store.getters['Lang/get']('new_snippet')"
           icon="fa fa-code"
-          :message="lang('snippet_msg')"/>
+          :message="$store.getters['Lang/get']('snippet_msg')"/>
 
       <Tabs
           id="snippet"
           :tabs="[
-            { id: 'Snippet', title: lang('settings_general') },
-            { id: 'Config', title: lang('settings_config') },
-            { id: 'Props', title: lang('settings_properties') },
-            { id: 'DocBlock', title: lang('information') }
+            { id: 'Snippet', title: $store.getters['Lang/get']('settings_general') },
+            { id: 'Config', title: $store.getters['Lang/get']('settings_config') },
+            { id: 'Props', title: $store.getters['Lang/get']('settings_properties') },
+            { id: 'DocBlock', title: $store.getters['Lang/get']('information') }
           ]">
         <!-- General -->
         <template #Snippet>
@@ -25,12 +25,13 @@
             <div class="form-group">
 
               <div class="row form-row mb-1">
-                <label class="col-md-3 col-lg-2">{{ lang('snippet_name') }}</label>
+                <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('snippet_name') }}</label>
                 <div class="col-md-9 col-lg-10">
                   <div class="form-control-name clearfix">
                     <input v-model="data.name" type="text" maxlength="100" class="form-control form-control-lg"
                            onchange="documentDirty=true;"/>
-                    <label v-if="hasPermissions('save_role')" :title="lang('lock_snippet_msg')">
+                    <label v-if="$store.getters['Auth/hasPermissions']('save_role')"
+                           :title="$store.getters['Lang/get']('lock_snippet_msg')">
                       <input v-model="data.locked" type="checkbox" :false-value="0" :true-value="1"/>
                       <i class="fa fa-lock" :class="[data.locked ? 'text-danger' : 'text-muted']"></i>
                     </label>
@@ -40,7 +41,7 @@
               </div>
 
               <div class="row form-row mb-1">
-                <label class="col-md-3 col-lg-2">{{ lang('snippet_desc') }}</label>
+                <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('snippet_desc') }}</label>
                 <div class="col-md-9 col-lg-10">
                   <input v-model="data.description" type="text" maxlength="255" class="form-control"
                          onchange="documentDirty=true;"/>
@@ -48,10 +49,11 @@
               </div>
 
               <div class="row form-row mb-1">
-                <label class="col-md-3 col-lg-2">{{ lang('existing_category') }}</label>
+                <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('existing_category') }}</label>
                 <div class="col-md-9 col-lg-10">
                   <select v-model="data.category" class="form-select" onchange="documentDirty=true;">
-                    <option v-for="category in categories()" :key="category.id" :value="category.id">
+                    <option v-for="category in $store.getters['Config/categories']" :key="category.id"
+                            :value="category.id">
                       {{ category.category }}
                     </option>
                   </select>
@@ -59,7 +61,7 @@
               </div>
 
               <div class="row form-row mb-1">
-                <label class="col-md-3 col-lg-2">{{ lang('new_category') }}</label>
+                <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('new_category') }}</label>
                 <div class="col-md-9 col-lg-10">
                   <input v-model="data.newcategory" type="text" maxlength="45" class="form-control"
                          onchange="documentDirty=true;"/>
@@ -68,13 +70,13 @@
 
             </div>
 
-            <div v-if="hasPermissions('save_role')">
+            <div v-if="$store.getters['Auth/hasPermissions']('save_role')">
 
               <div v-if="user('role') === 1" class="form-row mb-1">
                 <div class="form-check">
                   <input v-model="data.disabled" type="checkbox" class="form-check-input" id="disabled" :false-value="0"
                          :true-value="1">
-                  <label class="form-check-label" for="disabled">{{ lang('disabled') }}</label>
+                  <label class="form-check-label" for="disabled">{{ $store.getters['Lang/get']('disabled') }}</label>
                 </div>
               </div>
 
@@ -82,16 +84,19 @@
                 <div class="form-check">
                   <input v-model="data.parse_docblock" type="checkbox" class="form-check-input" id="parse_docblock"
                          :false-value="0" :true-value="1">
-                  <label class="form-check-label" for="parse_docblock">{{ lang('parse_docblock') }}</label>
+                  <label class="form-check-label" for="parse_docblock">{{
+                      $store.getters['Lang/get']('parse_docblock')
+                    }}</label>
                 </div>
-                <small v-if="data.parse_docblock" class="text-danger d-block" v-html="lang('parse_docblock_msg')"/>
+                <small v-if="data.parse_docblock" class="text-danger d-block"
+                       v-html="$store.getters['Lang/get']('parse_docblock_msg')"/>
               </div>
 
             </div>
 
             <!-- PHP text editor start -->
             <div class="navbar-editor mt-3 mb-1">
-              <span>{{ lang('snippet_code') }}</span>
+              <span>{{ $store.getters['Lang/get']('snippet_code') }}</span>
             </div>
 
           </div>
@@ -107,7 +112,7 @@
           <div class="container-fluid container-body py-3">
             <div class="form-group">
               <a href="javascript:;" class="btn btn-sm btn-primary" onclick="setDefaults(this);return false;">{{
-                  lang('set_default_all')
+                  $store.getters['Lang/get']('set_default_all')
                 }}</a>
             </div>
             <div id="displayparamrow">
@@ -121,19 +126,19 @@
           <div class="container-fluid container-body py-3">
             <div class="form-group">
               <div class="row form-row">
-                <label class="col-md-3 col-lg-2">{{ lang('import_params') }}</label>
+                <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('import_params') }}</label>
                 <div class="col-md-9 col-lg-10">
                   <select name="moduleguid" class="form-control" onchange="documentDirty=true;">
                     <option>&nbsp;</option>
                   </select>
-                  <small class="form-text text-muted">{{ lang('import_params_msg') }}</small>
+                  <small class="form-text text-muted">{{ $store.getters['Lang/get']('import_params_msg') }}</small>
                 </div>
               </div>
             </div>
             <div class="form-group">
               <a href="javascript:;" class="btn btn-sm btn-primary"
                  onclick='tpSnippet.pages[1].select();showParameters(this);return false;'>{{
-                  lang('update_params')
+                  $store.getters['Lang/get']('update_params')
                 }}</a>
             </div>
           </div>
@@ -228,7 +233,7 @@ export default {
       })
     },
     delete () {
-      if (confirm(this.lang('confirm_delete_snippet'))) {
+      if (confirm(this.$store.getters['Lang/get']('confirm_delete_snippet'))) {
         http.delete(this.controller, { id: this.data.id }).then(result => {
           if (result) {
             this.action('cancel')

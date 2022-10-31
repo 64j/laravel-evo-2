@@ -1,5 +1,6 @@
-import store from '@/store'
 import { toRaw } from 'vue'
+// import store from '@/store'
+// import router from '@/router'
 
 export default {
   baseUrl: localStorage['EVO.HOST'] || '',
@@ -34,9 +35,12 @@ export default {
     }
 
     if (response.status === 401) {
-      if (location.hash !== '#/login') {
-        store.dispatch('Settings/del').then(() => {})
-      }
+      throw new Error('Something went wrong')
+      // router.push({ name: 'AuthLogin' })
+      // store.dispatch('Auth/logout').then(() => {})
+      // if (location.hash !== '#/login') {
+      //   store.dispatch('Settings/del').then(() => {})
+      // }
     }
 
     return {}
@@ -130,6 +134,6 @@ export default {
   },
 
   bootstrap (data) {
-    return this.fetch('post', 'Bootstrap@run', data).catch(this.handlerCatch)
+    return this.fetch('post', 'Bootstrap@run', data)
   }
 }

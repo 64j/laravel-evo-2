@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import http from '@/utils/http'
+//import http from '@/utils/http'
 import store from '@/store'
 
 export default {
@@ -86,31 +86,32 @@ export default {
   },
   methods: {
     submit () {
-      this.isErrors = false
-
-      http.baseUrl = this.data.host = this.data.host.replace(/\/$/, '') + '/'
-
-      http.login(this.data).then(result => {
-        if (result) {
-          if (this.data.remember) {
-            if (!this.hosts[this.data.host]) {
-              this.hosts[this.data.host] = this.data.host
-            }
-            localStorage['EVO.HOSTS'] = JSON.stringify(this.hosts)
-            localStorage['EVO.HOST'] = this.data.host
-          }
-
-          store.dispatch('Settings/get').then(settings => {
-            if (settings.user.role) {
-              this.$router.replace({ name: 'DashboardIndex' })
-            } else {
-              this.isErrors = true
-            }
-          })
-        } else {
-          this.isErrors = true
-        }
-      })
+      store.dispatch('Auth/login').then(() => {})
+      // this.isErrors = false
+      //
+      // http.baseUrl = this.data.host = this.data.host.replace(/\/$/, '') + '/'
+      //
+      // http.login(this.data).then(result => {
+      //   if (result) {
+      //     if (this.data.remember) {
+      //       if (!this.hosts[this.data.host]) {
+      //         this.hosts[this.data.host] = this.data.host
+      //       }
+      //       localStorage['EVO.HOSTS'] = JSON.stringify(this.hosts)
+      //       localStorage['EVO.HOST'] = this.data.host
+      //     }
+      //
+      //     store.dispatch('Settings/get').then(settings => {
+      //       if (settings.user.role) {
+      //         this.$router.replace({ name: 'DashboardIndex' })
+      //       } else {
+      //         this.isErrors = true
+      //       }
+      //     })
+      //   } else {
+      //     this.isErrors = true
+      //   }
+      // })
     },
 
     listOpen (event) {

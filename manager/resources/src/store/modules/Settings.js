@@ -1,6 +1,6 @@
 import http from '@/utils/http'
-import router from '@/router'
-import store from '@/store'
+// import router from '@/router'
+// import store from '@/store'
 
 const state = {
   user: {},
@@ -21,7 +21,7 @@ const mutations = {
       state[i] = {}
     }
     http.token(null)
-    store.dispatch('MultiTabs/delAllTabs').then(() => router.push({ name: 'AuthLogin' }))
+    //store.dispatch('MultiTabs/delAllTabs').then(() => router.push({ name: 'AuthLogin' }))
   }
 }
 

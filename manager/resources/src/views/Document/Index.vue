@@ -6,22 +6,22 @@
 
       <TitleView
           :id="data.id"
-          :title="data.pagetitle || lang('new_resource')"
+          :title="data.pagetitle || $store.getters['Lang/get']('new_resource')"
           icon="fa fa-file"
-          :message="lang('create_resource_title')"/>
+          :message="$store.getters['Lang/get']('create_resource_title')"/>
 
       <Tabs
           id="doc"
           :tabs="[
-            { id: 'General', title: lang('settings_general') },
-            { id: 'Settings', title: lang('settings_page_settings') }
+            { id: 'General', title: $store.getters['Lang/get']('settings_general') },
+            { id: 'Settings', title: $store.getters['Lang/get']('settings_page_settings') }
           ]">
         <template #General>
           <div class="container-fluid container-body pt-3">
 
             <div class="row form-row mb-1">
               <label class="col-md-3 col-lg-2">
-                {{ lang('resource_title') }}
+                {{ $store.getters['Lang/get']('resource_title') }}
               </label>
               <div class="col-md-9 col-lg-10">
                 <div class="form-control-name clearfix">
@@ -32,7 +32,7 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('long_title') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('long_title') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.longtitle" type="text" maxlength="255" class="form-control"
                        onchange="documentDirty=true;">
@@ -40,7 +40,7 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('resource_description') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('resource_description') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.description" type="text" maxlength="255" class="form-control"
                        onchange="documentDirty=true;">
@@ -48,7 +48,7 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('resource_alias') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('resource_alias') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.alias" type="text" maxlength="100" class="form-control"
                        onchange="documentDirty=true;">
@@ -56,7 +56,7 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('link_attributes') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('link_attributes') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.link_attributes" type="text" maxlength="255" class="form-control"
                        onchange="documentDirty=true;">
@@ -64,7 +64,7 @@
             </div>
 
             <div class="row form-row mb-1" v-if="data.type === 'reference'">
-              <label class="col-md-3 col-lg-2">{{ lang('weblink') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('weblink') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.link_attributes" type="text" maxlength="255" class="form-control"
                        onchange="documentDirty=true;">
@@ -72,14 +72,14 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('resource_summary') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('resource_summary') }}</label>
               <div class="col-md-9 col-lg-10">
                 <textarea v-model="data.introtext" maxlength="255" class="form-control" onchange="documentDirty=true;"/>
               </div>
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('page_data_template') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('page_data_template') }}</label>
               <div class="col-md-9 col-lg-10">
                 <select v-model="data.template" class="form-select" onchange="documentDirty=true;">
                   <option :value="0">(blank)</option>
@@ -94,7 +94,7 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('resource_opt_menu_title') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('resource_opt_menu_title') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.menutitle" type="text" maxlength="255" class="form-control"
                        onchange="documentDirty=true;">
@@ -102,7 +102,7 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('resource_opt_menu_index') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('resource_opt_menu_index') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.menuindex" type="text" maxlength="6" class="form-control"
                        onchange="documentDirty=true;">
@@ -110,7 +110,7 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('resource_opt_show_menu') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('resource_opt_show_menu') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.hidemenu" type="checkbox" class="form-check-input" onchange="documentDirty=true;"
                        :false-value="1" :true-value="0">
@@ -118,7 +118,7 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('resource_parent') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('resource_parent') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.parent" type="text" class="form-control" onchange="documentDirty=true;">
               </div>
@@ -126,7 +126,7 @@
 
             <!-- HTML text editor start -->
             <div class="navbar-editor mt-3 mb-1">
-              <span>{{ lang('resource_content') }}</span>
+              <span>{{ $store.getters['Lang/get']('resource_content') }}</span>
             </div>
 
           </div>
@@ -141,7 +141,7 @@
           <div class="container-fluid container-body pt-3">
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('resource_opt_published') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('resource_opt_published') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.published" type="checkbox" class="form-check-input" onchange="documentDirty=true;"
                        :false-value="0" :true-value="1">
@@ -149,7 +149,7 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('page_data_publishdate') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('page_data_publishdate') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.pub_date" type="text" maxlength="255" class="form-control"
                        onchange="documentDirty=true;">
@@ -157,7 +157,7 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('page_data_unpublishdate') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('page_data_unpublishdate') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.unpub_date" type="text" maxlength="255" class="form-control"
                        onchange="documentDirty=true;">
@@ -165,17 +165,17 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('resource_type') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('resource_type') }}</label>
               <div class="col-md-9 col-lg-10">
                 <select v-model="data.type" class="form-select" onchange="documentDirty=true;">
-                  <option value="document">{{ lang('resource_type_webpage') }}</option>
-                  <option value="reference">{{ lang('resource_type_weblink') }}</option>
+                  <option value="document">{{ $store.getters['Lang/get']('resource_type_webpage') }}</option>
+                  <option value="reference">{{ $store.getters['Lang/get']('resource_type_weblink') }}</option>
                 </select>
               </div>
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('page_data_contentType') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('page_data_contentType') }}</label>
               <div class="col-md-9 col-lg-10">
                 <select v-model="data.contentType" class="form-select" onchange="documentDirty=true;">
                   <option v-for="(type, i) in config('custom_contenttype').split(',')" :key="`type-`+i" :value="type">
@@ -186,17 +186,17 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('resource_opt_contentdispo') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('resource_opt_contentdispo') }}</label>
               <div class="col-md-9 col-lg-10">
                 <select v-model="data.content_dispo" class="form-select" onchange="documentDirty=true;">
-                  <option :value="0">{{ lang('inline') }}</option>
-                  <option :value="1">{{ lang('attachment') }}</option>
+                  <option :value="0">{{ $store.getters['Lang/get']('inline') }}</option>
+                  <option :value="1">{{ $store.getters['Lang/get']('attachment') }}</option>
                 </select>
               </div>
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('resource_opt_folder') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('resource_opt_folder') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.isfolder" type="checkbox" class="form-check-input" onchange="documentDirty=true;"
                        :false-value="0" :true-value="1">
@@ -204,7 +204,7 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('resource_opt_alvisibled') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('resource_opt_alvisibled') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.alias_visible" type="checkbox" class="form-check-input"
                        onchange="documentDirty=true;" :false-value="0" :true-value="1">
@@ -212,7 +212,7 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('resource_opt_richtext') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('resource_opt_richtext') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.richtext" type="checkbox" class="form-check-input" onchange="documentDirty=true;"
                        :false-value="0" :true-value="1">
@@ -220,7 +220,7 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('track_visitors_title') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('track_visitors_title') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.donthit" type="checkbox" class="form-check-input" onchange="documentDirty=true;"
                        :false-value="1" :true-value="0">
@@ -228,7 +228,7 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('page_data_searchable') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('page_data_searchable') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.searchable" type="checkbox" class="form-check-input" onchange="documentDirty=true;"
                        :false-value="0" :true-value="1">
@@ -236,7 +236,7 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('page_data_cacheable') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('page_data_cacheable') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.cacheable" type="checkbox" class="form-check-input" onchange="documentDirty=true;"
                        :false-value="0" :true-value="1">
@@ -244,7 +244,7 @@
             </div>
 
             <div class="row form-row mb-1">
-              <label class="col-md-3 col-lg-2">{{ lang('resource_opt_emptycache') }}</label>
+              <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('resource_opt_emptycache') }}</label>
               <div class="col-md-9 col-lg-10">
                 <input v-model="data.syncsite" type="checkbox" class="form-check-input" onchange="documentDirty=true;"
                        :false-value="0" :true-value="1">
@@ -341,7 +341,7 @@ export default {
       })
     },
     delete () {
-      if (confirm(this.lang('confirm_delete_resource'))) {
+      if (confirm(this.$store.getters['Lang/get']('confirm_delete_resource'))) {
         http.delete(this.controller, this.data).then(result => {
           if (result) {
             this.action('cancel')

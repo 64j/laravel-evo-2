@@ -5,8 +5,8 @@
     :search-input="true"
     link-name="TvIndex"
     link-icon="fa fa-list-alt"
-    :txt-new="lang('new_tmplvars')"
-    :txt-help="lang('tmplvars_management_msg')"
+    :txt-new="$store.getters['Lang/get']('new_tmplvars')"
+    :txt-help="$store.getters['Lang/get']('tmplvars_management_msg')"
     @action="action"
   />
 </template>
@@ -49,7 +49,7 @@ export default {
           break
 
         case 'delete':
-          if (confirm(this.lang('confirm_delete_tmplvars'))) {
+          if (confirm(this.$store.getters['Lang/get']('confirm_delete_tmplvars'))) {
             http.delete(this.controller, item).then(result => {
               if (result) {
                 delete category.items[item.id]

@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <TitleView :title="lang('elements')" icon="fa fa-th"/>
+    <TitleView :title="$store.getters['Lang/get']('elements')" icon="fa fa-th"/>
 
     <Tabs
       id="resources"
@@ -26,52 +26,52 @@ export default {
       tabs: [
         {
           id: 'Templates',
-          title: this.lang('templates'),
+          title: this.$store.getters['Lang/get']('templates'),
           icon: 'fa fa-newspaper',
           component: () => import('@/views/Template/List'),
-          hidden: !this.hasPermissions('edit_template')
+          hidden: !this.$store.getters['Auth/hasPermissions']('edit_template')
         },
         {
           id: 'Variables',
-          title: this.lang('tmplvars'),
+          title: this.$store.getters['Lang/get']('tmplvars'),
           icon: 'fa fa-list-alt',
           component: () => import('@/views/Tv/List'),
-          hidden: !this.hasPermissions(['edit_template', 'edit_snippet', 'edit_chunk', 'edit_plugin'])
+          hidden: !this.$store.getters['Auth/hasPermissions'](['edit_template', 'edit_snippet', 'edit_chunk', 'edit_plugin'])
         },
         {
           id: 'Chunks',
-          title: this.lang('htmlsnippets'),
+          title: this.$store.getters['Lang/get']('htmlsnippets'),
           icon: 'fa fa-th-large',
           component: () => import('@/views/Chunk/List'),
-          hidden: !this.hasPermissions('edit_chunk')
+          hidden: !this.$store.getters['Auth/hasPermissions']('edit_chunk')
         },
         {
           id: 'Snippets',
-          title: this.lang('snippets'),
+          title: this.$store.getters['Lang/get']('snippets'),
           icon: 'fa fa-code',
           component: () => import('@/views/Snippet/List'),
-          hidden: !this.hasPermissions('edit_snippet')
+          hidden: !this.$store.getters['Auth/hasPermissions']('edit_snippet')
         },
         {
           id: 'Plugins',
-          title: this.lang('plugins'),
+          title: this.$store.getters['Lang/get']('plugins'),
           icon: 'fa fa-plug',
           component: () => import('@/views/Plugin/List'),
-          hidden: !this.hasPermissions('edit_plugin')
+          hidden: !this.$store.getters['Auth/hasPermissions']('edit_plugin')
         },
         {
           id: 'Modules',
-          title: this.lang('modules'),
+          title: this.$store.getters['Lang/get']('modules'),
           icon: 'fa fa-cubes',
           component: () => import('@/views/Module/List'),
-          hidden: !this.hasPermissions('edit_module')
+          hidden: !this.$store.getters['Auth/hasPermissions']('edit_module')
         }
       ],
     }
   },
   mounted () {
     this.$emit('titleTab', {
-      title: this.lang('elements'),
+      title: this.$store.getters['Lang/get']('elements'),
       icon: 'fa fa-th'
     })
   }

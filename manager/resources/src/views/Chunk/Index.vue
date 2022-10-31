@@ -7,14 +7,14 @@
 
       <TitleView
           :id="data.id"
-          :title="data.name || lang('new_htmlsnippet')"
+          :title="data.name || $store.getters['Lang/get']('new_htmlsnippet')"
           icon="fa fa-th-large"
-          :message="lang('htmlsnippet_msg')"/>
+          :message="$store.getters['Lang/get']('htmlsnippet_msg')"/>
 
       <Tabs
         id="chunk"
         :tabs="[
-          { id: 'General', title: lang('settings_general') }
+          { id: 'General', title: $store.getters['Lang/get']('settings_general') }
         ]">
         <template #General>
           <div class="container-fluid container-body pt-3">
@@ -22,12 +22,12 @@
 
               <div class="row form-row mb-1">
                 <label class="col-md-3 col-lg-2">
-                  {{ lang('htmlsnippet_name') }}
+                  {{ $store.getters['Lang/get']('htmlsnippet_name') }}
                 </label>
                 <div class="col-md-9 col-lg-10">
                   <div class="form-control-name clearfix">
                     <input v-model="data.name" type="text" maxlength="100" class="form-control form-control-lg" onchange="documentDirty=true;">
-                    <label v-if="hasPermissions('save_role')" :title="lang('lock_snippet_msg')">
+                    <label v-if="$store.getters['Auth/hasPermissions']('save_role')" :title="$store.getters['Lang/get']('lock_snippet_msg')">
                       <input v-model="data.locked" type="checkbox" :false-value="0" :true-value="1"/>
                       <i class="fa fa-lock" :class="[data.locked ? 'text-danger' : 'text-muted']"></i>
                     </label>
@@ -37,17 +37,17 @@
               </div>
 
               <div class="row form-row mb-1">
-                <label class="col-md-3 col-lg-2">{{ lang('htmlsnippet_desc') }}</label>
+                <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('htmlsnippet_desc') }}</label>
                 <div class="col-md-9 col-lg-10">
                   <input v-model="data.description" type="text" maxlength="255" class="form-control" onchange="documentDirty=true;">
                 </div>
               </div>
 
               <div class="row form-row mb-1">
-                <label class="col-md-3 col-lg-2">{{ lang('existing_category') }}</label>
+                <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('existing_category') }}</label>
                 <div class="col-md-9 col-lg-10">
                   <select v-model="data.category" class="form-select" onchange="documentDirty=true;">
-                    <option v-for="category in categories()" :key="category.id" :value="category.id">
+                    <option v-for="category in $store.getters['Config/categories']" :key="category.id" :value="category.id">
                       {{ category.category }}
                     </option>
                   </select>
@@ -55,7 +55,7 @@
               </div>
 
               <div class="row form-row mb-1">
-                <label class="col-md-3 col-lg-2">{{ lang('new_category') }}</label>
+                <label class="col-md-3 col-lg-2">{{ $store.getters['Lang/get']('new_category') }}</label>
                 <div class="col-md-9 col-lg-10">
                   <input v-model="data.newcategory" type="text" maxlength="45" class="form-control" onchange="documentDirty=true;">
                 </div>
@@ -64,7 +64,7 @@
               <div v-if="user('role') === 1" class="form-row mb-1">
                 <div class="form-check">
                   <input v-model="data.disabled" type="checkbox" class="form-check-input" id="disabled" :false-value="0" true-value="1">
-                  <label class="form-check-label" for="disabled">{{ lang('disabled') }}</label>
+                  <label class="form-check-label" for="disabled">{{ $store.getters['Lang/get']('disabled') }}</label>
                 </div>
               </div>
 
@@ -72,7 +72,7 @@
 
             <!-- HTML text editor start -->
             <div class="navbar-editor mt-3 mb-1">
-              <span>{{ lang('chunk_code') }}</span>
+              <span>{{ $store.getters['Lang/get']('chunk_code') }}</span>
             </div>
 
           </div>
@@ -168,7 +168,7 @@ export default {
       })
     },
     delete () {
-      if (confirm(this.lang('confirm_delete_htmlsnippet'))) {
+      if (confirm(this.$store.getters['Lang/get']('confirm_delete_htmlsnippet'))) {
         http.delete(this.controller, this.data).then(result => {
           if (result) {
             this.action('cancel')
