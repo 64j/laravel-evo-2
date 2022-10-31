@@ -1,5 +1,5 @@
 <template>
-  <div class="app position-relative d-flex flex-nowrap flex-column h-100 w-100" v-if="loading">
+  <div class="app position-relative d-flex flex-nowrap flex-column h-100 w-100">
     <notifications style="top: .5rem"/>
     <div class="app-header flex-grow-0 position-relative border-bottom">
       <MenuView ref="Menu"/>
@@ -22,15 +22,7 @@ import MultiTabs from '@/components/MultiTabs'
 
 export default {
   name: 'DefaultLayout',
-  components: { MenuView, Tree, MultiTabs },
-  data() {
-    return {
-      loading: false
-    }
-  },
-  created () {
-    this.loading = true
-  }
+  components: { MenuView, Tree, MultiTabs }
 }
 </script>
 

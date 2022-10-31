@@ -1,70 +1,69 @@
 <template>
-  <div class="main w-100 h-100 d-flex flex-nowrap bg-dark">
-    <div class="col-auto sidebar p-5 bg-dark bg-opacity-75 text-white text-opacity-75">
-      <form @submit.prevent="submit">
+  <form @submit.prevent="submit">
 
-        <div class="form-group form-floating mb-3">
-          <input v-model="data.host"
-                 type="text"
-                 id="floatingHost"
-                 class="form-control form-control-lg rounded-0 border-light bg-transparent text-white"
-                 @focus="listOpen"
-                 @blur="listClose"
-                 placeholder="Hostname"
-                 :class="{'border-danger': isErrors}">
-          <label for="floatingHost">Valid hostnames</label>
+    <div class="form-group form-floating mb-3">
+      <input v-model="data.host"
+             type="text"
+             id="floatingHost"
+             class="form-control form-control-lg rounded-0 border-light bg-transparent text-white"
+             @focus="listOpen"
+             @blur="listClose"
+             placeholder="Hostname"
+             :class="{'border-danger': isErrors}">
+      <label for="floatingHost">Valid hostnames</label>
 
-          <div class="input-list position-absolute w-100 bg-light text-dark">
-            <div v-for="(host, k) in hosts" :key="k" class="px-3 py-2 d-flex align-items-center justify-content-between" @mousedown="listSelect">
-              <span>{{ host }}</span>
-              <span class="text-danger float-end input-list-remove rounded-circle d-inline-flex align-items-center justify-content-center" @mousedown.stop="listRemoveItem">&times;</span>
-            </div>
-          </div>
+      <div class="input-list position-absolute w-100 bg-light text-dark">
+        <div v-for="(host, k) in hosts" :key="k" class="px-3 py-2 d-flex align-items-center justify-content-between"
+             @mousedown="listSelect">
+          <span>{{ host }}</span>
+          <span
+              class="text-danger float-end input-list-remove rounded-circle d-inline-flex align-items-center justify-content-center"
+              @mousedown.stop="listRemoveItem">&times;</span>
         </div>
-
-        <div class="form-group form-floating mb-3">
-          <input v-model="data.username"
-                 type="text"
-                 id="floatingName"
-                 class="form-control form-control-lg rounded-0 border-light bg-transparent text-white"
-                 placeholder="Username"
-                 :class="{'border-danger': isErrors}"
-                 autofocus>
-          <label for="floatingName">Username</label>
-        </div>
-
-        <div class="form-group form-floating mb-3">
-          <input v-model="data.password"
-                 type="password"
-                 id="floatingPassword"
-                 class="form-control form-control-lg rounded-0 border-light bg-transparent text-white"
-                 placeholder="Password"
-                 :class="{'border-danger': isErrors}">
-          <label for="floatingPassword">Password</label>
-        </div>
-
-        <div class="row align-items-center">
-          <div class="col">
-            <div class="form-check">
-              <input v-model="data.remember"
-                     type="checkbox"
-                     id="remember"
-                     class="form-check-input rounded-0 border-light bg-transparent"
-                     :false-value="0"
-                     :true-value="1">
-              <label class="form-check-label" for="remember">Remember me</label>
-            </div>
-          </div>
-          <div class="col-auto">
-            <button class="btn btn-success rounded-0" type="submit">Login</button>
-          </div>
-        </div>
-
-        <div class="errors text-danger py-3 text-center" v-show="isErrors">Incorrect username or password entered!</div>
-
-      </form>
+      </div>
     </div>
-  </div>
+
+    <div class="form-group form-floating mb-3">
+      <input v-model="data.username"
+             type="text"
+             id="floatingName"
+             class="form-control form-control-lg rounded-0 border-light bg-transparent text-white"
+             placeholder="Username"
+             :class="{'border-danger': isErrors}"
+             autofocus>
+      <label for="floatingName">Username</label>
+    </div>
+
+    <div class="form-group form-floating mb-3">
+      <input v-model="data.password"
+             type="password"
+             id="floatingPassword"
+             class="form-control form-control-lg rounded-0 border-light bg-transparent text-white"
+             placeholder="Password"
+             :class="{'border-danger': isErrors}">
+      <label for="floatingPassword">Password</label>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col">
+        <div class="form-check">
+          <input v-model="data.remember"
+                 type="checkbox"
+                 id="remember"
+                 class="form-check-input rounded-0 border-light bg-transparent"
+                 :false-value="0"
+                 :true-value="1">
+          <label class="form-check-label" for="remember">Remember me</label>
+        </div>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-success rounded-0" type="submit">Login</button>
+      </div>
+    </div>
+
+    <div class="errors text-danger py-3 text-center" v-show="isErrors">Incorrect username or password entered!</div>
+
+  </form>
 </template>
 
 <script>
@@ -115,19 +114,19 @@ export default {
       })
     },
 
-    listOpen(event) {
+    listOpen (event) {
       event.currentTarget.parentElement.classList.add('active')
     },
 
-    listClose(event) {
+    listClose (event) {
       event.currentTarget.parentElement.classList.remove('active')
     },
 
-    listSelect(event) {
+    listSelect (event) {
       this.data.host = event.currentTarget.firstElementChild.innerText
     },
 
-    listRemoveItem(event) {
+    listRemoveItem (event) {
       let host = event.currentTarget.parentElement.firstElementChild.innerText
       for (let i in this.hosts) {
         if (this.hosts[i] === host) {
@@ -147,8 +146,6 @@ export default {
 </script>
 
 <style scoped>
-.main { background: url("https://picsum.photos/1600/900") 50% 50% no-repeat; background-size: cover }
-.sidebar { width: 30rem; max-width: 100%; }
 .active .input-list { display: block; }
 .input-list { display: none; z-index: 10; }
 .input-list > div { cursor: pointer; }

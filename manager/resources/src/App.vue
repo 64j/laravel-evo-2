@@ -1,5 +1,5 @@
 <template>
-  <component :is="layout" ref="Layout"/>
+  <component :is="currentLayout" ref="Layout"/>
 </template>
 
 <script>
@@ -7,22 +7,30 @@ import { defineAsyncComponent } from 'vue'
 
 export default {
   name: 'App',
+  data () {
+    return {
+      layoutName: 'Blank'
+    }
+  },
+  watch: {
+    '$route.meta.layout' (layout) {
+      const newLayout = layout
+      if (!newLayout) {
+        this.layoutName = this.layout || 'Blank'
+        return
+      }
+      this.layoutName = newLayout
+    }
+  },
   computed: {
+    currentLayout () {
+      return this.layoutName && defineAsyncComponent(() => import(`@/layouts/${this.layoutName}.vue`))
+    },
     key () {
       return this.getKey()
-    },
-    layout () {
-      return this.$route['meta'].layout && defineAsyncComponent(() => import('@/layouts/' + this.$route['meta'].layout))
-    },
+    }
   },
   methods: {
-    getLayout () {
-      if (this.$store.state['Settings'].user.role) {
-        return defineAsyncComponent(() => import('@/layouts/DefaultLayout'))
-      } else {
-        return defineAsyncComponent(() => import('@/layouts/BlankLayout'))
-      }
-    },
     getKey (route) {
       return (route || this.$route)['path']
     }
