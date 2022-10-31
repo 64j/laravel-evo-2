@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     currentLayout () {
-      return this.layoutName && defineAsyncComponent(() => import(`@/layouts/${this.layoutName}.vue`))
+      return this.layoutName && defineAsyncComponent(() => import(`@/layouts/${this.layoutName}`))
     },
     key () {
       return this.getKey()

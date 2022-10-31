@@ -263,7 +263,7 @@ export default {
         this.events[i] = Array.isArray(this.meta.events[i]) ? this.meta.events[i].join('') : this.meta.events[i]
       }
 
-      this.$emit('titleTab', this.title)
+      this.$emit('titleTab', result.data.templatename)
       this.loading = true
     }
   }

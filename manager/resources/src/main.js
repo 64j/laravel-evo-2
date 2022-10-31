@@ -15,22 +15,22 @@ app.mixin({
   methods: {
     hasPermissions (permissions) {
       if (typeof permissions === 'object') {
-        return permissions.some(permission => !store.state['Settings'].permissions?.[permission]?.disabled || false)
+        return permissions.some(permission => !this.$store.state['Settings'].permissions?.[permission]?.disabled || false)
       } else {
-        return !store.state['Settings'].permissions?.[permissions]?.disabled || false
+        return !this.$store.state['Settings'].permissions?.[permissions]?.disabled || false
       }
     },
     config (key) {
-      return key && store.state['Settings'].config[key] || null
+      return key && this.$store.state['Settings'].config[key] || null
     },
     user (key) {
-      return key && store.state['Settings'].user[key] || null
+      return key && this.$store.state['Settings'].user[key] || null
     },
     lang (key, def) {
-      return key && store.state['Settings'].lexicon[key] || def
+      return key && this.$store.state['Settings'].lexicon[key] || def
     },
     categories () {
-      return store.state['Settings'].categories || {}
+      return this.$store.state['Settings'].categories || {}
     }
   }
 })

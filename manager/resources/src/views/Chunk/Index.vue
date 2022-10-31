@@ -148,7 +148,7 @@ export default {
           this.$emit('replaceTab', { params: { id: result.data.id } })
         } else {
           this.setData(result)
-          this.$emit('titleTab', this.title)
+          this.$emit('titleTab', this.data.name)
         }
         this.action('refresh')
         this.loading = true
@@ -162,7 +162,7 @@ export default {
     update () {
       http.update(this.controller, this.data).then(result => {
         this.setData(result)
-        this.$emit('titleTab', this.title)
+        this.$emit('titleTab', this.data.name)
         this.action('refresh')
         this.loading = true
       })
@@ -181,7 +181,7 @@ export default {
       for (let i in result.meta.events || {}) {
         this.events[i] = Array.isArray(result.meta.events[i]) ? result.meta.events[i].join('') : result.meta.events[i]
       }
-      this.$emit('titleTab', this.title)
+      this.$emit('titleTab', this.data.name)
       this.loading = true
     }
   }

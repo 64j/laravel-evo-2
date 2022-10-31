@@ -76,7 +76,6 @@ export default {
     return {
       isErrors: false,
       data: {
-        ajax: 1,
         username: '',
         password: '',
         remember: 1,

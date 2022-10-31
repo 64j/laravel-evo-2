@@ -226,7 +226,7 @@ const routes = [
     name: 'AuthPasswordChange',
     component: () => import('@/views/Auth/PasswordChange'),
     meta: {
-      layout: 'Auth'
+      layout: 'Default'
     }
   },
   {

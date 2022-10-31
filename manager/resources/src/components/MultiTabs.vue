@@ -81,7 +81,7 @@ export default {
       return active
     },
     titleTab (title) {
-      return title && title.replace(/<\/?[^>]+>/ig, '') || ''
+      return title && title.toString().replace(/<\/?[^>]+>/ig, '') || ''
     },
     clickTab (tab) {
       this.$router.push(tab.fullPath)

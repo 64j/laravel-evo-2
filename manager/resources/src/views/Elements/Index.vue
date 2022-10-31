@@ -71,7 +71,7 @@ export default {
   },
   mounted () {
     this.$emit('titleTab', {
-      title: this.title,
+      title: this.lang('elements'),
       icon: 'fa fa-th'
     })
   }
