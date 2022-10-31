@@ -58,8 +58,12 @@ const mutations = {
 }
 
 const actions = {
-  check () {
-    return http.bootstrap()
+  async check ({ commit }, ) {
+    const response = await http.bootstrap()
+
+    response.ok && response.json().then(result => {
+      commit('check', result.data)
+    })
   },
 
   set ({ commit }, data) {
