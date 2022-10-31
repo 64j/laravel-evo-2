@@ -4,20 +4,12 @@ import router from './router'
 import store from './store'
 import Notifications from '@kyvg/vue3-notification'
 import '@fortawesome/fontawesome-free/css/all.css'
-/**
- * Templates
- */
-import BlankLayout from '@/layouts/BlankLayout'
-import DefaultLayout from '@/layouts/DefaultLayout'
 
 const app = createApp(App)
 
 app.use(store)
 app.use(router)
 app.use(Notifications)
-
-app.component('DefaultLayout', DefaultLayout)
-app.component('BlankLayout', BlankLayout)
 
 app.mixin({
   methods: {
