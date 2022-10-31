@@ -4,7 +4,9 @@ import store from '@/store'
 
 const state = {
   user: {},
-  permissions: {}
+  permissions: {},
+  errors: {},
+  token: null
 }
 
 const mutations = {
@@ -18,8 +20,28 @@ const mutations = {
     }).then(() => {})
   },
 
-  login (state) {
-    console.log(state)
+  login (state, data) {
+    http.login(data).then(response => {
+      return response.json().then(response => {
+        if (response) {
+          if (data.remember) {
+            if (!data.hosts[data.host]) {
+              data.hosts[data.host] = data.host
+            }
+            localStorage['EVO.HOSTS'] = JSON.stringify(data.hosts)
+            localStorage['EVO.HOST'] = data.host
+          }
+        }
+
+        if (response.errors) {
+          state.errors = response.errors
+        } else {
+          localStorage['EVO.TOKEN'] = response['token'] || null
+        }
+
+        return response
+      })
+    })
   },
 
   logout (state) {
@@ -38,9 +60,13 @@ const actions = {
     })
   },
 
-  login ({ commit, state }) {
+  login ({ commit }, data) {
+    return http.login(data).then()
+  },
+
+  login2 ({ commit, state }, data) {
     return new Promise(resolve => {
-      commit('login')
+      commit('login', data)
       resolve(state)
     })
   },

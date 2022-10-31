@@ -256,7 +256,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (store.state['Auth'].user.role) {
+  if (store.getters['Auth/role']) {
     if (to?.redirectedFrom?.name === 'AuthLogout') {
       //
     } else if (to.name === 'AuthLogin') {
@@ -264,7 +264,7 @@ router.beforeEach((to, from, next) => {
     } else {
       next()
     }
-  } else if (!store.state['Auth'].user.role) {
+  } else if (!store.getters['Auth/role']) {
     if (to.name !== 'AuthLogin') {
       router.push({ name: 'AuthLogin' })
     } else {

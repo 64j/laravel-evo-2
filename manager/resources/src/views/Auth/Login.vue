@@ -69,6 +69,7 @@
 <script>
 //import http from '@/utils/http'
 import store from '@/store'
+import { toRaw } from 'vue'
 
 export default {
   name: 'AuthLogin',
@@ -86,7 +87,14 @@ export default {
   },
   methods: {
     submit () {
-      store.dispatch('Auth/login').then(() => {})
+      this.isErrors = false
+
+      store.dispatch('Auth/login', toRaw(Object.assign(this.data, { hosts: this.hosts }))).catch(result => {
+        if (result.errors) {
+          this.isErrors = true
+        }
+      })
+
       // this.isErrors = false
       //
       // http.baseUrl = this.data.host = this.data.host.replace(/\/$/, '') + '/'

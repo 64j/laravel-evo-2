@@ -36,11 +36,6 @@ export default {
 
     if (response.status === 401) {
       throw new Error('Something went wrong')
-      // router.push({ name: 'AuthLogin' })
-      // store.dispatch('Auth/logout').then(() => {})
-      // if (location.hash !== '#/login') {
-      //   store.dispatch('Settings/del').then(() => {})
-      // }
     }
 
     return {}
@@ -112,6 +107,14 @@ export default {
   },
 
   login (data) {
+    return fetch(this.baseUrl + 'manager/login', {
+      method: 'post',
+      body: this.setBody(data),
+      headers: this.setHeaders()
+    })
+  },
+
+  login2 (data) {
     return fetch(this.baseUrl + 'manager/login', {
       method: 'post',
       body: this.setBody(data),
