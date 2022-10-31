@@ -9,22 +9,17 @@ export default {
   name: 'App',
   data () {
     return {
-      layoutName: 'Blank'
+      layout: null
     }
   },
   watch: {
     '$route.meta.layout' (layout) {
-      const newLayout = layout
-      if (!newLayout) {
-        this.layoutName = this.layout || 'Blank'
-        return
-      }
-      this.layoutName = newLayout
+      this.layout = layout || 'Blank'
     }
   },
   computed: {
     currentLayout () {
-      return this.layoutName && defineAsyncComponent(() => import(`@/layouts/${this.layoutName}`))
+      return this.layout && defineAsyncComponent(() => import(`@/layouts/${this.layout}`))
     },
     key () {
       return this.getKey()
