@@ -1,0 +1,69 @@
+<template>
+  <Panel
+    :data="data"
+    :actions="actions"
+    :search-input="true"
+    link-name="TemplateIndex"
+    link-icon="fa fa-newspaper"
+    :txt-new="$store.getters['Lang/get']('new_template')"
+    :txt-help="$store.getters['Lang/get']('template_management_msg')"
+    @action="action"
+  />
+</template>
+
+<script>
+import http from '@/utils/http'
+import Panel from '@/components/Panel'
+
+export default {
+  name: 'TemplateList',
+  components: { Panel },
+  data () {
+    this.element = 'TemplateIndex'
+    this.controller = 'Template'
+
+    return {
+      data: null,
+      actions: {
+        copy: {
+          icon: 'far fa-clone fa-fw'
+        },
+        delete: {
+          icon: 'fa fa-trash fa-fw text-danger'
+        }
+      }
+    }
+  },
+  created () {
+    this.list()
+  },
+  methods: {
+    action (action, item, category) {
+      switch (action) {
+        case 'copy':
+          http.copy(this.controller, item).then(result => {
+            if (result) {
+              this.list()
+            }
+          })
+          break
+
+        case 'delete':
+          if (confirm(this.$store.getters['Lang/get']('confirm_delete_template'))) {
+            http.delete(this.controller, item).then(result => {
+              if (result) {
+                delete category.items[item.id]
+                this.$root.$refs.Layout.$refs.MultiTabs.closeTab(
+                    this.$router.resolve({ name: this.element, params: { id: item.id } }))
+              }
+            })
+          }
+          break
+      }
+    },
+    list() {
+      http.list(this.controller, { categories: true }).then(result => this.data = result.data)
+    }
+  }
+}
+</script>

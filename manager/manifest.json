@@ -1,0 +1,508 @@
+{
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2": {
+    "file": "public/build/local/manager/node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400/fa-brands-400-3fe890d0.woff2",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2": {
+    "file": "public/build/local/manager/node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400/fa-regular-400-fe69d948.woff2",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2": {
+    "file": "public/build/local/manager/node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900/fa-solid-900-d27bc752.woff2",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2": {
+    "file": "public/build/local/manager/node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility/fa-v4compatibility-7d1c2ce5.woff2",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.ttf": {
+    "file": "public/build/local/manager/node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400/fa-brands-400-c7ae37d3.ttf",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.ttf"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.ttf": {
+    "file": "public/build/local/manager/node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400/fa-regular-400-fdc1f753.ttf",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.ttf"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.ttf": {
+    "file": "public/build/local/manager/node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility/fa-v4compatibility-4d73f280.ttf",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.ttf"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf": {
+    "file": "public/build/local/manager/node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900/fa-solid-900-6d53c706.ttf",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf"
+  },
+  "resources/js/app.js": {
+    "file": "public/build/js/app-7f64524b.js",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/views/Dashboard/Index.vue",
+      "resources/js/views/Document/Index.vue",
+      "resources/js/views/Document/List.vue",
+      "resources/js/views/Elements/Index.vue",
+      "resources/js/views/Template/Index.vue",
+      "resources/js/views/Tv/Index.vue",
+      "resources/js/views/Chunk/Index.vue",
+      "resources/js/views/Snippet/Index.vue",
+      "resources/js/views/Plugin/Index.vue",
+      "resources/js/views/Module/Index.vue",
+      "resources/js/views/Module/Exec.vue",
+      "resources/js/views/User/List.vue",
+      "resources/js/views/User/Index.vue",
+      "resources/js/views/Role/List.vue",
+      "resources/js/views/Role/Index.vue",
+      "resources/js/views/UserPermissions/Index.vue",
+      "resources/js/views/Cache/Index.vue",
+      "resources/js/views/Search/Index.vue",
+      "resources/js/views/Configuration/Index.vue",
+      "resources/js/views/Schedules/Index.vue",
+      "resources/js/views/EventLog/List.vue",
+      "resources/js/views/EventLog/Index.vue",
+      "resources/js/views/SystemLog/Index.vue",
+      "resources/js/views/SystemInfo/Index.vue",
+      "resources/js/views/Help/Index.vue",
+      "resources/js/views/Auth/PasswordChange.vue",
+      "resources/js/views/PageNotFound/Index.vue",
+      "resources/js/views/Redirect/Index.vue"
+    ],
+    "css": [
+      "public/build/css/app-415a50ae.css"
+    ]
+  },
+  "resources/js/views/Dashboard/Index.vue": {
+    "file": "public/build/js/Index-38c9db0d.js",
+    "src": "resources/js/views/Dashboard/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Document/Index.vue": {
+    "file": "public/build/js/Index-9bd3eda6.js",
+    "src": "resources/js/views/Document/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_ActionsButtons-b12436f1.js",
+      "_Title-29454112.js",
+      "_Tabs-166e78d8.js",
+      "_http-df3c53d6.js",
+      "resources/js/app.js"
+    ],
+    "css": [
+      "public/build/css/Index-f978d979.css"
+    ]
+  },
+  "_ActionsButtons-b12436f1.js": {
+    "file": "public/build/js/ActionsButtons-b12436f1.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "public/build/css/ActionsButtons-4da130b1.css"
+    ]
+  },
+  "_Title-29454112.js": {
+    "file": "public/build/js/Title-29454112.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "public/build/css/Title-cbc200ee.css"
+    ]
+  },
+  "_Tabs-166e78d8.js": {
+    "file": "public/build/js/Tabs-166e78d8.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "public/build/css/Tabs-c7248acf.css"
+    ]
+  },
+  "_http-df3c53d6.js": {
+    "file": "public/build/js/http-df3c53d6.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Document/List.vue": {
+    "file": "public/build/js/List-aa99ab1c.js",
+    "src": "resources/js/views/Document/List.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Elements/Index.vue": {
+    "file": "public/build/js/Index-c5dd67b9.js",
+    "src": "resources/js/views/Elements/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_Title-29454112.js",
+      "_Tabs-166e78d8.js"
+    ],
+    "dynamicImports": [
+      "resources/js/views/Template/List.vue",
+      "resources/js/views/Tv/List.vue",
+      "resources/js/views/Chunk/List.vue",
+      "resources/js/views/Snippet/List.vue",
+      "resources/js/views/Plugin/List.vue",
+      "resources/js/views/Module/List.vue"
+    ]
+  },
+  "resources/js/views/Template/Index.vue": {
+    "file": "public/build/js/Index-73885400.js",
+    "src": "resources/js/views/Template/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_ActionsButtons-b12436f1.js",
+      "_Title-29454112.js",
+      "_Tabs-166e78d8.js",
+      "_Panel-e1d9a6d9.js",
+      "_http-df3c53d6.js",
+      "resources/js/app.js"
+    ],
+    "css": [
+      "public/build/css/Index-50422f6a.css"
+    ]
+  },
+  "_Panel-e1d9a6d9.js": {
+    "file": "public/build/js/Panel-e1d9a6d9.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "public/build/css/Panel-328950ad.css"
+    ]
+  },
+  "resources/js/views/Tv/Index.vue": {
+    "file": "public/build/js/Index-1336d8eb.js",
+    "src": "resources/js/views/Tv/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_ActionsButtons-b12436f1.js",
+      "_Tabs-166e78d8.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Chunk/Index.vue": {
+    "file": "public/build/js/Index-42cf90cc.js",
+    "src": "resources/js/views/Chunk/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_ActionsButtons-b12436f1.js",
+      "_Title-29454112.js",
+      "_Tabs-166e78d8.js",
+      "_http-df3c53d6.js",
+      "resources/js/app.js"
+    ],
+    "css": [
+      "public/build/css/Index-c0690d25.css"
+    ]
+  },
+  "resources/js/views/Snippet/Index.vue": {
+    "file": "public/build/js/Index-587ac869.js",
+    "src": "resources/js/views/Snippet/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_ActionsButtons-b12436f1.js",
+      "_Title-29454112.js",
+      "_Tabs-166e78d8.js",
+      "_http-df3c53d6.js",
+      "resources/js/app.js"
+    ],
+    "css": [
+      "public/build/css/Index-c9da34e7.css"
+    ]
+  },
+  "resources/js/views/Plugin/Index.vue": {
+    "file": "public/build/js/Index-862e0fbc.js",
+    "src": "resources/js/views/Plugin/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Module/Index.vue": {
+    "file": "public/build/js/Index-6aae4ad8.js",
+    "src": "resources/js/views/Module/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Module/Exec.vue": {
+    "file": "public/build/js/Exec-c537adc5.js",
+    "src": "resources/js/views/Module/Exec.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_http-df3c53d6.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/User/List.vue": {
+    "file": "public/build/js/List-8dc92530.js",
+    "src": "resources/js/views/User/List.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_Title-29454112.js",
+      "_Table-b511c8c8.js",
+      "_http-df3c53d6.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_Table-b511c8c8.js": {
+    "file": "public/build/js/Table-b511c8c8.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "public/build/css/Table-a43d6bc5.css"
+    ]
+  },
+  "resources/js/views/User/Index.vue": {
+    "file": "public/build/js/Index-5324d216.js",
+    "src": "resources/js/views/User/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Role/List.vue": {
+    "file": "public/build/js/List-885ab92f.js",
+    "src": "resources/js/views/Role/List.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_Title-29454112.js",
+      "_Table-b511c8c8.js",
+      "_http-df3c53d6.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Role/Index.vue": {
+    "file": "public/build/js/Index-ace2544b.js",
+    "src": "resources/js/views/Role/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_ActionsButtons-b12436f1.js",
+      "_Title-29454112.js",
+      "_http-df3c53d6.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/UserPermissions/Index.vue": {
+    "file": "public/build/js/Index-66936752.js",
+    "src": "resources/js/views/UserPermissions/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_Title-29454112.js",
+      "_Tabs-166e78d8.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Cache/Index.vue": {
+    "file": "public/build/js/Index-e63a15c1.js",
+    "src": "resources/js/views/Cache/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Search/Index.vue": {
+    "file": "public/build/js/Index-094b43f5.js",
+    "src": "resources/js/views/Search/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Configuration/Index.vue": {
+    "file": "public/build/js/Index-4a719569.js",
+    "src": "resources/js/views/Configuration/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_ActionsButtons-b12436f1.js",
+      "_Title-29454112.js",
+      "_Tabs-166e78d8.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Schedules/Index.vue": {
+    "file": "public/build/js/Index-cfe1e200.js",
+    "src": "resources/js/views/Schedules/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/EventLog/List.vue": {
+    "file": "public/build/js/List-8772f1c8.js",
+    "src": "resources/js/views/EventLog/List.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/EventLog/Index.vue": {
+    "file": "public/build/js/Index-8d204750.js",
+    "src": "resources/js/views/EventLog/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/SystemLog/Index.vue": {
+    "file": "public/build/js/Index-bc2df719.js",
+    "src": "resources/js/views/SystemLog/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/SystemInfo/Index.vue": {
+    "file": "public/build/js/Index-5b49888b.js",
+    "src": "resources/js/views/SystemInfo/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Help/Index.vue": {
+    "file": "public/build/js/Index-e33bbf29.js",
+    "src": "resources/js/views/Help/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Auth/PasswordChange.vue": {
+    "file": "public/build/js/PasswordChange-2844a5fa.js",
+    "src": "resources/js/views/Auth/PasswordChange.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/PageNotFound/Index.vue": {
+    "file": "public/build/js/Index-ad5bfe0b.js",
+    "src": "resources/js/views/PageNotFound/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Redirect/Index.vue": {
+    "file": "public/build/js/Index-84313b24.js",
+    "src": "resources/js/views/Redirect/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Template/List.vue": {
+    "file": "public/build/js/List-3ab7082d.js",
+    "src": "resources/js/views/Template/List.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_http-df3c53d6.js",
+      "_Panel-e1d9a6d9.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Tv/List.vue": {
+    "file": "public/build/js/List-970bd7c3.js",
+    "src": "resources/js/views/Tv/List.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_http-df3c53d6.js",
+      "_Panel-e1d9a6d9.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Chunk/List.vue": {
+    "file": "public/build/js/List-016e6920.js",
+    "src": "resources/js/views/Chunk/List.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_http-df3c53d6.js",
+      "_Panel-e1d9a6d9.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Snippet/List.vue": {
+    "file": "public/build/js/List-ccd8faf2.js",
+    "src": "resources/js/views/Snippet/List.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_http-df3c53d6.js",
+      "_Panel-e1d9a6d9.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Plugin/List.vue": {
+    "file": "public/build/js/List-219faaf2.js",
+    "src": "resources/js/views/Plugin/List.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_http-df3c53d6.js",
+      "_Panel-e1d9a6d9.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Module/List.vue": {
+    "file": "public/build/js/List-b13c48f4.js",
+    "src": "resources/js/views/Module/List.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_http-df3c53d6.js",
+      "_Panel-e1d9a6d9.js",
+      "resources/js/app.js"
+    ]
+  },
+  "ActionsButtons.css": {
+    "file": "public/build/css/ActionsButtons-4da130b1.css",
+    "src": "ActionsButtons.css"
+  },
+  "resources/js/views/Document/Index.css": {
+    "file": "public/build/css/Index-f978d979.css",
+    "src": "resources/js/views/Document/Index.css"
+  },
+  "resources/css/app.css": {
+    "file": "public/build/css/app-c4975f4f.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "Title.css": {
+    "file": "public/build/css/Title-cbc200ee.css",
+    "src": "Title.css"
+  },
+  "Tabs.css": {
+    "file": "public/build/css/Tabs-c7248acf.css",
+    "src": "Tabs.css"
+  },
+  "resources/js/views/Snippet/Index.css": {
+    "file": "public/build/css/Index-c9da34e7.css",
+    "src": "resources/js/views/Snippet/Index.css"
+  },
+  "Panel.css": {
+    "file": "public/build/css/Panel-328950ad.css",
+    "src": "Panel.css"
+  },
+  "resources/js/app.css": {
+    "file": "public/build/css/app-415a50ae.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/js/views/Template/Index.css": {
+    "file": "public/build/css/Index-50422f6a.css",
+    "src": "resources/js/views/Template/Index.css"
+  },
+  "Table.css": {
+    "file": "public/build/css/Table-a43d6bc5.css",
+    "src": "Table.css"
+  },
+  "resources/js/views/Chunk/Index.css": {
+    "file": "public/build/css/Index-c0690d25.css",
+    "src": "resources/js/views/Chunk/Index.css"
+  }
+}
