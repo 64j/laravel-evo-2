@@ -10,3 +10,5 @@
 html { font-size: 15px; }
 body { font-size: 1rem; }
 html, body, #app { width: 100%; height: 100%; overflow: hidden; }
+.logo { width: 0; height: 0; }
+.logo::before { transform: none; content: ""; display: block; position: relative; z-index: 1; left: 50%; top: 30%; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; box-shadow: 5px 5px 0 0 rgb(234, 132, 82), 14px -7px 0 0 rgba(111, 163, 219, 0.7), -7px 11px 0 0 rgba(112, 193, 92, 0.74), -11px -7px 0 0 rgba(147, 205, 99, 0.78); animation: none }

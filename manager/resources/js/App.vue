@@ -1,9 +1,9 @@
 <template>
   <div class="app flex flex-nowrap flex-col h-full w-full">
-    <div class="app-header grow-0 border-bottom">
+    <div class="app-header grow-0 border-bottom peer/header">
       <MenuView ref="Menu"/>
     </div>
-    <div class="app-body grow flex flex-nowrap">
+    <div class="app-body grow flex flex-nowrap before:hidden before:content-[''] before:absolute before:z-40 before:left-0 before:top-0 before:right-0 before:bottom-0 before:bg-gray-900/25 before:peer-[.active]/header:block">
       <div class="app-tree flex-auto overflow-hidden">
         <Tree ref="Tree"/>
       </div>

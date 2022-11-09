@@ -1,7 +1,0 @@
-@import "@fortawesome/fontawesome-free/css/all.min.css";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-/*html { font-size: 0.7777rem; }*/
-/*body { font-size: 13px; }*/
-html, body, #app { width: 100%; height: 100%; overflow: hidden; }
