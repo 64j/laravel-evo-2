@@ -58,9 +58,9 @@
                 <div class="flex items-center">
                     <input name="remember"
                            type="checkbox"
-                           id="rememberme"
+                           id="remember"
                            class="mr-2 bg-transparent">
-                    <label class="text-sm" for="rememberme">{{ __('global.remember_username') }}</label>
+                    <label class="text-sm" for="remember">{{ __('global.remember_username') }}</label>
                 </div>
                 <div>
                     <button class="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded"

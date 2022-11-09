@@ -4,7 +4,7 @@
 @tailwind utilities;
 @layer base {
     *, ::before, ::after {
-        @apply box-content;
+        @apply box-border;
     }
 }
 html { font-size: 15px; }
