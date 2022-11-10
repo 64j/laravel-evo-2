@@ -18,10 +18,17 @@
 import MenuView from '@/components/Menu.vue'
 import Tree from '@/components/Tree.vue'
 import MultiTabs from '@/components/MultiTabs.vue'
+import store from '@/store'
 
 export default {
   name: 'App.vue',
-  components: { MenuView, Tree, MultiTabs }
+  components: { MenuView, Tree, MultiTabs },
+  methods: {
+    lang: (key) => store.getters['Lang/get'](key),
+    config: (key) => store.getters['Config/get'](key),
+    categories: () => store.getters['Config/categories'],
+    hasPermissions: (key) => store.getters['Auth/hasPermissions'](key)
+  }
 }
 </script>
 

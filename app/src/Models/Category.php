@@ -35,28 +35,28 @@ class Category extends Model
     ];
 
     /**
-     * @return Category|null
+     * @return \Illuminate\Support\Collection
      */
-    public static function getNoCategoryTemplates(): ?Category
+    public static function templatesNoCategory(): \Illuminate\Support\Collection
     {
-        $items = SiteTemplate::query()
-            ->select([
-                'id',
-                'templatename as name',
-                'templatealias as alias',
-                'description',
-                'locked',
-                'category',
-            ])
-            ->where('category', 0)
-            ->get();
-
-        return $items->count() ? (new static())->setRawAttributes([
+        return \Illuminate\Support\Collection::make([
             'id' => 0,
             'name' => __('global.no_category'),
             'rank' => 0,
-            'items' => $items,
-        ]) : null;
+        ])
+            ->merge(
+                SiteTemplate::query()
+                    ->select([
+                        'id',
+                        'templatename as name',
+                        'templatealias as alias',
+                        'description',
+                        'locked',
+                        'category',
+                    ])
+                    ->where('category', 0)
+                    ->paginate()
+            );
     }
 
     /**
@@ -65,7 +65,7 @@ class Category extends Model
      *
      * @return Category|null
      */
-    public static function getNoCategoryTvs(array $ids = [], bool $not = false): ?Category
+    public static function tvsNoCategory(array $ids = [], bool $not = false): ?Category
     {
         $items = SiteTmplvar::query()
             ->select([
@@ -88,103 +88,103 @@ class Category extends Model
     }
 
     /**
-     * @return Category|null
+     * @return \Illuminate\Support\Collection
      */
-    public static function getNoCategoryChunks(): ?Category
+    public static function chunksNoCategory(): \Illuminate\Support\Collection
     {
-        $items = SiteHtmlsnippet::query()
-            ->select([
-                'id',
-                'name',
-                'description',
-                'locked',
-                'disabled',
-                'category',
-            ])
-            ->where('category', 0)
-            ->get();
-
-        return $items->count() ? (new static())->setRawAttributes([
+        return \Illuminate\Support\Collection::make([
             'id' => 0,
             'name' => __('global.no_category'),
             'rank' => 0,
-            'items' => $items,
-        ]) : null;
+        ])
+            ->merge(
+                SiteHtmlsnippet::query()
+                    ->select([
+                        'id',
+                        'name',
+                        'description',
+                        'locked',
+                        'disabled',
+                        'category',
+                    ])
+                    ->where('category', 0)
+                    ->paginate()
+            );
     }
 
     /**
-     * @return Category|null
+     * @return \Illuminate\Support\Collection
      */
-    public static function getNoCategorySnippets(): ?Category
+    public static function snippetsNoCategory(): \Illuminate\Support\Collection
     {
-        $items = SiteHtmlsnippet::query()
-            ->select([
-                'id',
-                'name',
-                'description',
-                'locked',
-                'disabled',
-                'category',
-            ])
-            ->where('category', 0)
-            ->get();
-
-        return $items->count() ? (new static())->setRawAttributes([
+        return \Illuminate\Support\Collection::make([
             'id' => 0,
             'name' => __('global.no_category'),
             'rank' => 0,
-            'items' => $items,
-        ]) : null;
+        ])
+            ->merge(
+                SiteSnippet::query()
+                    ->select([
+                        'id',
+                        'name',
+                        'description',
+                        'locked',
+                        'disabled',
+                        'category',
+                    ])
+                    ->where('category', 0)
+                    ->paginate()
+            );
     }
 
     /**
-     * @return Category|null
+     * @return \Illuminate\Support\Collection
      */
-    public static function getNoCategoryPlugins(): ?Category
+    public static function pluginsNoCategory(): \Illuminate\Support\Collection
     {
-        $items = SitePlugin::query()
-            ->select([
-                'id',
-                'name',
-                'description',
-                'locked',
-                'disabled',
-                'category',
-            ])
-            ->where('category', 0)
-            ->get();
-
-        return $items->count() ? (new static())->setRawAttributes([
+        return \Illuminate\Support\Collection::make([
             'id' => 0,
             'name' => __('global.no_category'),
             'rank' => 0,
-            'items' => $items,
-        ]) : null;
+        ])
+            ->merge(
+                SitePlugin::query()
+                    ->select([
+                        'id',
+                        'name',
+                        'description',
+                        'locked',
+                        'disabled',
+                        'category',
+                    ])
+                    ->where('category', 0)
+                    ->paginate()
+            );
     }
 
     /**
-     * @return Category|null
+     * @return \Illuminate\Support\Collection
      */
-    public static function getNoCategoryModules(): ?Category
+    public static function modulesNoCategory(): \Illuminate\Support\Collection
     {
-        $items = SiteModule::query()
-            ->select([
-                'id',
-                'name',
-                'description',
-                'locked',
-                'disabled',
-                'category',
-            ])
-            ->where('category', 0)
-            ->get();
-
-        return $items->count() ? (new static())->setRawAttributes([
+        return \Illuminate\Support\Collection::make([
             'id' => 0,
             'name' => __('global.no_category'),
             'rank' => 0,
-            'items' => $items,
-        ]) : null;
+        ])
+            ->merge(
+                SiteModule::query()
+                    ->select([
+                        'id',
+                        'name',
+                        'description',
+                        'locked',
+                        'disabled',
+                        'category',
+                    ])
+                    ->where('category', 0)
+                    ->paginate()
+            );
     }
 
     /**

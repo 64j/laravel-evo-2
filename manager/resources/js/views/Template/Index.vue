@@ -7,15 +7,15 @@
 
       <TitleView
           :id="data?.id"
-          :title="data?.templatename || $store.getters['Lang/get']('new_template')"
-          icon="fa fa-code"
-          :message="$store.getters['Lang/get']('template_msg')"/>
+          :title="data?.templatename || $root.lang('new_template')"
+          :icon="icon"
+          :message="$root.lang('template_msg')"/>
 
       <Tabs
           id="template"
           :tabs="[
-            { id: 'Template', title: $store.getters['Lang/get']('settings_general'), active: true },
-            { id: 'Tvs', title: $store.getters['Lang/get']('template_assignedtv_tab') },
+            { id: 'Template', title: $root.lang('settings_general'), active: true },
+            { id: 'Tvs', title: $root.lang('template_assignedtv_tab') },
           ]"
           :history="true">
         <template #Template>
@@ -24,17 +24,19 @@
 
               <div class="flex mb-1">
                 <label class="basis-1/4">
-                  {{ $store.getters['Lang/get']('template_name') }}
-                  <small v-if="data?.id === $store.getters['Config/get']('default_template')" class="text-danger d-block">{{
-                      $store.getters['Lang/get']('defaulttemplate_title')
+                  {{ $root.lang('template_name') }}
+                  <small v-if="data?.id === $root.config('default_template')" class="text-danger d-block">{{
+                      $root.lang('defaulttemplate_title')
                     }}</small>
                 </label>
                 <div class="basis-3/4">
                   <div class="form-control-name clearfix">
-                    <input v-model="data['templatename']" type="text" maxlength="100"
+                    <input v-model="data['templatename']"
+                           type="text"
+                           maxlength="100"
                            class="block w-full border-gray-300 text-base"
                            onchange="documentDirty=true;">
-                    <label v-if="$store.getters['Auth/hasPermissions']('save_role')" :title="$store.getters['Lang/get']('lock_snippet_msg')">
+                    <label v-if="$root.hasPermissions('save_role')" :title="$root.lang('lock_snippet_msg')">
                       <input v-model="data.locked" type="checkbox" :false-value="0" :true-value="1"/>
                       <i class="fa fa-lock" :class="[data.locked ? 'text-danger' : 'text-muted']"></i>
                     </label>
@@ -44,30 +46,35 @@
               </div>
 
               <div class="flex mb-1">
-                <label class="basis-1/4">{{ $store.getters['Lang/get']('alias') }}</label>
+                <label class="basis-1/4">{{ $root.lang('alias') }}</label>
                 <div class="basis-3/4">
-                  <input v-model="data['templatealias']" type="text" maxlength="255"
+                  <input v-model="data['templatealias']"
+                         type="text"
+                         maxlength="255"
                          class="block w-full border-gray-300 px-3 py-1 text-base"
                          onchange="documentDirty=true;">
                 </div>
               </div>
 
               <div class="flex mb-1">
-                <label class="basis-1/4">{{ $store.getters['Lang/get']('template_desc') }}</label>
+                <label class="basis-1/4">{{ $root.lang('template_desc') }}</label>
                 <div class="basis-3/4">
-                  <input v-model="data.description" type="text" maxlength="255"
+                  <input v-model="data.description"
+                         type="text"
+                         maxlength="255"
                          class="block w-full border-gray-300 px-3 py-1 text-base"
                          onchange="documentDirty=true;">
                 </div>
               </div>
 
               <div class="flex mb-1">
-                <label class="basis-1/4">{{ $store.getters['Lang/get']('existing_category') }}</label>
+                <label class="basis-1/4">{{ $root.lang('existing_category') }}</label>
                 <div class="basis-3/4">
                   <select v-model="data.category"
                           class="block w-full border-gray-300 px-3 py-1 text-base"
                           onchange="documentDirty=true;">
-                    <option v-for="category in categories()" :key="category.id" :value="category.id">
+                    <option v-for="category in $root.categories()" :key="category.id"
+                            :value="category.id">
                       {{ category.category }}
                     </option>
                   </select>
@@ -75,25 +82,30 @@
               </div>
 
               <div class="flex mb-1">
-                <label class="basis-1/4">{{ $store.getters['Lang/get']('new_category') }}</label>
+                <label class="basis-1/4">{{ $root.lang('new_category') }}</label>
                 <div class="basis-3/4">
-                  <input v-model="data.newcategory" type="text" maxlength="45"
+                  <input v-model="data.newcategory"
+                         type="text"
+                         maxlength="45"
                          class="block w-full border-gray-300 px-3 py-1 text-base"
                          onchange="documentDirty=true;">
                 </div>
               </div>
 
-              <div class="form-check mb-1" v-if="$store.getters['Auth/hasPermissions']('save_role')">
-                <input v-model="data.selectable" type="checkbox" class="form-check-input" id="selectable"
+              <div class="form-check mb-1" v-if="$root.hasPermissions('save_role')">
+                <input v-model="data.selectable"
+                       type="checkbox"
+                       class="form-check-input"
+                       id="selectable"
                        :false-value="0" :true-value="1">
-                <label class="form-check-label" for="selectable">{{ $store.getters['Lang/get']('template_selectable') }}</label>
+                <label class="form-check-label" for="selectable">{{ $root.lang('template_selectable') }}</label>
               </div>
 
             </div>
 
             <!-- HTML text editor start -->
             <div class="navbar-editor mt-3 mb-1">
-              <span>{{ $store.getters['Lang/get']('template_code') }}</span>
+              <span>{{ $root.lang('template_code') }}</span>
             </div>
           </div>
 
@@ -109,7 +121,7 @@
         <template #Tvs>
           <div class="container-fluid container-body pt-3">
             <div class="form-group">
-              <p>{{ $store.getters['Lang/get']('template_tv_msg') }}</p>
+              <p>{{ $root.lang('template_tv_msg') }}</p>
 
               <div class="row">
                 <template v-if="Object.values(meta?.selected || {}).length">
@@ -126,13 +138,13 @@
                   />
                 </template>
 
-                <p v-else class="text-danger">{{ lang$store.getters['Lang/get']('template_no_tv') }}</p>
+                <p v-else class="text-danger">{{ $root.lang('template_no_tv') }}</p>
               </div>
 
               <div class="row">
                 <template v-if="Object.values(meta?.['unselected'] || {}).length">
                   <!--                  <hr class="bg-secondary">-->
-                  <p class="m-0">{{ $store.getters['Lang/get']('template_notassigned_tv') }}</p>
+                  <p class="m-0">{{ $root.lang('template_notassigned_tv') }}</p>
 
                   <Panel
                       :data="meta['unselected']"
@@ -158,140 +170,104 @@
   </div>
 </template>
 
-<script setup>
-import TemplateService from '@/views/Template/service'
-import { onMounted } from 'vue'
-import router from '@/router'
-
-const { data, read, create, update, destroy } = TemplateService()
-
-onMounted(() => {
-  if (router.params.id) {
-
-  }
-})
-</script>
-
 <script>
 import ActionsButtons from '@/components/ActionsButtons'
 import TitleView from '@/components/Title'
 import Tabs from '@/components/Tabs'
 import Panel from '@/components/Panel'
-// import TemplateService from '@/views/Template/service'
-// import { onMounted } from 'vue'
-// import router from '@/router'
 
-// export default {
-//   name: 'TemplateIndex',
-//   components: { ActionsButtons, TitleView, Tabs, Panel },
-//   data () {
-//     this.events = {
-//       OnTempFormPrerender: '',
-//       OnTempFormRender: ''
-//     }
-//
-//     return {
-//       controller: 'Template',
-//       icon: 'fa fa-code',
-//       loading: false,
-//       id: this.$route['params'] && this.$route['params']['id'] || null,
-//       meta: {},
-//       data: formData,
-//       tvSelected: []
-//     }
-//   },
-//   created () {
-//     this.$emit('titleTab', {
-//       icon: this.icon,
-//       title: ''
-//     })
-//
-//     if (this.id) {
-//       read(this.id).then(() => {
-//         this.$emit('titleTab', formData.value.templatename)
-//       })
-//     }
-//   },
-//   methods: {
-//     lang (key) {
-//       return this.$store.getters['Lang/get'](key)
-//     },
-//     config (key) {
-//       return this.$store.getters['Config/get'](key)
-//     },
-//     hasPermissions (permissions) {
-//       return this.$store.getters['Auth/hasPermissions'](permissions)
-//     },
-//     categories () {
-//       return this.$store.getters['Config/categories']
-//     },
-//     action (name, item) {
-//       switch (name) {
-//         case 'save':
-//           this.loading = false
-//           if (this.data.id) {
-//             update(this.controller, { ...this.data, tvSelected: this.tvSelected })
-//           } else {
-//             create({ ...this.data, tvSelected: this.tvSelected })
-//           }
-//           break
-//
-//         case 'delete':
-//           if (this.data.id) {
-//             if (confirm(this.lang('confirm_delete_template'))) {
-//               destroy(this.id)
-//             }
-//           }
-//           break
-//
-//         case 'cancel':
-//           this.$emit('toTab', { name: 'ElementsIndex', query: { resourcesTab: 0 } }, true)
-//           break
-//
-//         case 'refresh':
-//           this.$emit('refreshTab', { name: 'ElementsIndex', query: { resourcesTab: 0 } })
-//           break
-//
-//         case 'checkbox': {
-//           const index = this.tvSelected.indexOf(item.id)
-//           index > -1 && this.tvSelected.splice(index, 1) || this.tvSelected.push(item.id)
-//           break
-//         }
-//       }
-//     },
-//     setData (result) {
-//       this.data = result.data
-//       this.meta = result.meta
-//
-//       if (this.meta?.selected) {
-//         this.tvSelected = []
-//         for (const i in this.meta.selected) {
-//           for (const j in this.meta.selected[i].items) {
-//             const tv = this.meta.selected[i].items[j]
-//             this.tvSelected.push(tv.id)
-//           }
-//         }
-//       }
-//
-//       if (this.meta?.unselected) {
-//         for (const i in this.meta.unselected) {
-//           for (const j in this.meta.unselected[i].items) {
-//             let tv = this.meta.unselected[i].items[j]
-//             tv.prepend = '<input type="checkbox" name="assignedTv[]" value="' + tv.id +
-//                 '" class="form-check-input me-2">'
-//           }
-//         }
-//       }
-//
-//       for (let i in this.meta?.events || {}) {
-//         this.events[i] = Array.isArray(this.meta.events[i]) ? this.meta.events[i].join('') : this.meta.events[i]
-//       }
-//
-//       this.$emit('titleTab', result.data.templatename)
-//       this.loading = true
-//     }
-//   }
-// }
+export default {
+  name: 'TemplateIndex',
+  components: { ActionsButtons, TitleView, Tabs, Panel },
+  data () {
+    return {
+      id: this.$route['params'] && this.$route['params']['id'] || null,
+      icon: 'fa fa-code',
+      errors: {},
+      data: {},
+      meta: {}
+    }
+  },
+
+  created () {
+    this.setTabTitle(this.data.templatename)
+
+    if (this.id) {
+      this.read(this.id)
+    }
+  },
+
+  methods: {
+    action (name, item) {
+      switch (name) {
+        case 'save':
+          this.loading = false
+          if (this.data.id) {
+            this.update({ ...this.data, tvSelected: this.tvSelected })
+          } else {
+            this.create({ ...this.data, tvSelected: this.tvSelected })
+          }
+          break
+
+        case 'delete':
+          if (this.data.id) {
+            confirm(this.$root.lang('confirm_delete_template')) && this.destroy(this.data.id)
+          }
+          break
+
+        case 'cancel':
+          this.$emit('toTab', { name: 'ElementsIndex', query: { resourcesTab: 0 } }, true)
+          break
+      }
+    },
+
+    setTabTitle (title) {
+      this.$emit('titleTab', {
+        icon: this.icon,
+        title: title || ''
+      })
+
+      if (title) {
+        this.$emit('titleTab', title)
+      }
+    },
+
+    async create (data) {
+      try {
+        let response = await axios.post('api/template', data)
+        this.data = response.data.data
+        this.setTabTitle(this.data.templatename)
+      } catch (e) {
+        if (e.response.status === 422) {
+          this.errors = e.response.data.errors
+        }
+      }
+    },
+
+    async read (id) {
+      let response = await axios.get('api/template/' + id)
+      this.data = response.data.data
+      this.setTabTitle(this.data.templatename)
+    },
+
+    async update (data) {
+      this.errors = {}
+      try {
+        let response = await axios.put('api/template/' + data.id, data)
+        this.data = response.data.data
+        this.setTabTitle(this.data.templatename)
+      } catch (e) {
+        if (e.response.status === 422) {
+          this.errors = e.response.data.errors
+        }
+      }
+    },
+
+    async destroy (id) {
+      await axios.delete('api/template/' + id)
+    }
+  }
+}
 </script>
 
 <style scoped>

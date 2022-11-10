@@ -13,7 +13,6 @@
         .main { background: url("https://picsum.photos/1600/900") 50% 50% no-repeat; background-size: cover }
         .logo { display: inline-block; margin: 0 1rem; width: 0; height: 0; transform: scale(0.3); }
         .logo::before { transform: none; content: ""; display: block; position: relative; z-index: 1; left: 50%; top: 30%; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; box-shadow: 5px 5px 0 0 rgb(234, 132, 82), 14px -7px 0 0 rgba(111, 163, 219, 0.7), -7px 11px 0 0 rgba(112, 193, 92, 0.74), -11px -7px 0 0 rgba(147, 205, 99, 0.78); animation: none }
-        .active .input-list { display: block; }
     </style>
 </head>
 <body>
@@ -22,7 +21,7 @@
         <form method="post" action="{{ route('login') }}">
             @csrf
 
-            <div class="flex items-center mb-6 pt-4 pl-1 text-white font-bold uppercase">
+            <div class="flex items-center mb-6 pt-4 pl-1 text-xl text-white font-bold uppercase">
                 <span class="logo"></span>
                 <span class="pl-4">Evolution</span>
             </div>
