@@ -35,19 +35,19 @@
             <template v-for="item in category.data">
               <li v-if="!item.hidden"
                   :key="'item-' + item.id"
-                  class="flex flex-1 justify-between pr-5 items-center hover:bg-slate-100">
+                  class="flex flex-1 justify-between px-5 items-center hover:bg-slate-100">
 
                 <input v-if="checkbox"
                        type="checkbox"
                        :id="`checkbox-item-`+item.id"
                        :value="item.id"
                        :checked="~checkboxChecked.indexOf(item.id)"
-                       class="mr-2 p-0"
+                       class="mr-2 p-0 border-gray-300"
                        @change="$emit('action', checkbox, item, category)"/>
 
                 <router-link
                     :to="{ name: linkName, params: { id: item.id } }"
-                    class="grow py-1 px-5 text-md select-none group/item"
+                    class="grow py-1 pr-5 text-md select-none group/item"
                     :class="[item.disabled ? 'text-rose-700/75': '']">
 
                   <i :class="linkIcon" class="mr-1"></i>
@@ -110,7 +110,8 @@ export default {
       type: String
     },
     checkboxChecked: {
-      type: Array
+      type: Array,
+      default: []
     },
     hiddenCategories: {
       type: Boolean

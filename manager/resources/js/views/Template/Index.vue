@@ -160,12 +160,14 @@
 
                   <Panel
                       :data="meta['unselected']"
-                      class-name="px-0"
+                      class-name="px-0 -mx-4"
                       link-name="TvIndex"
                       link-icon="fa fa-list-alt"
                       :search-input="true"
+                      :txt-new="$store.getters['Lang/get']('new_tmplvars')"
+                      :txt-help="$store.getters['Lang/get']('tmplvars_management_msg')"
                       checkbox="checkbox"
-                      :checkbox-checked="tvSelected"
+                      :checkbox-checked1="tvSelected"
                       @action="action"
                   />
                 </template>

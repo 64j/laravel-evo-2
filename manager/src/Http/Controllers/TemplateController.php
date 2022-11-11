@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Manager\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\SiteTemplate;
 use App\Models\SiteTmplvarTemplate;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -41,14 +42,27 @@ class TemplateController extends Controller
     public function show(SiteTemplate $template): TemplateResource
     {
         $tvs = SiteTmplvarTemplate::query()
-            ->with('tmplvar')
+            ->with('tmplvar', fn ($query) => $query->select('id', 'name', 'caption'))
             ->where('templateid', $template->getKey())
             ->get()
             ->pluck('tmplvar');
 
+        $unselected = Category::query()
+            ->select('id', 'category as name')
+            ->with('tvs', fn($query) => $query->whereNotIn('id', $tvs->pluck('id'))->paginate())
+            ->whereHas('tvs')
+            ->get()
+            ->map(function ($category) {
+                $category->data = $category->tvs;
+                unset($category->tvs);
+
+                return $category;
+            });
+
         return (new TemplateResource($template))->additional([
             'meta' => [
                 'selected' => $tvs,
+                'unselected' => $unselected
             ],
         ]);
     }
