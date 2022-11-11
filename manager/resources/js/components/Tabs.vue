@@ -58,6 +58,9 @@ export default {
         this.activeTab = parseInt(tab)
       }
     })
+    if (this.history) {
+      this.data.forEach((el, i) => this.activeTab === i ? el.active = true : el.active = false)
+    }
   },
   methods: {
     select (tab) {
