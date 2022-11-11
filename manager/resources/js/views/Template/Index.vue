@@ -19,7 +19,7 @@
           ]"
           :history="true">
         <template #Template>
-          <div class="p-4">
+          <div class="py-4 px-5">
             <div class="form-group">
 
               <div class="flex flex-wrap md:flex-nowrap mb-1">
@@ -122,23 +122,33 @@
         </template>
 
         <template #Tvs>
-          <div class="p-4">
+          <div class="py-4 px-5">
             <div class="form-group">
               <p>{{ $root.lang('template_tv_msg') }}</p>
 
               <div class="row">
                 <template v-if="Object.values(meta.selected || {}).length">
-                  <hr class="bg-secondary m-0">
-                  <Panel
-                      :data="meta.selected"
-                      class-name="px-0 mb-4"
-                      link-name="TvIndex"
-                      link-icon="fa fa-list-alt"
-                      checkbox="checkbox"
-                      :checkbox-checked="tvSelected"
-                      :hidden-categories="false"
-                      @action="action"
-                  />
+                  <ul class="mt-2 py-3 -mx-4 border-t border-gray-200 divide-y divide-gray-100">
+                    <li v-for="tv in meta.selected" class="py-1 hover:text-blue-500 hover:bg-slate-100">
+                      <router-link
+                          :to="{ name: 'TvIndex', params: { id: tv.id } }"
+                          class="block px-5">
+                        <span class="font-bold">{{ tv.name }}</span> ({{ tv.id }})
+                        <span v-if="tv.caption">- {{ tv.caption }}</span>
+                      </router-link>
+                    </li>
+                  </ul>
+
+                  <!--                  <Panel-->
+                  <!--                      :data="meta.selected"-->
+                  <!--                      class-name="px-0 mb-4"-->
+                  <!--                      link-name="TvIndex"-->
+                  <!--                      link-icon="fa fa-list-alt"-->
+                  <!--                      checkbox="checkbox"-->
+                  <!--                      :checkbox-checked="tvSelected"-->
+                  <!--                      :hidden-categories="false"-->
+                  <!--                      @action="action"-->
+                  <!--                  />-->
                 </template>
 
                 <p v-else class="text-danger">{{ $root.lang('template_no_tv') }}</p>
@@ -252,6 +262,7 @@ export default {
     async read (id) {
       let response = await axios.get('api/template/' + id)
       this.data = response.data.data
+      this.meta = response.data.meta
       this.$emit('titleTab', this.data.templatename)
       this.loading = true
     },

@@ -28,6 +28,7 @@ class SiteTmplvar extends Model
         'rank' => 'int',
         'createdon' => 'int',
         'editedon' => 'int',
+        'properties' => 'array'
     ];
 
     /**

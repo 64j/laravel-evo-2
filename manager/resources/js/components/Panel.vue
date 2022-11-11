@@ -23,7 +23,7 @@
     </div>
     <ul v-else>
       <template v-for="category in data">
-        <li :key="'category-' + category.id" v-if="category.data.filter(v => !v.hidden).length">
+        <li :key="'category-' + category.id" v-if="Object.values(category.data).filter(v => !v.hidden).length">
 
           <a v-if="!hiddenCategories"
              class="block px-5 py-1 bg-slate-200 border">
@@ -35,7 +35,7 @@
             <template v-for="item in category.data">
               <li v-if="!item.hidden"
                   :key="'item-' + item.id"
-              class="flex flex-1 justify-between pr-5 items-center hover:bg-slate-100">
+                  class="flex flex-1 justify-between pr-5 items-center hover:bg-slate-100">
 
                 <input v-if="checkbox"
                        type="checkbox"

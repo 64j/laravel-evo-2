@@ -40,10 +40,16 @@ class TemplateController extends Controller
      */
     public function show(SiteTemplate $template): TemplateResource
     {
+        $tvs = SiteTmplvarTemplate::query()
+            ->with('tmplvar')
+            ->where('templateid', $template->getKey())
+            ->get()
+            ->pluck('tmplvar');
+
         return (new TemplateResource($template))->additional([
             'meta' => [
-                'tvs' => []
-            ]
+                'selected' => $tvs,
+            ],
         ]);
     }
 
