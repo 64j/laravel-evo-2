@@ -25,9 +25,9 @@
               <div class="flex mb-1">
                 <label class="basis-1/4">
                   {{ $root.lang('template_name') }}
-                  <small v-if="data.id === $root.config('default_template')" class="text-danger d-block">{{
-                      $root.lang('defaulttemplate_title')
-                    }}</small>
+                  <small v-if="data.id === $root.config('default_template')" class="text-danger d-block">
+                    {{ $root.lang('defaulttemplate_title') }}
+                  </small>
                 </label>
                 <div class="basis-3/4">
                   <div class="form-control-name relative">
@@ -38,7 +38,7 @@
                            onchange="documentDirty=true;">
                     <label v-if="$root.hasPermissions('save_role')"
                            :title="$root.lang('lock_snippet_msg')"
-                    class="absolute left-full top-0 mt-2 -ml-6 text-lg">
+                           class="absolute left-full top-0 mt-2 -ml-6 text-lg">
                       <input v-model="data.locked" type="checkbox" class="hidden" :false-value="0" :true-value="1"/>
                       <i class="fa fa-lock -ml-1 cursor-pointer"
                          :class="[data.locked ? 'text-rose-500 hover:text-rose-600' : 'text-gray-400 hover:text-gray-500 fa-lock-open']"></i>
@@ -95,10 +95,10 @@
                 </div>
               </div>
 
-              <div class="form-check mb-1" v-if="$root.hasPermissions('save_role')">
+              <div class="flex items-center mb-1" v-if="$root.hasPermissions('save_role')">
                 <input v-model="data.selectable"
                        type="checkbox"
-                       class="form-check-input"
+                       class="mr-2 border-gray-300"
                        id="selectable"
                        :false-value="0" :true-value="1">
                 <label class="form-check-label" for="selectable">{{ $root.lang('template_selectable') }}</label>

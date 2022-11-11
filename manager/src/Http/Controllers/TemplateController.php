@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Manager\Http\Controllers;
 
 use App\Models\SiteTemplate;
+use App\Models\SiteTmplvarTemplate;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Manager\Http\Requests\TemplateRequest;
