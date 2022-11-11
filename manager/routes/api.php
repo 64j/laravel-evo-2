@@ -7,7 +7,13 @@ use Manager\Http\Controllers\TemplateController;
 
 Route::post('bootstrap', [BootstrapController::class, 'index']);
 
-Route::get('category/templates', [CategoryController::class, 'templates']);
+Route::group([
+    'prefix' => 'category',
+], fn() => [
+    Route::get('templates', [CategoryController::class, 'templates']),
+    Route::get('tvs', [CategoryController::class, 'tvs']),
+    Route::get('chunks', [CategoryController::class, 'chunks']),
+]);
 
 Route::apiResource('template', TemplateController::class);
 

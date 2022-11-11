@@ -1,6 +1,6 @@
 <template>
   <div class="panel" :class="className">
-    <div v-if="searchInput" class="p-3">
+    <div v-if="searchInput" class="py-3 px-5">
       <div class="input-group input-group-sm">
         <router-link
             v-if="txtNew"
@@ -26,7 +26,7 @@
         <li :key="'category-' + category.id" v-if="category.data.filter(v => !v.hidden).length">
 
           <a v-if="!hiddenCategories"
-             class="block px-3 py-1 bg-gray-100 border">
+             class="block px-5 py-1 bg-slate-200 border">
             <span class="text-md font-bold mr-2">{{ category.name }} </span>
             <small>({{ category.id }})</small>
           </a>
@@ -35,7 +35,7 @@
             <template v-for="item in category.data">
               <li v-if="!item.hidden"
                   :key="'item-' + item.id"
-              class="flex flex-1 justify-between pr-3 items-center hover:bg-gray-100">
+              class="flex flex-1 justify-between pr-5 items-center hover:bg-slate-100">
 
                 <input v-if="checkbox"
                        type="checkbox"
@@ -47,12 +47,12 @@
 
                 <router-link
                     :to="{ name: linkName, params: { id: item.id } }"
-                    class="grow py-1 px-3 select-none"
+                    class="grow py-1 px-5 text-sm select-none group/item"
                     :class="[item.disabled ? 'text-rose-700/75': '']">
 
-                  <i :class="linkIcon"></i>
-                  <i class="fa fa-lock fa-fw text-rose-500" v-if="item.locked"/>
-                  {{ item.name }}
+                  <i :class="linkIcon" class="mr-1"></i>
+                  <i class="fa fa-lock fa-fw mr-1 text-rose-500" v-if="item.locked"/>
+                  <span class="text-blue-500 group-hover/item:text-blue-700 mr-1">{{ item.name }}</span>
                   <span class="text-xs">({{ item.id }})</span>
                   <span class="ml-3 text-xs" v-html="item.description"/>
 

@@ -3,11 +3,11 @@
 
     <ActionsButtons @action="action"/>
 
-    <form name="mutate">
+    <form name="mutate" v-show="loading">
 
       <TitleView
-          :id="data?.id"
-          :title="data?.templatename || $root.lang('new_template')"
+          :id="data.id"
+          :title="title"
           :icon="icon"
           :message="$root.lang('template_msg')"/>
 
@@ -25,20 +25,23 @@
               <div class="flex mb-1">
                 <label class="basis-1/4">
                   {{ $root.lang('template_name') }}
-                  <small v-if="data?.id === $root.config('default_template')" class="text-danger d-block">{{
+                  <small v-if="data.id === $root.config('default_template')" class="text-danger d-block">{{
                       $root.lang('defaulttemplate_title')
                     }}</small>
                 </label>
                 <div class="basis-3/4">
-                  <div class="form-control-name clearfix">
+                  <div class="form-control-name relative">
                     <input v-model="data['templatename']"
                            type="text"
                            maxlength="100"
-                           class="block w-full border-gray-300 text-base"
+                           class="block w-full border-gray-300 pr-8"
                            onchange="documentDirty=true;">
-                    <label v-if="$root.hasPermissions('save_role')" :title="$root.lang('lock_snippet_msg')">
-                      <input v-model="data.locked" type="checkbox" :false-value="0" :true-value="1"/>
-                      <i class="fa fa-lock" :class="[data.locked ? 'text-danger' : 'text-muted']"></i>
+                    <label v-if="$root.hasPermissions('save_role')"
+                           :title="$root.lang('lock_snippet_msg')"
+                    class="absolute left-full top-0 mt-2 -ml-6 text-lg">
+                      <input v-model="data.locked" type="checkbox" class="hidden" :false-value="0" :true-value="1"/>
+                      <i class="fa fa-lock -ml-1 cursor-pointer"
+                         :class="[data.locked ? 'text-rose-500 hover:text-rose-600' : 'text-gray-400 hover:text-gray-500 fa-lock-open']"></i>
                     </label>
                   </div>
                   <small class="form-text text-danger hide" id='savingMessage'></small>
@@ -51,7 +54,7 @@
                   <input v-model="data['templatealias']"
                          type="text"
                          maxlength="255"
-                         class="block w-full border-gray-300 px-3 py-1 text-base"
+                         class="block w-full border-gray-300 px-3 py-1"
                          onchange="documentDirty=true;">
                 </div>
               </div>
@@ -62,7 +65,7 @@
                   <input v-model="data.description"
                          type="text"
                          maxlength="255"
-                         class="block w-full border-gray-300 px-3 py-1 text-base"
+                         class="block w-full border-gray-300 px-3 py-1"
                          onchange="documentDirty=true;">
                 </div>
               </div>
@@ -71,7 +74,7 @@
                 <label class="basis-1/4">{{ $root.lang('existing_category') }}</label>
                 <div class="basis-3/4">
                   <select v-model="data.category"
-                          class="block w-full border-gray-300 px-3 py-1 text-base"
+                          class="block w-full border-gray-300 px-3 py-1"
                           onchange="documentDirty=true;">
                     <option v-for="category in $root.categories()" :key="category.id"
                             :value="category.id">
@@ -87,7 +90,7 @@
                   <input v-model="data.newcategory"
                          type="text"
                          maxlength="45"
-                         class="block w-full border-gray-300 px-3 py-1 text-base"
+                         class="block w-full border-gray-300 px-3 py-1"
                          onchange="documentDirty=true;">
                 </div>
               </div>
@@ -111,7 +114,7 @@
 
           <div class="section-editor">
             <textarea v-model="data.content"
-                      class="block w-full border-gray-300 border-l-transparent border-r-transparent px-3 py-1 text-base"
+                      class="block w-full border-gray-300 border-l-transparent border-r-transparent px-3 py-1"
                       rows="20"
                       wrap="soft"
                       onchange="documentDirty=true;"/>
@@ -124,7 +127,7 @@
               <p>{{ $root.lang('template_tv_msg') }}</p>
 
               <div class="row">
-                <template v-if="Object.values(meta?.selected || {}).length">
+                <template v-if="Object.values(meta.selected || {}).length">
                   <hr class="bg-secondary m-0">
                   <Panel
                       :data="meta.selected"
@@ -142,8 +145,7 @@
               </div>
 
               <div class="row">
-                <template v-if="Object.values(meta?.['unselected'] || {}).length">
-                  <!--                  <hr class="bg-secondary">-->
+                <template v-if="Object.values(meta['unselected'] || {}).length">
                   <p class="m-0">{{ $root.lang('template_notassigned_tv') }}</p>
 
                   <Panel
@@ -181,7 +183,7 @@ export default {
   components: { ActionsButtons, TitleView, Tabs, Panel },
   data () {
     return {
-      id: this.$route['params'] && this.$route['params']['id'] || null,
+      loading: false,
       icon: 'fa fa-code',
       errors: {},
       data: {},
@@ -189,11 +191,25 @@ export default {
     }
   },
 
+  computed: {
+    id () {
+      return this.$route['params'] && this.$route['params']['id'] || null
+    },
+    title () {
+      return this.data.templatename || (this.id && '...') || this.$root.lang('new_template')
+    }
+  },
+
   created () {
-    this.setTabTitle(this.data.templatename)
+    this.$emit('titleTab', {
+      icon: this.icon,
+      title: this.title
+    })
 
     if (this.id) {
       this.read(this.id)
+    } else {
+      this.loading = true
     }
   },
 
@@ -221,22 +237,11 @@ export default {
       }
     },
 
-    setTabTitle (title) {
-      this.$emit('titleTab', {
-        icon: this.icon,
-        title: title || ''
-      })
-
-      if (title) {
-        this.$emit('titleTab', title)
-      }
-    },
-
     async create (data) {
       try {
         let response = await axios.post('api/template', data)
         this.data = response.data.data
-        this.setTabTitle(this.data.templatename)
+        this.$emit('titleTab', this.data.templatename)
       } catch (e) {
         if (e.response.status === 422) {
           this.errors = e.response.data.errors
@@ -247,7 +252,8 @@ export default {
     async read (id) {
       let response = await axios.get('api/template/' + id)
       this.data = response.data.data
-      this.setTabTitle(this.data.templatename)
+      this.$emit('titleTab', this.data.templatename)
+      this.loading = true
     },
 
     async update (data) {
@@ -255,7 +261,7 @@ export default {
       try {
         let response = await axios.put('api/template/' + data.id, data)
         this.data = response.data.data
-        this.setTabTitle(this.data.templatename)
+        this.$emit('titleTab', this.data.templatename)
       } catch (e) {
         if (e.response.status === 422) {
           this.errors = e.response.data.errors
@@ -269,9 +275,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.form-control-name { position: relative; }
-.form-control-name label { position: absolute; right: .8rem; top: .4rem; font-size: 1.5rem; cursor: pointer; }
-.form-control-name label input { opacity: 0 }
-</style>

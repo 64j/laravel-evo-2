@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
 use JsonSerializable;
 
 class Controller extends BaseController
@@ -30,9 +31,12 @@ class Controller extends BaseController
 
         if (Auth::check()) {
             // Взять локаль из настроек юзера
-            $this->app->setLocale('ru');
         } else {
-            // Определить локаль
+            $locale = Str::lower(Str::substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2));
+
+            if (file_exists($app->basePath('lang/' . $locale))) {
+                $app->setLocale($locale);
+            }
         }
     }
 

@@ -1,8 +1,8 @@
 <template>
-  <div class="p-4">
+  <div class="py-4 px-5">
     <h1 class="title h4 m-0">
-      <i v-if="icon" class="mr-2" :class="icon"/>
-      <span v-html="title" class="font-bold"/>
+      <i v-if="icon" class="mr-2 text-lg" :class="icon"/>
+      <span v-html="title" class="text-xl font-bold"/>
       <small v-if="id" class="ml-2">({{ id }})</small>
       <i v-if="message" class="fa fa-question-circle ml-3 text-sm text-gray-400 hover:text-gray-600 cursor-pointer" @click="show=!show"/>
     </h1>

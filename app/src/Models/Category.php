@@ -39,35 +39,35 @@ class Category extends Model
      */
     public static function templatesNoCategory(): \Illuminate\Support\Collection
     {
-        return \Illuminate\Support\Collection::make([
+        $data = SiteTemplate::query()
+            ->select([
+                'id',
+                'templatename as name',
+                'templatealias as alias',
+                'description',
+                'locked',
+                'category',
+            ])
+            ->where('category', 0)
+            ->paginate();
+
+        return $data->isNotEmpty() ? \Illuminate\Support\Collection::make([
             'id' => 0,
             'name' => __('global.no_category'),
             'rank' => 0,
         ])
-            ->merge(
-                SiteTemplate::query()
-                    ->select([
-                        'id',
-                        'templatename as name',
-                        'templatealias as alias',
-                        'description',
-                        'locked',
-                        'category',
-                    ])
-                    ->where('category', 0)
-                    ->paginate()
-            );
+            ->merge($data) : collect();
     }
 
     /**
      * @param array $ids
      * @param bool $not
      *
-     * @return Category|null
+     * @return \Illuminate\Support\Collection
      */
-    public static function tvsNoCategory(array $ids = [], bool $not = false): ?Category
+    public static function tvsNoCategory(array $ids = [], bool $not = false): \Illuminate\Support\Collection
     {
-        $items = SiteTmplvar::query()
+        $data = SiteTmplvar::query()
             ->select([
                 'id',
                 'name',
@@ -77,14 +77,14 @@ class Category extends Model
             ])
             ->where(fn($item) => $ids ? ($not ? $item->whereKeyNot($ids) : $item->whereKey($ids)) : null)
             ->where('category', 0)
-            ->get();
+            ->paginate();
 
-        return $items->count() ? (new static())->setRawAttributes([
+        return $data->isNotEmpty() ? \Illuminate\Support\Collection::make([
             'id' => 0,
             'name' => __('global.no_category'),
             'rank' => 0,
-            'items' => $items,
-        ]) : null;
+        ])
+            ->merge($data) : collect();
     }
 
     /**
@@ -92,24 +92,24 @@ class Category extends Model
      */
     public static function chunksNoCategory(): \Illuminate\Support\Collection
     {
-        return \Illuminate\Support\Collection::make([
+        $data = SiteHtmlsnippet::query()
+            ->select([
+                'id',
+                'name',
+                'description',
+                'locked',
+                'disabled',
+                'category',
+            ])
+            ->where('category', 0)
+            ->paginate();
+
+        return $data->isNotEmpty() ? \Illuminate\Support\Collection::make([
             'id' => 0,
             'name' => __('global.no_category'),
             'rank' => 0,
         ])
-            ->merge(
-                SiteHtmlsnippet::query()
-                    ->select([
-                        'id',
-                        'name',
-                        'description',
-                        'locked',
-                        'disabled',
-                        'category',
-                    ])
-                    ->where('category', 0)
-                    ->paginate()
-            );
+            ->merge($data) : collect();
     }
 
     /**
@@ -117,24 +117,24 @@ class Category extends Model
      */
     public static function snippetsNoCategory(): \Illuminate\Support\Collection
     {
-        return \Illuminate\Support\Collection::make([
+        $data = SiteSnippet::query()
+            ->select([
+                'id',
+                'name',
+                'description',
+                'locked',
+                'disabled',
+                'category',
+            ])
+            ->where('category', 0)
+            ->paginate();
+
+        return $data->isNotEmpty() ? \Illuminate\Support\Collection::make([
             'id' => 0,
             'name' => __('global.no_category'),
             'rank' => 0,
         ])
-            ->merge(
-                SiteSnippet::query()
-                    ->select([
-                        'id',
-                        'name',
-                        'description',
-                        'locked',
-                        'disabled',
-                        'category',
-                    ])
-                    ->where('category', 0)
-                    ->paginate()
-            );
+            ->merge($data) : collect();
     }
 
     /**
@@ -142,24 +142,24 @@ class Category extends Model
      */
     public static function pluginsNoCategory(): \Illuminate\Support\Collection
     {
-        return \Illuminate\Support\Collection::make([
+        $data = SitePlugin::query()
+            ->select([
+                'id',
+                'name',
+                'description',
+                'locked',
+                'disabled',
+                'category',
+            ])
+            ->where('category', 0)
+            ->paginate();
+
+        return $data->isNotEmpty() ? \Illuminate\Support\Collection::make([
             'id' => 0,
             'name' => __('global.no_category'),
             'rank' => 0,
         ])
-            ->merge(
-                SitePlugin::query()
-                    ->select([
-                        'id',
-                        'name',
-                        'description',
-                        'locked',
-                        'disabled',
-                        'category',
-                    ])
-                    ->where('category', 0)
-                    ->paginate()
-            );
+            ->merge($data) : collect();
     }
 
     /**
@@ -167,24 +167,24 @@ class Category extends Model
      */
     public static function modulesNoCategory(): \Illuminate\Support\Collection
     {
-        return \Illuminate\Support\Collection::make([
+        $data = SiteModule::query()
+            ->select([
+                'id',
+                'name',
+                'description',
+                'locked',
+                'disabled',
+                'category',
+            ])
+            ->where('category', 0)
+            ->paginate();
+
+        return $data->isNotEmpty() ? \Illuminate\Support\Collection::make([
             'id' => 0,
             'name' => __('global.no_category'),
             'rank' => 0,
         ])
-            ->merge(
-                SiteModule::query()
-                    ->select([
-                        'id',
-                        'name',
-                        'description',
-                        'locked',
-                        'disabled',
-                        'category',
-                    ])
-                    ->where('category', 0)
-                    ->paginate()
-            );
+            ->merge($data) : collect();
     }
 
     /**

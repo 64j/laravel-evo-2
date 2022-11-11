@@ -1,9 +1,9 @@
 <template>
-  <div class="actions-buttons fixed rounded-b bg-gray-900/5 p-2 pl-1 right-0 z-50">
+  <div class="actions-buttons fixed rounded-b bg-gray-500/5 p-2 pl-1 right-0 z-50">
 
     <button
         type="button"
-        class="inline-flex items-center bg-gray-200 hover:bg-gray-300 text-gray-900 text-sm font-bold py-1 px-2 rounded ml-1"
+        class="inline-flex items-center bg-slate-200 hover:bg-slate-300 text-gray-900 text-sm font-bold py-1 px-2 rounded ml-1"
         @click="$emit('action', 'cancel', $event)" :title="$root.lang('cancel')">
       <i class="fa fa-reply fa-fw"/>
       <span class="ml-1">{{ $root.lang('cancel') }}</span>

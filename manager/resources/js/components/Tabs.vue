@@ -1,15 +1,15 @@
 <template>
   <div class="dynamic-tab-pane-control tab-pane" :id="id+`Pane`">
-    <div class="tab-row-container overflow-hidden relative h-10 px-6 border-b-2 border-b-gray-200">
+    <div class="tab-row-container overflow-hidden relative h-10 px-6 border-b-2 border-b-slate-200">
       <div class="tab-row overflow-hidden overflow-x-auto h-16 flex flex-nowrap">
         <template v-for="(tab, index) in data">
           <div :key="index"
                @mousedown="select(tab)"
                class="tab py-2 px-3 h-10 whitespace-nowrap rounded-t cursor-pointer"
-               :class="{ 'active bg-gray-200': tab.active }"
+               :class="{ 'active bg-slate-200': tab.active }"
                v-if="!tab.hidden">
             <i class="mr-2" :class="tab.icon" v-if="tab.icon"></i>
-            <span class="font-bold" :class="{ 'text-blue-500' : tab.active }">{{ tab.title }}</span>
+            <span class="font-bold select-none" :class="{ 'text-blue-500' : tab.active }">{{ tab.title }}</span>
           </div>
         </template>
       </div>
