@@ -7,7 +7,7 @@
       <div class="app-tree flex-auto overflow-hidden">
         <Tree ref="Tree"/>
       </div>
-      <div class="app-main flex flex-nowrap flex-col bg-gray-50">
+      <div class="app-main flex flex-nowrap flex-col bg-slate-100">
         <MultiTabs ref="MultiTabs"/>
       </div>
     </div>

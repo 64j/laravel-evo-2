@@ -16,7 +16,7 @@
            class="bg-blue-600 border border-transparent hover:bg-blue-700 text-white font-bold py-1 px-2 text-xs rounded-r"
            @click="msg=!msg">{{ $root.lang('help') }}</a>
       </div>
-      <div class="bg-blue-100 rounded p-4 m-0 mt-3 text-sm" v-html="txtHelp" v-if="msg"/>
+      <div class="bg-blue-100 rounded p-4 m-0 mt-3" v-html="txtHelp" v-if="msg"/>
     </div>
     <div v-if="!data" class="text-center p-4">
       <i class="fa fa-spinner fa-spin"/>
@@ -47,7 +47,7 @@
 
                 <router-link
                     :to="{ name: linkName, params: { id: item.id } }"
-                    class="grow py-1 px-5 text-sm select-none group/item"
+                    class="grow py-1 px-5 text-md select-none group/item"
                     :class="[item.disabled ? 'text-rose-700/75': '']">
 
                   <i :class="linkIcon" class="mr-1"></i>

@@ -19,22 +19,22 @@
           ]"
           :history="true">
         <template #Template>
-          <div class="container container-body pt-3 px-4">
+          <div class="p-4">
             <div class="form-group">
 
-              <div class="flex mb-1">
-                <label class="basis-1/4">
+              <div class="flex flex-wrap md:flex-nowrap mb-1">
+                <label class="basis-full md:basis-80">
                   {{ $root.lang('template_name') }}
                   <small v-if="data.id === $root.config('default_template')" class="text-danger d-block">
                     {{ $root.lang('defaulttemplate_title') }}
                   </small>
                 </label>
-                <div class="basis-3/4">
+                <div class="basis-full">
                   <div class="form-control-name relative">
                     <input v-model="data['templatename']"
                            type="text"
                            maxlength="100"
-                           class="block w-full border-gray-300 pr-8"
+                           class="block w-full border-gray-300 pr-8 text-lg"
                            onchange="documentDirty=true;">
                     <label v-if="$root.hasPermissions('save_role')"
                            :title="$root.lang('lock_snippet_msg')"
@@ -48,9 +48,9 @@
                 </div>
               </div>
 
-              <div class="flex mb-1">
-                <label class="basis-1/4">{{ $root.lang('alias') }}</label>
-                <div class="basis-3/4">
+              <div class="flex flex-wrap md:flex-nowrap mb-1">
+                <label class="basis-full md:basis-80">{{ $root.lang('alias') }}</label>
+                <div class="basis-full">
                   <input v-model="data['templatealias']"
                          type="text"
                          maxlength="255"
@@ -59,9 +59,9 @@
                 </div>
               </div>
 
-              <div class="flex mb-1">
-                <label class="basis-1/4">{{ $root.lang('template_desc') }}</label>
-                <div class="basis-3/4">
+              <div class="flex flex-wrap md:flex-nowrap mb-1">
+                <label class="basis-full md:basis-80">{{ $root.lang('template_desc') }}</label>
+                <div class="basis-full">
                   <input v-model="data.description"
                          type="text"
                          maxlength="255"
@@ -70,9 +70,9 @@
                 </div>
               </div>
 
-              <div class="flex mb-1">
-                <label class="basis-1/4">{{ $root.lang('existing_category') }}</label>
-                <div class="basis-3/4">
+              <div class="flex flex-wrap md:flex-nowrap mb-1">
+                <label class="basis-full md:basis-80">{{ $root.lang('existing_category') }}</label>
+                <div class="basis-full">
                   <select v-model="data.category"
                           class="block w-full border-gray-300 px-3 py-1"
                           onchange="documentDirty=true;">
@@ -84,9 +84,9 @@
                 </div>
               </div>
 
-              <div class="flex mb-1">
-                <label class="basis-1/4">{{ $root.lang('new_category') }}</label>
-                <div class="basis-3/4">
+              <div class="flex flex-wrap md:flex-nowrap mb-1">
+                <label class="basis-full md:basis-80">{{ $root.lang('new_category') }}</label>
+                <div class="basis-full">
                   <input v-model="data.newcategory"
                          type="text"
                          maxlength="45"
@@ -95,7 +95,7 @@
                 </div>
               </div>
 
-              <div class="flex items-center mb-1" v-if="$root.hasPermissions('save_role')">
+              <div class="flex flex-wrap md:flex-nowrap items-center mb-1" v-if="$root.hasPermissions('save_role')">
                 <input v-model="data.selectable"
                        type="checkbox"
                        class="mr-2 border-gray-300"
@@ -122,7 +122,7 @@
         </template>
 
         <template #Tvs>
-          <div class="container-fluid container-body pt-3">
+          <div class="p-4">
             <div class="form-group">
               <p>{{ $root.lang('template_tv_msg') }}</p>
 

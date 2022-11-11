@@ -12,7 +12,7 @@
               :to="{ name: 'DashboardIndex' }"
               class="home flex h-full items-center px-4 text-xl uppercase">
 
-            <span class="logo mr-4"></span>
+            <span class="logo mr-3 hover:animate-spin"></span>
             <span>Evolution</span>
             <sub class="ml-1 text-xs text-gray-400">{{ $root.config('settings_version') }}</sub>
 
@@ -29,22 +29,23 @@
             {{ $root.lang('elements') }}
           </a>
 
-          <ul class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-72 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+          <ul class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
 
             <li
                 v-if="$root.hasPermissions('edit_template')"
                 @mouseover="hoverSubItem"
-                @mouseenter="getSubMenu('template', list.templates)">
+                @mouseenter="getSubMenu('template', list.templates)"
+                class="group/item">
 
               <router-link
                   :to="{ name: 'ElementsIndex', query: { resourcesTab: 0 } }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-newspaper fa-fw mr-3"/> {{ $root.lang('manage_templates') }}
               </router-link>
 
               <ul
                   v-if="list.templates.length"
-                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-72 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
 
                 <li
                     @mouseenter="subMenuEnter">
@@ -78,11 +79,12 @@
             <li
                 v-if="$root.hasPermissions('edit_snippet')"
                 @mouseover="hoverSubItem"
-                @mouseenter="getSubMenu('tvs', list.tvs)">
+                @mouseenter="getSubMenu('tvs', list.tvs)"
+                class="group/item">
 
               <router-link
                   :to="{ name: 'ElementsIndex', query: { resourcesTab: 1 } }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-list-alt fa-fw mr-3"/> {{ $root.lang('tmplvars') }}
               </router-link>
 
@@ -111,11 +113,12 @@
             <li
                 v-if="$root.hasPermissions('edit_chunk')"
                 @mouseover="hoverSubItem"
-                @mouseenter="getSubMenu('chunks', list.chunks)">
+                @mouseenter="getSubMenu('chunks', list.chunks)"
+                class="group/item">
 
               <router-link
                   :to="{ name: 'ElementsIndex', query: { resourcesTab: 2 } }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-th-large fa-fw mr-3"/> {{ $root.lang('manage_htmlsnippets') }}
               </router-link>
 
@@ -145,11 +148,12 @@
             <li
                 v-if="$root.hasPermissions('edit_snippet')"
                 @mouseover="hoverSubItem"
-                @mouseenter="getSubMenu('snippets', list.snippets)">
+                @mouseenter="getSubMenu('snippets', list.snippets)"
+                class="group/item">
 
               <router-link
                   :to="{ name: 'ElementsIndex', query: { resourcesTab: 3 } }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-code fa-fw mr-3"/> {{ $root.lang('manage_snippets') }}
               </router-link>
 
@@ -177,11 +181,12 @@
             <li
                 v-if="$root.hasPermissions('edit_plugin')"
                 @mouseover="hoverSubItem"
-                @mouseenter="getSubMenu('plugins', list.plugins)">
+                @mouseenter="getSubMenu('plugins', list.plugins)"
+                class="group/item">
 
               <router-link
                   :to="{ name: 'ElementsIndex', query: { resourcesTab: 4 } }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-plug fa-fw mr-3"/> {{ $root.lang('manage_plugins') }}
               </router-link>
 
@@ -211,11 +216,12 @@
             <li
                 v-if="$root.hasPermissions('edit_module')"
                 @mouseover="hoverSubItem"
-                @mouseenter="getSubMenu('modules', list.modules)">
+                @mouseenter="getSubMenu('modules', list.modules)"
+                class="group/item">
 
               <router-link
                   :to="{ name: 'ElementsIndex', query: { resourcesTab: 5 } }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-cubes fa-fw mr-3"/> {{ $root.lang('modules') }}
               </router-link>
 
@@ -257,17 +263,19 @@
 
           <ul
               v-if="list.modules.length"
-              class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-72 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+              class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
 
             <li
                 v-for="item in list.modules"
                 :key="'item-module-exec-' + item.id"
                 @mouseover="hoverSubItem"
-                @mouseenter="subMenuEnter">
+                @mouseenter="subMenuEnter"
+                class="group/item">
 
               <router-link
                   :to="{ name: 'ModuleExec', params: { id: item.id } }"
-                  :class="{'fst-italic': item.locked, 'text-danger opacity-50': item.disabled}">
+                  :class="{'fst-italic': item.locked, 'text-danger opacity-50': item.disabled}"
+                  class="group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-cube"/>
                 {{ item.name }}
               </router-link>
@@ -287,34 +295,37 @@
             {{ $root.lang('users') }}
           </a>
 
-          <ul class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-72 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+          <ul class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
 
             <li
                 v-if="$root.hasPermissions('edit_user')"
-                @mouseover="hoverSubItem">
+                @mouseover="hoverSubItem"
+                class="group/item">
               <router-link
                   :to="{ name: 'UserList' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-user-circle fa-fw mr-3"/> {{ $root.lang('users') }}
               </router-link>
             </li>
 
             <li
                 v-if="$root.hasPermissions('edit_role')"
-                @mouseover="hoverSubItem">
+                @mouseover="hoverSubItem"
+                class="group/item">
               <router-link
                   :to="{ name: 'RoleList' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-legal fa-fw mr-3"/> {{ $root.lang('role_management_title') }}
               </router-link>
             </li>
 
             <li
                 v-if="$root.hasPermissions('access_permissions')"
-                @mouseover="hoverSubItem">
+                @mouseover="hoverSubItem"
+                class="group/item">
               <router-link
                   :to="{ name: 'UserPermissionsIndex' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-universal-access fa-fw mr-3"/> {{ $root.lang('manager_permissions') }}
               </router-link>
             </li>
@@ -332,22 +343,24 @@
             {{ $root.lang('tools') }}
           </a>
 
-          <ul class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-72 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+          <ul class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
 
             <li
-                @mouseover="hoverSubItem">
+                @mouseover="hoverSubItem"
+                class="group/item">
               <router-link
                   :to="{ name: 'ClearCacheIndex' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-recycle fa-fw mr-3"/> {{ $root.lang('refresh_site') }}
               </router-link>
             </li>
 
             <li
-                @mouseover="hoverSubItem">
+                @mouseover="hoverSubItem"
+                class="group/item">
               <router-link
                   :to="{ name: 'SearchIndex' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-search fa-fw mr-3"/> {{ $root.lang('search') }}
               </router-link>
             </li>
@@ -371,20 +384,23 @@
             <i class="fa fa-user-circle text-xl ms-2"/>
           </a>
 
-          <ul class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-72 shadow-2xl rounded-b right-0 divide-y divide-gray-100">
+          <ul class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-80 shadow-2xl rounded-b right-0 divide-y divide-gray-100">
 
             <li
-                @mouseover="hoverSubItem">
+                @mouseover="hoverSubItem"
+                class="group/item">
               <router-link
                   :to="{ name: 'AuthPasswordChange' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-lock fa-fw mr-3"/> {{ $root.lang('change_password') }}
               </router-link>
             </li>
 
             <li
-                @mouseover="hoverSubItem">
-              <a href="logout" class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                @mouseover="hoverSubItem"
+                class="group/item">
+              <a href="logout"
+                 class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-sign-out fa-fw mr-3"/> {{ $root.lang('logout') }}
               </a>
             </li>
@@ -395,40 +411,43 @@
 
         <li
             v-if="$root.hasPermissions(['settings', 'view_eventlog', 'logs', 'help'])"
-            class="relative h-full parent"
-            @mouseover="hoverItem">
+            @mouseover="hoverItem"
+            class="relative h-full parent">
 
           <a class="flex h-full items-center px-4 relative z-20 select-none cursor-default">
             <i class="fa fa-cogs text-xl"/>
           </a>
 
-          <ul class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-72 shadow-2xl rounded-b right-0 divide-y divide-gray-100">
+          <ul class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-80 shadow-2xl rounded-b right-0 divide-y divide-gray-100">
 
             <li
                 v-if="$root.hasPermissions('settings')"
-                @mouseover="hoverSubItem">
+                @mouseover="hoverSubItem"
+                class="group/item">
               <router-link
                   :to="{ name: 'ConfigurationIndex' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-sliders fa-fw mr-3"/> {{ $root.lang('edit_settings') }}
               </router-link>
             </li>
 
             <li
-                @mouseover="hoverSubItem">
+                @mouseover="hoverSubItem"
+                class="group/item">
               <router-link
                   :to="{ name: 'SchedulesIndex' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-calendar fa-fw mr-3"/> {{ $root.lang('site_schedule') }}
               </router-link>
             </li>
 
             <li
                 v-if="$root.hasPermissions('view_eventlog')"
-                @mouseover="hoverSubItem">
+                @mouseover="hoverSubItem"
+                class="group/item">
               <router-link
                   :to="{ name: 'EventLogList' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-exclamation-triangle fa-fw mr-3"/> {{ $root.lang('eventlog_viewer') }}
               </router-link>
             </li>
@@ -436,19 +455,21 @@
             <template v-if="$root.hasPermissions('logs')">
 
               <li
-                  @mouseover="hoverSubItem">
+                  @mouseover="hoverSubItem"
+                  class="group/item">
                 <router-link
                     :to="{ name: 'SystemLogIndex' }"
-                    class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                    class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                   <i class="fa fa-user-secret fa-fw mr-3"/> {{ $root.lang('view_logging') }}
                 </router-link>
               </li>
 
               <li
-                  @mouseover="hoverSubItem">
+                  @mouseover="hoverSubItem"
+                  class="group/item">
                 <router-link
                     :to="{ name: 'SystemInfoIndex' }"
-                    class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                    class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                   <i class="fa fa-info-circle fa-fw mr-3"/> {{ $root.lang('view_sysinfo') }}
                 </router-link>
               </li>
@@ -532,6 +553,7 @@ export default {
       event.currentTarget.classList.add('hover')
     },
     hoverSubItem (event) {
+      this.$el.querySelectorAll('ul.nav > li > ul li.hover').forEach(i => i.classList.remove('hover'))
       event.currentTarget.parentElement.querySelectorAll(':scope > li.hover').forEach(i => i.classList.remove('hover'))
       event.currentTarget.classList.add('hover')
     },

@@ -5,8 +5,8 @@
           <a v-for="(tab, i) in tabs"
              :key="i"
              :data-to="tab.fullPath"
-             class="h-8 inline-flex justify-between items-center no-underline hover:bg-gray-700 text-gray-200 border-r border-r-gray-800 hover:border-b-gray-700 hover:text-white text-sm relative select-none	cursor-pointer"
-             :class="[(isActive(tab) ? 'active bg-gray-700 text-white after:content-[\'\'] after:absolute after:bottom-0 after:w-full after:h-[3px] after:bg-blue-600' : '') + ' ' + tab.class]"
+             class="h-8 inline-flex justify-between items-center no-underline hover:bg-gray-700 text-gray-200 border-r border-r-gray-800 hover:border-b-gray-700 hover:text-white relative select-none	cursor-pointer"
+             :class="[(isActive(tab) ? 'active bg-gray-600 text-white after:content-[\'\'] after:absolute after:bottom-0 after:w-full after:h-[3px] after:bg-blue-600' : '') + ' ' + tab.class]"
              :title="titleTab(tab.title)"
              @click="clickTab(tab)"
              @dblclick="dblClickTab(tab)">
