@@ -163,8 +163,8 @@
                   class-name="px-0 -mx-5"
                   link-name="TvIndex"
                   :search-input="true"
-                  :txt-new="$store.getters['Lang/get']('new_tmplvars')"
-                  :txt-help="$store.getters['Lang/get']('tmplvars_management_msg')"
+                  :txt-new="$root.lang('new_tmplvars')"
+                  :txt-help="$root.lang('tmplvars_management_msg')"
                   checkbox="checkbox"
                   filter="ajax"
                   @action="action"
@@ -193,7 +193,7 @@ export default {
   data () {
     return {
       loading: false,
-      icon: 'fa fa-code',
+      icon: 'fa fa-newspaper',
       errors: {},
       data: {},
       meta: {
@@ -217,7 +217,7 @@ export default {
   },
 
   created () {
-    this.$emit('titleTab', {
+    this.$emit('setTab', {
       icon: this.icon,
       title: this.title
     })
@@ -226,6 +226,7 @@ export default {
       this.read(this.id)
     } else {
       this.loading = true
+      this.setData()
     }
   },
 
@@ -264,13 +265,31 @@ export default {
       }
     },
 
+    setData (data) {
+      this.data = data?.data || {}
+      this.meta = data?.meta || {}
+      this.$emit('setTab', { title: this.title })
+      this.loading = true
+
+      const unwatchData = this.$watch('data', () => {
+        this.$emit('setTab', { changed: true })
+        unwatchData()
+      }, {
+        deep: true
+      })
+
+      const unwatchMeta = this.$watch('meta', () => {
+        this.$emit('setTab', { changed: true })
+        unwatchMeta()
+      }, {
+        deep: true
+      })
+    },
+
     async create (data) {
       try {
         let response = await axios.post('api/template', data)
-        this.data = response.data.data
-        this.meta = response.data.meta
-        this.$emit('titleTab', this.data.templatename)
-        this.loading = true
+        this.setData(response.data)
       } catch (e) {
         if (e.response.status === 422) {
           this.errors = e.response.data.errors
@@ -280,20 +299,14 @@ export default {
 
     async read (id) {
       let response = await axios.get('api/template/' + id)
-      this.data = response.data.data
-      this.meta = response.data.meta
-      this.$emit('titleTab', this.data.templatename)
-      this.loading = true
+      this.setData(response.data)
     },
 
     async update (data) {
       this.errors = {}
       try {
         let response = await axios.put('api/template/' + data.id, data)
-        this.data = response.data.data
-        this.meta = response.data.meta
-        this.$emit('titleTab', this.data.templatename)
-        this.loading = true
+        this.setData(response.data)
       } catch (e) {
         if (e.response.status === 422) {
           this.errors = e.response.data.errors
