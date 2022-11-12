@@ -118,7 +118,7 @@ class TemplateController extends Controller
                     $category->tvs()
                         ->whereKeyNot($tvs->pluck('id'))
                         ->where(fn($query) => $filter ? $query->where('name', 'like', '%' . $filter . '%') : null)
-                        ->paginate(1, '*', 'page_' . $category->getKey())
+                        ->paginate(100, '*', 'page_' . $category->getKey())
                 );
 
                 return array_merge(

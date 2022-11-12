@@ -20,9 +20,12 @@
               @click="clearFilter"
           />
         </div>
-        <a v-if="txtHelp" href="javascript:;"
-           class="bg-blue-600 border border-transparent hover:bg-blue-700 text-white font-bold py-1 px-2 text-xs rounded-r"
-           @click="msg=!msg">{{ $root.lang('help') }}</a>
+        <span v-if="txtHelp"
+           class="bg-blue-600 border border-transparent hover:bg-blue-700 text-white font-bold py-1 px-2 text-xs rounded-r cursor-pointer"
+           @click="msg=!msg">
+          <i class="far fa-question-circle mr-1"/>
+          {{ $root.lang('help') }}
+        </span>
       </div>
       <div class="bg-blue-100 rounded p-4 m-0 mt-3" v-html="txtHelp" v-if="msg"/>
     </div>
@@ -79,9 +82,9 @@
                         v-model="item['@selected']"
                         class="mr-3 peer/check"/>
 
-                    <i :class="linkIcon" class="mr-1"></i>
-                    <i class="fa fa-lock fa-fw mr-1 text-rose-500" v-if="item.locked"/>
-                    <span class="group-hover/item:text-blue-700 peer-checked/check:font-bold mr-1">{{ item.name }}</span>
+                    <i v-if="linkIcon" :class="linkIcon" class="mr-2 peer/icon"></i>
+                    <i class="fa fa-lock fa-fw mr-1 -ml-5 text-rose-500 text-xs peer-[.fa]/icon:-ml-4 peer-[.fa]/icon:mr-0" v-if="item.locked"/>
+                    <span class="group-hover/item:text-blue-700 mr-1 peer-checked/check:font-bold">{{ item.name }}</span>
                     <span class="text-xs">({{ item.id }})</span>
                     <span class="ml-3 text-xs" v-html="item.description"/>
 
@@ -93,11 +96,11 @@
                     v-else
                     :to="{ name: linkName, params: { id: item.id } }"
                     class="grow inline-flex items-center py-1 pr-5 select-none group/item"
-                    :class="[item.disabled ? 'text-rose-700/75': '']">
+                    :class="{ 'text-rose-700/75': item.disabled }">
 
-                  <i :class="linkIcon" class="mr-1"></i>
-                  <i class="fa fa-lock fa-fw mr-1 text-rose-500" v-if="item.locked"/>
-                  <span class="text-blue-500 group-hover/item:text-blue-700 mr-1">{{ item.name }}</span>
+                  <i v-if="linkIcon" :class="linkIcon" class="mr-2 peer/icon"></i>
+                  <i class="fa fa-lock fa-fw mr-1 -ml-5 text-rose-500 text-xs peer-[.fa]/icon:-ml-4 peer-[.fa]/icon:mr-0" v-if="item.locked"/>
+                  <span class="group-hover/item:text-blue-700 mr-1">{{ item.name }}</span>
                   <span class="text-xs">({{ item.id }})</span>
                   <span class="ml-3 text-xs" v-html="item.description"/>
 

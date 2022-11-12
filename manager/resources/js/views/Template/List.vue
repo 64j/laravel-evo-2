@@ -25,7 +25,7 @@ export default {
           icon: 'far fa-clone fa-fw hover:text-blue-500'
         },
         delete: {
-          icon: 'fa fa-trash fa-fw hover:text-rose-500'
+          icon: 'fa fa-trash fa-fw text-rose-500 hover:text-rose-700'
         }
       }
     }
