@@ -1,40 +1,43 @@
 import diff from '@/utils/diff'
+import store from '@/store'
 
 const state = {
   keys: [],
   values: []
 }
 const mutations = {
-  ADD_MULTI_TAB_VALUE: (state, tab) => {
-    if (state.values.some((v) => {
+  addTabValue: (state, tab) => {
+    state.values.forEach(v => v.active = false)
+    tab.active = true
+
+    if (state.values.some(v => {
       if (v.name === tab.name && (v.meta.groupTab || !v.meta.groupTab && diff(v.params, tab.params))) {
-        for (let i in v) {
-          if (tab[i]) {
-            v[i] = tab[i]
-          }
-        }
+        Object.assign(v, tab)
+        document.title = (v.title && v.title + ' - ' || '') + store.getters['Config/get']('site_name') + ' (EVO CMS Manager)'
         return true
       }
       return false
     })) {
       return
     }
+
     state.values.push(
-      Object.assign({}, tab, {
+      Object.assign(tab, {
         icon: tab.meta.icon || '',
         class: tab.meta.class || '',
-        title: ((typeof tab.meta.title !== 'undefined' ? tab.meta.title : (tab.name || 'no-name')) + ' ' + (!tab.meta.groupTab && tab.params && tab.params.id ? tab.params.id : '')).trim()
+        title: ((typeof tab.meta.title !== 'undefined' ? tab.meta.title : (tab.name || 'no-name')) + ' ' +
+          (!tab.meta.groupTab && tab.params && tab.params.id ? tab.params.id : '')).trim()
       })
     )
   },
-  ADD_MULTI_TAB_KEY: (state, tab) => {
+  addTabKey: (state, tab) => {
     const key = tab.path
     if (state.keys.includes(key)) return
     if (!tab.meta['noCache']) {
       state.keys.push(key)
     }
   },
-  DEL_MULTI_TAB_VALUE: (state, tab) => {
+  delTabValue: (state, tab) => {
     for (const [i, v] of state.values.entries()) {
       if (v.path === tab.path) {
         state.values.splice(i, 1)
@@ -42,17 +45,17 @@ const mutations = {
       }
     }
   },
-  DEL_MULTI_TAB_KEY: (state, tab) => {
+  delTabKey: (state, tab) => {
     const index = state.keys.indexOf(tab.path)
     index > -1 && state.keys.splice(index, 1)
   },
-  DEL_ALL_MULTI_TAB_KEYS: state => {
+  delTabKeys: state => {
     state.keys = []
   },
-  DEL_ALL_MULTI_TAB_VALUES: state => {
+  delTabValues: state => {
     state.values = []
   },
-  REPLACE_MULTI_TAB_VALUE: (state, { route, tab }) => {
+  replaceTabValue: (state, { route, tab }) => {
     for (const [i, v] of state.values.entries()) {
       if (v.path === route.path) {
         state.values.splice(i, 1, tab)
@@ -63,8 +66,11 @@ const mutations = {
 }
 const actions = {
   addTab ({ commit }, tab) {
-    commit('ADD_MULTI_TAB_VALUE', tab)
-    commit('ADD_MULTI_TAB_KEY', tab)
+    return new Promise(resolve => {
+      commit('addTabValue', tab)
+      commit('addTabKey', tab)
+      resolve(tab)
+    })
   },
   delTab ({ dispatch, state }, tab) {
     return new Promise(resolve => {
@@ -77,10 +83,10 @@ const actions = {
     })
   },
   delTabValue ({ commit }, tab) {
-    commit('DEL_MULTI_TAB_VALUE', tab)
+    commit('delTabValue', tab)
   },
   delTabKey ({ commit }, tab) {
-    commit('DEL_MULTI_TAB_KEY', tab)
+    commit('delTabKey', tab)
   },
   delAllTabs ({ dispatch, state }, tab) {
     return new Promise(resolve => {
@@ -94,20 +100,20 @@ const actions = {
   },
   delAllKeysTabs ({ commit, state }) {
     return new Promise(resolve => {
-      commit('DEL_ALL_MULTI_TAB_KEYS')
+      commit('delTabKeys')
       resolve([...state.keys])
     })
   },
   delAllValuesTabs ({ commit, state }) {
     return new Promise(resolve => {
-      commit('DEL_ALL_MULTI_TAB_VALUES')
+      commit('delTabValues')
       resolve([...state.values])
     })
   },
   replaceTab ({ commit }, { route, tab }) {
     return new Promise(resolve => {
       //dispatch('delTabKey', route)
-      commit('REPLACE_MULTI_TAB_VALUE', { route, tab })
+      commit('replaceTabValue', { route, tab })
       resolve({
         tab: tab
       })
@@ -117,7 +123,7 @@ const actions = {
 
 const getters = {
   keys: (state) => state.keys,
-  values: (state) => state.values,
+  values: (state) => state.values
 }
 
 export default {

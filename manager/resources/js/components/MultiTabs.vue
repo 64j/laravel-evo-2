@@ -6,7 +6,7 @@
              :key="i"
              :data-to="tab.fullPath"
              class="h-8 inline-flex justify-between items-center no-underline hover:bg-gray-700 text-gray-200 border-r border-r-gray-800 hover:border-b-gray-700 hover:text-white relative select-none	cursor-pointer"
-             :class="[(isActive(tab) ? 'active bg-gray-600 text-white after:content-[\'\'] after:absolute after:bottom-0 after:w-full after:h-[3px] after:bg-blue-600' : '') + ' ' + tab.class]"
+             :class="[tab.active ? 'active bg-gray-600 text-white after:content-[\'\'] after:absolute after:bottom-0 after:w-full after:h-[3px] after:bg-blue-600' : '', tab.class]"
              :title="tab.title"
              @click="clickTab(tab)"
              @dblclick="dblClickTab(tab)">
@@ -41,6 +41,7 @@
 <script>
 import diff from '@/utils/diff'
 import CustomKeepAlive from '@/utils/keep-alive'
+import store from '@/store'
 
 export default {
   name: 'MultiTabsView',
@@ -73,7 +74,6 @@ export default {
     },
     isActive (tab) {
       const active = tab.name === this.$route.name && (tab?.meta?.groupTab || !tab?.meta?.groupTab && diff(tab.params, this.$route.params))
-      tab.active = active
       if (active) {
         const title = tab.title && tab.title.replace(/<\/?[^>]+>/ig, '').trim() || ''
         document.title = (title && title + ' - ' || '') + this.$store.getters['Config/get']('site_name') + ' (EVO CMS Manager)'
@@ -92,23 +92,9 @@ export default {
       })
     },
     setTab (data) {
-      this.tabs.forEach(tab => {
-        if (tab.active) {
-          Object.assign(tab, data)
-        }
-      })
-    },
-    setTitleTab (data) {
-      for (let i in this.tabs) {
-        if (this.tabs[i].active/* this.isActive(this.tabs[i])*/) {
-          if (typeof data === 'string') {
-            this.tabs[i].title = data
-          } else {
-            Object.assign(this.tabs[i], data)
-          }
-          break
-        }
-      }
+      this.tabs.forEach(tab => tab.active && Object.assign(tab, data))
+      document.title = (data.title && data.title + ' - ' || '') + store.getters['Config/get']('site_name') +
+          ' (EVO CMS Manager)'
     },
     route (route) {
       return route.meta['groupTab'] ? this.$router.resolve(route) : route
@@ -122,7 +108,7 @@ export default {
     addTab (route) {
       route = route || this.$route
       if (route.name && !route.meta['noTab']) {
-        this.$store.dispatch('MultiTabs/addTab', this.route(route)).then(() => {
+        this.$store.dispatch('MultiTabs/addTab', this.route(route)).then(tab => {
           const key = this.tabKey(route)
           const panel = this.$el.parentElement.querySelector('.multi-tabs-panel')
           const frames = this.$el.parentElement.querySelector('.multi-tabs-panel-frames')
@@ -152,7 +138,7 @@ export default {
         if (frames) {
           frames.querySelectorAll('iframe[data-key="' + key + '"]').forEach(i => i.parentElement.removeChild(i))
         }
-        if (this.isActive(tab)) {
+        if (tab.active) {
           this.toPrevTab(tab, () => this.$store.dispatch('MultiTabs/delTab', tab))
         } else {
           this.$store.dispatch('MultiTabs/delTab', tab)
