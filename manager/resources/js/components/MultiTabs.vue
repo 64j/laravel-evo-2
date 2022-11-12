@@ -193,8 +193,8 @@ export default {
     },
     toTab (to, refresh) {
       const route = this.$route
+      this.closeTab(route)
       this.$router.push(to).then(() => {
-        this.closeTab(route)
         if (refresh) {
           const tab = this.$router.resolve(to)
           this.$router.replace('/redirect' + tab.fullPath).then(() => {
