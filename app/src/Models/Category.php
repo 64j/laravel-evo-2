@@ -213,8 +213,8 @@ class Category extends Model
             ->select([
                 'id',
                 'name',
-                'caption',
-                'description',
+                'caption as description',
+                'description as intro',
                 'locked',
                 'category',
             ])

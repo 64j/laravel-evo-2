@@ -36,18 +36,19 @@
         <li :key="'category-' + category.id" v-if="Object.values(category.data).filter(v => !v.hidden).length">
 
           <div v-if="!hiddenCategories"
-               class="flex justify-between items-center px-5 bg-slate-200 border">
-            <div class="py-1">
+               class="flex justify-between items-center px-5 bg-slate-200">
+            <label class="py-1">
               <input
                   v-if="checkbox"
                   type="checkbox"
                   v-model="category['@selected']"
+                  @change="checkAll(category)"
                   class="mr-3 peer/check"/>
 
-              <span class="text-md font-bold mr-2">{{ category.name }} </span>
-              <small>({{ category.id }})</small>
-            </div>
-            <div v-if="category.total">
+              <span class="font-bold mr-1">{{ category.name }}</span>
+              <span class="text-xs">({{ category.id }})</span>
+            </label>
+            <div v-if="category.total && category.total > category['per_page']">
               <i
                   :class="{ 'pointer-events-none text-gray-400' : !category['prev_page_url'] }"
                   class="fa fa-angle-left fa-fw text-lg cursor-pointer hover:text-blue-500"
@@ -67,23 +68,26 @@
                   :key="'item-' + item.id"
                   class="flex flex-1 justify-between px-5 items-center hover:bg-slate-100">
 
-                <label v-if="checkbox"
-                       class="grow inline-flex items-center py-1 pr-5 select-none group/item">
+                <template v-if="checkbox">
 
-                  <input
-                      type="checkbox"
-                      :id="`checkbox-item-`+item.id"
-                      :value="item.id"
-                      v-model="item['@selected']"
-                      class="mr-3 peer/check"/>
+                  <label class="grow inline-flex items-center py-1 select-none group/item">
 
-                  <i :class="linkIcon" class="mr-1"></i>
-                  <i class="fa fa-lock fa-fw mr-1 text-rose-500" v-if="item.locked"/>
-                  <span class="group-hover/item:text-blue-700 peer-checked/check:font-bold mr-1">{{ item.name }}</span>
-                  <span class="text-xs">({{ item.id }})</span>
-                  <span class="ml-3 text-xs" v-html="item.description"/>
+                    <input
+                        type="checkbox"
+                        :id="`checkbox-item-`+item.id"
+                        :value="item.id"
+                        v-model="item['@selected']"
+                        class="mr-3 peer/check"/>
 
-                </label>
+                    <i :class="linkIcon" class="mr-1"></i>
+                    <i class="fa fa-lock fa-fw mr-1 text-rose-500" v-if="item.locked"/>
+                    <span class="group-hover/item:text-blue-700 peer-checked/check:font-bold mr-1">{{ item.name }}</span>
+                    <span class="text-xs">({{ item.id }})</span>
+                    <span class="ml-3 text-xs" v-html="item.description"/>
+
+                  </label>
+
+                </template>
 
                 <router-link
                     v-else
@@ -170,21 +174,9 @@ export default {
       msg: false
     }
   },
-  watch: {
-    'data': {
-      handler (categories) {
-        categories.forEach(category => {
-          category.data.forEach(item => {
-            item['@selected'] = category['@selected']
-          })
-        })
-      },
-      deep: true
-    }
-  },
   methods: {
-    checkAll (event, category) {
-      category.data.forEach(input => input['@selected'] = event.target.checked)
+    checkAll (category) {
+      category.data.forEach(item => item['@selected'] = category['@selected'])
     },
     clearFilter (event) {
       const filterElement = event.target.previousElementSibling

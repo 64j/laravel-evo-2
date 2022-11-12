@@ -25,9 +25,9 @@
               <div class="flex flex-wrap md:flex-nowrap mb-1">
                 <label class="basis-full md:basis-80">
                   {{ $root.lang('template_name') }}
-                  <small v-if="data.id === $root.config('default_template')" class="text-danger d-block">
+                  <span v-if="data.id === $root.config('default_template')" class="text-sm text-rose-500 block">
                     {{ $root.lang('defaulttemplate_title') }}
-                  </small>
+                  </span>
                 </label>
                 <div class="basis-full">
                   <div class="form-control-name relative">
@@ -44,7 +44,6 @@
                          :class="[data.locked ? 'text-rose-500 hover:text-rose-600' : 'text-gray-400 hover:text-gray-500 fa-lock-open']"></i>
                     </label>
                   </div>
-                  <small class="form-text text-danger hide" id='savingMessage'></small>
                 </div>
               </div>
 
@@ -123,55 +122,55 @@
 
         <template #Tvs>
           <div class="py-4 px-5">
-            <div class="form-group">
+
+            <div v-if="Object.values(meta.tvs || {}).length">
               <p class="font-bold">{{ $root.lang('template_tv_msg') }}</p>
 
-              <div class="row mb-3">
-                <template v-if="Object.values(meta.tvs || {}).length">
-                  <ul class="mt-2 py-3 -mx-5 border-t border-gray-200 divide-y divide-gray-100">
-                    <li v-for="item in meta.tvs"
-                        class="flex flex-1 justify-between px-5 items-center hover:bg-slate-100">
-                      <label class="grow inline-flex items-center py-1 pr-5 select-none group/item">
-                        <input
-                            type="checkbox"
-                            :id="`checkbox-item-`+item.id"
-                            :value="item.id"
-                            v-model="item['@selected']"
-                            checked="checked"
-                            class="mr-3 peer/check"/>
+              <ul class="mt-2 py-3 -mx-5 border-t border-gray-200 divide-y divide-gray-100">
+                <li v-for="item in meta.tvs"
+                    class="flex flex-1 justify-between px-5 items-center hover:bg-slate-100">
+                  <label class="grow inline-flex items-center py-1 select-none group/item">
+                    <input
+                        type="checkbox"
+                        :id="`checkbox-item-`+item.id"
+                        :value="item.id"
+                        v-model="item['@selected']"
+                        checked="checked"
+                        class="mr-3 peer/check"/>
 
-                        <i class="fa fa-lock fa-fw mr-1 text-rose-500" v-if="item.locked"/>
-                        <span class="group-hover/item:text-blue-700 peer-checked/check:font-bold mr-1">
+                    <i class="fa fa-lock fa-fw mr-1 text-rose-500" v-if="item.locked"/>
+                    <span class="group-hover/item:text-blue-700 peer-checked/check:font-bold mr-1">
                           {{ item.name }}
                         </span>
-                        <span class="text-xs">({{ item.id }})</span>
-                        <span class="ml-3 text-xs" v-html="item.description"/>
-                      </label>
-                    </li>
-                  </ul>
-                </template>
-
-                <p v-else class="text-danger">{{ $root.lang('template_no_tv') }}</p>
-              </div>
-
-              <div class="row" v-if="meta.categories != null">
-                <p class="font-bold">{{ $root.lang('template_notassigned_tv') }}</p>
-
-                <Panel
-                    :data="meta.categories"
-                    class-name="px-0 -mx-5"
-                    link-name="TvIndex"
-                    :search-input="true"
-                    :txt-new="$store.getters['Lang/get']('new_tmplvars')"
-                    :txt-help="$store.getters['Lang/get']('tmplvars_management_msg')"
-                    checkbox="checkbox"
-                    :checkbox-checked1="tvSelected"
-                    filter="ajax"
-                    @action="action"
-                />
-              </div>
-
+                    <span class="text-xs">({{ item.id }})</span>
+                    <span class="ml-3 text-xs" v-html="item.description"/>
+                  </label>
+                  <router-link :to="{ name: 'TvIndex', params: { id: item.id } }">
+                    <i class="far fa-edit fa-fw hover:text-blue-500"/>
+                  </router-link>
+                </li>
+              </ul>
             </div>
+
+            <p v-else class="font-bold text-rose-500 mb-3">{{ $root.lang('template_no_tv') }}</p>
+
+            <div v-if="meta.categories != null">
+              <p class="font-bold">{{ $root.lang('template_notassigned_tv') }}</p>
+
+              <Panel
+                  :data="meta.categories"
+                  :actions="categoriesActions"
+                  class-name="px-0 -mx-5"
+                  link-name="TvIndex"
+                  :search-input="true"
+                  :txt-new="$store.getters['Lang/get']('new_tmplvars')"
+                  :txt-help="$store.getters['Lang/get']('tmplvars_management_msg')"
+                  checkbox="checkbox"
+                  filter="ajax"
+                  @action="action"
+              />
+            </div>
+
           </div>
         </template>
 
@@ -200,7 +199,11 @@ export default {
       meta: {
         categories: []
       },
-      tvSelected: []
+      categoriesActions: {
+        tvEdit: {
+          icon: 'far fa-edit fa-fw hover:text-blue-500'
+        }
+      }
     }
   },
 
@@ -246,6 +249,10 @@ export default {
 
         case 'cancel':
           this.$emit('toTab', { name: 'ElementsIndex', query: { resourcesTab: 0 } }, true)
+          break
+
+        case 'tvEdit':
+          this.$router.push({ name: 'TvIndex', params: { id: item.id } })
           break
 
         case 'filter':

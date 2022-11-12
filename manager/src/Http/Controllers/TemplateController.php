@@ -98,7 +98,7 @@ class TemplateController extends Controller
     protected function getMeta(SiteTemplate $template): array
     {
         $tvs = SiteTmplvarTemplate::query()
-            ->with('tmplvar', fn($query) => $query->select('id', 'name', 'caption'))
+            ->with('tmplvar', fn($query) => $query->select('id', 'name', 'caption as description', 'description as intro'))
             ->where('templateid', $template->getKey())
             ->get()
             ->pluck('tmplvar')
