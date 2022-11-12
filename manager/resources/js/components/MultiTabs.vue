@@ -146,15 +146,17 @@ export default {
       }
     },
     closeTab (tab) {
-      const key = this.tabKey(tab)
-      const frames = this.$el.parentElement.querySelector('.multi-tabs-panel-frames')
-      if (frames) {
-        frames.querySelectorAll('iframe[data-key="' + key + '"]').forEach(i => i.parentElement.removeChild(i))
-      }
-      if (this.isActive(tab)) {
-        this.toPrevTab(tab, () => this.$store.dispatch('MultiTabs/delTab', tab))
-      } else {
-        this.$store.dispatch('MultiTabs/delTab', tab)
+      if (!tab['changed'] || tab['changed'] && confirm(this.$root.lang('close') + '?')) {
+        const key = this.tabKey(tab)
+        const frames = this.$el.parentElement.querySelector('.multi-tabs-panel-frames')
+        if (frames) {
+          frames.querySelectorAll('iframe[data-key="' + key + '"]').forEach(i => i.parentElement.removeChild(i))
+        }
+        if (this.isActive(tab)) {
+          this.toPrevTab(tab, () => this.$store.dispatch('MultiTabs/delTab', tab))
+        } else {
+          this.$store.dispatch('MultiTabs/delTab', tab)
+        }
       }
     },
     replaceTab(params) {
