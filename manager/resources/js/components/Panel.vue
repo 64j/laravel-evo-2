@@ -1,5 +1,6 @@
 <template>
   <div class="panel" :class="className">
+
     <div v-if="searchInput" class="py-3 px-5">
       <div class="input-group input-group-sm">
         <router-link
@@ -9,45 +10,85 @@
           <i class="fa fa-plus"/>
           {{ txtNew }}
         </router-link>
-        <input type="text" class="py-1 px-2 text-xs border-0 border-t border-b border-gray-300"
-               :placeholder="$root.lang('element_filter_msg')"
-               @keyup="filter">
+        <div class="inline-flex items-center relative">
+          <input type="text"
+                 class="py-1 pl-2 pr-5 w-80 text-xs border-0 border-t border-b peer/filter"
+                 :placeholder="$root.lang('element_filter_msg')"
+                 @keyup="setFilter">
+          <i
+              class="fa fa-circle-xmark text-gray-300 hover:text-rose-500 cursor-pointer absolute right-0 mx-1 invisible peer-[.active]/filter:visible"
+              @click="clearFilter"
+          />
+        </div>
         <a v-if="txtHelp" href="javascript:;"
            class="bg-blue-600 border border-transparent hover:bg-blue-700 text-white font-bold py-1 px-2 text-xs rounded-r"
            @click="msg=!msg">{{ $root.lang('help') }}</a>
       </div>
       <div class="bg-blue-100 rounded p-4 m-0 mt-3" v-html="txtHelp" v-if="msg"/>
     </div>
+
     <div v-if="!data" class="text-center p-4">
       <i class="fa fa-spinner fa-spin"/>
     </div>
+
     <ul v-else>
       <template v-for="category in data">
         <li :key="'category-' + category.id" v-if="Object.values(category.data).filter(v => !v.hidden).length">
 
-          <a v-if="!hiddenCategories"
-             class="block px-5 py-1 bg-slate-200 border">
-            <span class="text-md font-bold mr-2">{{ category.name }} </span>
-            <small>({{ category.id }})</small>
-          </a>
+          <div v-if="!hiddenCategories"
+               class="flex justify-between items-center px-5 bg-slate-200 border">
+            <div class="py-1">
+              <input
+                  v-if="checkbox"
+                  type="checkbox"
+                  v-model="category['@selected']"
+                  class="mr-3 peer/check"/>
 
-          <ul class="divide-y">
+              <span class="text-md font-bold mr-2">{{ category.name }} </span>
+              <small>({{ category.id }})</small>
+            </div>
+            <div v-if="category.total">
+              <i
+                  :class="{ 'pointer-events-none text-gray-400' : !category['prev_page_url'] }"
+                  class="fa fa-angle-left fa-fw text-lg cursor-pointer hover:text-blue-500"
+                  @click="$emit('action', 'paginate', category['prev_page_url'], category)"
+              />
+              <i
+                  :class="{ 'pointer-events-none text-gray-400' : !category['next_page_url'] }"
+                  class="fa fa-angle-right fa-fw text-lg cursor-pointer hover:text-blue-500"
+                  @click="$emit('action', 'paginate', category['next_page_url'], category)"
+              />
+            </div>
+          </div>
+
+          <ul class="divide-y divide-gray-100 pb-2">
             <template v-for="item in category.data">
               <li v-if="!item.hidden"
                   :key="'item-' + item.id"
                   class="flex flex-1 justify-between px-5 items-center hover:bg-slate-100">
 
-                <input v-if="checkbox"
-                       type="checkbox"
-                       :id="`checkbox-item-`+item.id"
-                       :value="item.id"
-                       :checked="~checkboxChecked.indexOf(item.id)"
-                       class="mr-2 p-0 border-gray-300"
-                       @change="$emit('action', checkbox, item, category)"/>
+                <label v-if="checkbox"
+                       class="grow inline-flex items-center py-1 pr-5 select-none group/item">
+
+                  <input
+                      type="checkbox"
+                      :id="`checkbox-item-`+item.id"
+                      :value="item.id"
+                      v-model="item['@selected']"
+                      class="mr-3 peer/check"/>
+
+                  <i :class="linkIcon" class="mr-1"></i>
+                  <i class="fa fa-lock fa-fw mr-1 text-rose-500" v-if="item.locked"/>
+                  <span class="group-hover/item:text-blue-700 peer-checked/check:font-bold mr-1">{{ item.name }}</span>
+                  <span class="text-xs">({{ item.id }})</span>
+                  <span class="ml-3 text-xs" v-html="item.description"/>
+
+                </label>
 
                 <router-link
+                    v-else
                     :to="{ name: linkName, params: { id: item.id } }"
-                    class="grow py-1 pr-5 text-md select-none group/item"
+                    class="grow inline-flex items-center py-1 pr-5 select-none group/item"
                     :class="[item.disabled ? 'text-rose-700/75': '']">
 
                   <i :class="linkIcon" class="mr-1"></i>
@@ -76,6 +117,7 @@
         </li>
       </template>
     </ul>
+
   </div>
 </template>
 
@@ -118,6 +160,9 @@ export default {
     },
     actions: {
       type: Object
+    },
+    filter: {
+      type: String
     }
   },
   data () {
@@ -125,27 +170,61 @@ export default {
       msg: false
     }
   },
+  watch: {
+    'data': {
+      handler (categories) {
+        categories.forEach(category => {
+          category.data.forEach(item => {
+            item['@selected'] = category['@selected']
+          })
+        })
+      },
+      deep: true
+    }
+  },
   methods: {
-    filter (event) {
+    checkAll (event, category) {
+      category.data.forEach(input => input['@selected'] = event.target.checked)
+    },
+    clearFilter (event) {
+      const filterElement = event.target.previousElementSibling
+      if (filterElement.value) {
+        filterElement.value = ''
+        filterElement.classList.remove('active')
+        this.$emit('action', 'filter', '')
+      }
+    },
+    setFilter (event) {
       const filter = event.target.value.toLowerCase()
-      if (filter.length) {
-        for (let i in this.data) {
-          let category = this.data[i]
-          for (let l in category.data) {
-            let item = category.data[l]
-            if (~item.name.toLowerCase().indexOf(filter)) {
-              delete (item.hidden)
-            } else {
-              item.hidden = true
+
+      if (filter) {
+        event.target.classList.add('active')
+      } else {
+        event.target.classList.remove('active')
+      }
+
+      if (this.filter === 'ajax') {
+        this.$emit('action', 'filter', filter)
+      } else {
+        if (filter.length) {
+          for (let i in this.data) {
+            let category = this.data[i]
+            for (let l in category.data) {
+              let item = category.data[l]
+              if (~item.name.toLowerCase().indexOf(filter)) {
+                delete (item.hidden)
+              } else {
+                item.hidden = true
+              }
             }
           }
-        }
-      } else {
-        for (let i in this.data) {
-          let category = this.data[i]
-          for (let l in category.data) {
-            let item = category.data[l]
-            delete (item.hidden)
+        } else {
+          for (let i in this.data) {
+            let category = this.data[i]
+            for (let l in category.data) {
+              let item = category.data[l]
+              delete (item.hidden)
+            }
           }
         }
       }

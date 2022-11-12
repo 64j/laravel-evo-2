@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Traits\Models\TimeMutatorTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -13,6 +14,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class SiteTemplate extends Model
 {
+    use TimeMutatorTrait;
+
     public const CREATED_AT = 'createdon';
     public const UPDATED_AT = 'editedon';
 
@@ -51,6 +54,26 @@ class SiteTemplate extends Model
     ];
 
     /**
+     * @param $value
+     *
+     * @return string
+     */
+    public function getCreatedonAttribute($value): string
+    {
+        return  $this->convertDateTime($value);
+    }
+
+    /**
+     * @param $value
+     *
+     * @return string
+     */
+    public function getEditedonAttribute($value): string
+    {
+        return  $this->convertDateTime($value);
+    }
+
+    /**
      * @return BelongsToMany
      */
     public function tvs(): BelongsToMany
@@ -63,10 +86,5 @@ class SiteTemplate extends Model
         )
             ->withPivot('rank')
             ->orderBy('pivot_rank');
-    }
-
-    public function tvsCategories()
-    {
-        return [];
     }
 }

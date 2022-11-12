@@ -22,7 +22,18 @@ class TemplateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //'templatename' => ['required', 'string'],
+            'templatename' => ['required', 'string'],
+//            'templatealias' => ['string'],
+            'description' => ['string'],
+            'editor_type' => ['int'],
+            'category' => ['int'],
+//            'icon' => ['string', 'nullable'],
+            'template_type' => ['int'],
+            'content' => ['string', 'nullable'],
+            'locked' => ['int'],
+            'selectable' => ['int'],
+//            'createdon' => ['date'],
+//            'editedon' => ['date'],
         ];
     }
 }

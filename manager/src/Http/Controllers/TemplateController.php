@@ -29,9 +29,12 @@ class TemplateController extends Controller
      */
     public function store(TemplateRequest $request): TemplateResource
     {
+        /** @var SiteTemplate $template */
         $template = SiteTemplate::query()->create($request->validated());
 
-        return new TemplateResource($template);
+        return (new TemplateResource($template))->additional([
+            'meta' => $this->getMeta($template),
+        ]);
     }
 
     /**
@@ -41,29 +44,8 @@ class TemplateController extends Controller
      */
     public function show(SiteTemplate $template): TemplateResource
     {
-        $tvs = SiteTmplvarTemplate::query()
-            ->with('tmplvar', fn ($query) => $query->select('id', 'name', 'caption'))
-            ->where('templateid', $template->getKey())
-            ->get()
-            ->pluck('tmplvar');
-
-        $unselected = Category::query()
-            ->select('id', 'category as name')
-            ->with('tvs', fn($query) => $query->whereNotIn('id', $tvs->pluck('id'))->paginate())
-            ->whereHas('tvs')
-            ->get()
-            ->map(function ($category) {
-                $category->data = $category->tvs;
-                unset($category->tvs);
-
-                return $category;
-            });
-
         return (new TemplateResource($template))->additional([
-            'meta' => [
-                'selected' => $tvs,
-                'unselected' => $unselected
-            ],
+            'meta' => $this->getMeta($template),
         ]);
     }
 
@@ -77,7 +59,23 @@ class TemplateController extends Controller
     {
         $template->update($request->validated());
 
-        return new TemplateResource($template);
+        SiteTmplvarTemplate::query()
+            ->where('templateid', $template->getKey())
+            ->delete();
+
+        $tvsTemplates = $request->input('tvs', []);
+        foreach ($tvsTemplates as &$tvsTemplate) {
+            $tvsTemplate = [
+                'tmplvarid' => $tvsTemplate,
+                'templateid' => $template->getKey(),
+            ];
+        }
+
+        SiteTmplvarTemplate::query()->upsert($tvsTemplates, 'tmplvarid');
+
+        return (new TemplateResource($template))->additional([
+            'meta' => $this->getMeta($template),
+        ]);
     }
 
     /**
@@ -90,5 +88,51 @@ class TemplateController extends Controller
         $template->delete();
 
         return response()->noContent();
+    }
+
+    /**
+     * @param SiteTemplate $template
+     *
+     * @return array
+     */
+    protected function getMeta(SiteTemplate $template): array
+    {
+        $tvs = SiteTmplvarTemplate::query()
+            ->with('tmplvar', fn($query) => $query->select('id', 'name', 'caption'))
+            ->where('templateid', $template->getKey())
+            ->get()
+            ->pluck('tmplvar')
+            ->map(function ($tv) {
+                $tv['@selected'] = true;
+
+                return $tv;
+            });
+
+        $filter = $this->app->request->get('filter', null);
+
+        $categories = Category::query()
+            ->get(['id', 'category as name'])
+            ->map(function (Category $category) use ($tvs, $filter) {
+                $category->setRelation(
+                    'tvs',
+                    $category->tvs()
+                        ->whereKeyNot($tvs->pluck('id'))
+                        ->where(fn($query) => $filter ? $query->where('name', 'like', '%' . $filter . '%') : null)
+                        ->paginate(1, '*', 'page_' . $category->getKey())
+                );
+
+                return array_merge(
+                    ['@selected' => false],
+                    $category->attributesToArray(),
+                    $category->tvs->toArray()
+                );
+            })
+            ->filter(fn($category) => $category['data'])
+            ->values();
+
+        return [
+            'tvs' => $tvs,
+            'categories' => !$filter && $categories->isEmpty() ? null : $categories,
+        ];
     }
 }

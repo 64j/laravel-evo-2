@@ -11,6 +11,9 @@ html { font-size: 13px; }
 body { font-size: 1rem; }
 html, body, #app { width: 100%; height: 100%; overflow: hidden; }
 .logo { width: 2rem; height: 2rem; background: url("../img/logo-empty.svg") no-repeat center center; background-size: contain; }
+[type='checkbox'], [type='radio'], [type='text'], [type='email'], [type='url'], [type='password'], [type='number'], [type='date'], [type='datetime-local'], [type='month'], [type='search'], [type='tel'], [type='time'], [type='week'], [multiple], textarea, select {
+    @apply border-gray-300
+}
 [type="checkbox"]:focus:not(:focus-visible), [type="radio"]:focus:not(:focus-visible) {
     @apply focus:ring-0 focus:ring-offset-0;
 }

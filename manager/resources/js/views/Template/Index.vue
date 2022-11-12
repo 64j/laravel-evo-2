@@ -124,53 +124,51 @@
         <template #Tvs>
           <div class="py-4 px-5">
             <div class="form-group">
-              <p>{{ $root.lang('template_tv_msg') }}</p>
+              <p class="font-bold">{{ $root.lang('template_tv_msg') }}</p>
 
-              <div class="row">
-                <template v-if="Object.values(meta.selected || {}).length">
-                  <ul class="mt-2 py-3 -mx-4 border-t border-gray-200 divide-y divide-gray-100">
-                    <li v-for="tv in meta.selected" class="py-1 hover:text-blue-500 hover:bg-slate-100">
-                      <router-link
-                          :to="{ name: 'TvIndex', params: { id: tv.id } }"
-                          class="block px-5">
-                        <span class="font-bold">{{ tv.name }}</span> ({{ tv.id }})
-                        <span v-if="tv.caption">- {{ tv.caption }}</span>
-                      </router-link>
+              <div class="row mb-3">
+                <template v-if="Object.values(meta.tvs || {}).length">
+                  <ul class="mt-2 py-3 -mx-5 border-t border-gray-200 divide-y divide-gray-100">
+                    <li v-for="item in meta.tvs"
+                        class="flex flex-1 justify-between px-5 items-center hover:bg-slate-100">
+                      <label class="grow inline-flex items-center py-1 pr-5 select-none group/item">
+                        <input
+                            type="checkbox"
+                            :id="`checkbox-item-`+item.id"
+                            :value="item.id"
+                            v-model="item['@selected']"
+                            checked="checked"
+                            class="mr-3 peer/check"/>
+
+                        <i class="fa fa-lock fa-fw mr-1 text-rose-500" v-if="item.locked"/>
+                        <span class="group-hover/item:text-blue-700 peer-checked/check:font-bold mr-1">
+                          {{ item.name }}
+                        </span>
+                        <span class="text-xs">({{ item.id }})</span>
+                        <span class="ml-3 text-xs" v-html="item.description"/>
+                      </label>
                     </li>
                   </ul>
-
-                  <!--                  <Panel-->
-                  <!--                      :data="meta.selected"-->
-                  <!--                      class-name="px-0 mb-4"-->
-                  <!--                      link-name="TvIndex"-->
-                  <!--                      link-icon="fa fa-list-alt"-->
-                  <!--                      checkbox="checkbox"-->
-                  <!--                      :checkbox-checked="tvSelected"-->
-                  <!--                      :hidden-categories="false"-->
-                  <!--                      @action="action"-->
-                  <!--                  />-->
                 </template>
 
                 <p v-else class="text-danger">{{ $root.lang('template_no_tv') }}</p>
               </div>
 
-              <div class="row">
-                <template v-if="Object.values(meta['unselected'] || {}).length">
-                  <p class="m-0">{{ $root.lang('template_notassigned_tv') }}</p>
+              <div class="row" v-if="meta.categories != null">
+                <p class="font-bold">{{ $root.lang('template_notassigned_tv') }}</p>
 
-                  <Panel
-                      :data="meta['unselected']"
-                      class-name="px-0 -mx-4"
-                      link-name="TvIndex"
-                      link-icon="fa fa-list-alt"
-                      :search-input="true"
-                      :txt-new="$store.getters['Lang/get']('new_tmplvars')"
-                      :txt-help="$store.getters['Lang/get']('tmplvars_management_msg')"
-                      checkbox="checkbox"
-                      :checkbox-checked1="tvSelected"
-                      @action="action"
-                  />
-                </template>
+                <Panel
+                    :data="meta.categories"
+                    class-name="px-0 -mx-5"
+                    link-name="TvIndex"
+                    :search-input="true"
+                    :txt-new="$store.getters['Lang/get']('new_tmplvars')"
+                    :txt-help="$store.getters['Lang/get']('tmplvars_management_msg')"
+                    checkbox="checkbox"
+                    :checkbox-checked1="tvSelected"
+                    filter="ajax"
+                    @action="action"
+                />
               </div>
 
             </div>
@@ -199,7 +197,10 @@ export default {
       icon: 'fa fa-code',
       errors: {},
       data: {},
-      meta: {}
+      meta: {
+        categories: []
+      },
+      tvSelected: []
     }
   },
 
@@ -226,14 +227,14 @@ export default {
   },
 
   methods: {
-    action (name, item) {
+    action (name, item, category) {
       switch (name) {
         case 'save':
           this.loading = false
           if (this.data.id) {
-            this.update({ ...this.data, tvSelected: this.tvSelected })
+            this.update({ ...this.data, tvs: this.tvs() })
           } else {
-            this.create({ ...this.data, tvSelected: this.tvSelected })
+            this.create({ ...this.data, tvs: this.tvs() })
           }
           break
 
@@ -246,6 +247,13 @@ export default {
         case 'cancel':
           this.$emit('toTab', { name: 'ElementsIndex', query: { resourcesTab: 0 } }, true)
           break
+
+        case 'filter':
+          this.filter(item)
+          break
+
+        case 'paginate':
+          this.paginate(item, category)
       }
     },
 
@@ -253,7 +261,9 @@ export default {
       try {
         let response = await axios.post('api/template', data)
         this.data = response.data.data
+        this.meta = response.data.meta
         this.$emit('titleTab', this.data.templatename)
+        this.loading = true
       } catch (e) {
         if (e.response.status === 422) {
           this.errors = e.response.data.errors
@@ -274,7 +284,9 @@ export default {
       try {
         let response = await axios.put('api/template/' + data.id, data)
         this.data = response.data.data
+        this.meta = response.data.meta
         this.$emit('titleTab', this.data.templatename)
+        this.loading = true
       } catch (e) {
         if (e.response.status === 422) {
           this.errors = e.response.data.errors
@@ -284,6 +296,39 @@ export default {
 
     async destroy (id) {
       await axios.delete('api/template/' + id)
+    },
+
+    async filter (str) {
+      if (!str || str.length > 1) {
+        let response = await axios.get('api/template/' + this.id + '?filter=' + str)
+        this.meta.categories = response.data.meta['categories'] ?? []
+      }
+    },
+
+    paginate (url, category) {
+      axios.get(url).then(response => {
+        if (response.data.meta['categories'] != null) {
+          response.data.meta['categories'].forEach((cat, i) => {
+            if (category.id === cat.id) {
+              this.meta.categories[i] = cat
+            }
+          })
+        }
+      })
+    },
+
+    tvs () {
+      let tvs = []
+
+      this.meta.tvs.forEach(tv => tv['@selected'] && tvs.push(tv.id))
+
+      if (this.meta.categories != null) {
+        this.meta.categories.forEach(category => {
+          category.data.forEach(tv => tv['@selected'] && tvs.push(tv.id))
+        })
+      }
+
+      return tvs
     }
   }
 }
