@@ -40,13 +40,13 @@ export default {
   },
 
   mounted () {
-    //this.get()
+    this.get()
   },
 
   methods: {
 
     async get () {
-      let response = await axios.post('api/tree')
+      let response = await axios.get('api/tree')
       this.data = response.data.data
       this.meta = response.data.meta
     },
@@ -63,23 +63,16 @@ export default {
       }
     },
 
-    toggle (node) {
+    async toggle (node) {
       this.loading = true
       if (node.children) {
-        axios.post(this.controller + '@get', {
-          parent: node.id,
-          close: node.id
-        }).then(() => {
-          delete node.children
-          this.loading = false
-        })
+        let response = await axios.get('api/tree?parent=' + node.id + '&close=' + node.id)
+        delete node.children
+        this.data = response.data.data
+        this.meta = response.data.meta
       } else {
-        axios.post(this.controller + '@get', {
-          parent: node.id
-        }).then(result => {
-          node.children = result.data
-          this.loading = false
-        })
+        let response = await axios.get('api/tree?parent=' + node.id)
+        node.children = response.data.data
       }
     },
 
