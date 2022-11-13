@@ -262,6 +262,7 @@ export default {
 
         case 'paginate':
           this.paginate(item, category)
+          break
       }
     },
 

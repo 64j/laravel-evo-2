@@ -10,20 +10,21 @@ use Illuminate\Support\Collection;
 class CategoryService
 {
     /**
-     * @return array
+     * @return Collection
      */
-    public function list(): array
+    public function list(): Collection
     {
-        $collect = Collection::make();
-
-        $collect->add([
-            'id' => 0,
-            'category' => __('global.no_category'),
-            'rank' => 0,
-        ]);
-
-        $collect = $collect->merge(Category::query()->get());
-
-        return $collect->keyBy('id')->toArray();
+        return Collection::make([
+            [
+                'id' => 0,
+                'category' => __('global.no_category'),
+                'rank' => 0,
+            ],
+        ])
+            ->merge(
+                Category::query()
+                    ->orderBy('rank')
+                    ->get()
+            );
     }
 }

@@ -7,6 +7,7 @@
       link-icon="fa fa-newspaper"
       :txt-new="$root.lang('new_template')"
       :txt-help="$root.lang('template_management_msg')"
+      filter="ajax"
       @action="action"
   />
 </template>
@@ -57,13 +58,40 @@ export default {
             // })
           }
           break
+
+        case 'filter':
+          this.filter(item)
+          break
+
+        case 'paginate':
+          this.paginate(item, category)
+          break
       }
     },
 
     async list (data) {
       let response = await axios.get('api/category/templates', data)
       this.data = response.data.data
-    }
+    },
+
+    async filter (str) {
+      if (!str || str.length > 1) {
+        let response = await axios.get('api/category/templates?filter=' + str)
+        this.data = response.data.data ?? []
+      }
+    },
+
+    paginate (url, category) {
+      axios.get(url).then(response => {
+        if (response.data.data != null) {
+          response.data.data.forEach((cat, i) => {
+            if (category.id === cat.id) {
+              this.data[i] = cat
+            }
+          })
+        }
+      })
+    },
   }
 }
 </script>

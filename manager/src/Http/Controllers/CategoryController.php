@@ -5,32 +5,43 @@ declare(strict_types=1);
 namespace Manager\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Config;
 
 class CategoryController extends Controller
 {
     /**
      * @param Request $request
      *
-     * @return array
+     * @return JsonResponse
      */
-    public function templates(Request $request): array
+    public function templates(Request $request): JsonResponse
     {
-        return [
-            'data' => Collection::make([Category::templatesNoCategory()])->merge(
-                Category::query()
-                    ->with('templates', fn($query) => $query->paginate())
-                    ->whereHas('templates')
-                    ->get()
-                    ->map(function ($category) {
-                        $category->data = $category->templates;
-                        unset($category->templates);
+        $filter = $request->get('filter');
 
-                        return $category;
-                    })
-            ),
-        ];
+        return $this->ok(
+            Category::query()
+                ->get(['id', 'category as name'])
+                ->map(function (Category $category) use ($filter) {
+                    $category->setRelation(
+                        'tvs',
+                        $category->tvs()
+                            ->where(fn($query) => $filter ? $query->where('name', 'like', '%' . $filter . '%') : null)
+                            ->paginate(Config::get('global.number_of_results'), '*', 'page_' . $category->getKey())
+                            ->appends('filter', $filter)
+                    );
+
+                    return array_merge(
+                        ['@selected' => false],
+                        $category->attributesToArray(),
+                        $category->tvs->toArray()
+                    );
+                })
+                ->filter(fn($category) => $category['data'])
+                ->values()
+        );
     }
 
     /**

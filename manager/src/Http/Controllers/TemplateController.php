@@ -109,7 +109,7 @@ class TemplateController extends Controller
                 return $tv;
             });
 
-        $filter = $this->app->request->get('filter', null);
+        $filter = $this->app->request->get('filter');
 
         $categories = Category::query()
             ->get(['id', 'category as name'])
@@ -120,6 +120,7 @@ class TemplateController extends Controller
                         ->whereKeyNot($tvs->pluck('id'))
                         ->where(fn($query) => $filter ? $query->where('name', 'like', '%' . $filter . '%') : null)
                         ->paginate(Config::get('global.number_of_results'), '*', 'page_' . $category->getKey())
+                        ->appends('filter', $filter)
                 );
 
                 return array_merge(
