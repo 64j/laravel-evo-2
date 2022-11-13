@@ -1,25 +1,35 @@
 <template>
   <div class="dynamic-tab-pane-control tab-pane" :id="id+`Pane`">
+
     <div class="tab-row-container overflow-hidden relative h-11 px-6">
-      <div class="tab-row overflow-hidden overflow-x-auto h-16 flex flex-nowrap">
+
+      <div class="tab-row overflow-hidden overflow-x-auto h-20 flex flex-nowrap">
         <template v-for="(tab, index) in data">
           <div :key="index"
                @mousedown="select(tab)"
                class="tab pt-3 pb-2 px-4 h-11 whitespace-nowrap cursor-pointer border-l border-t border-r uppercase"
                :class="[ tab.active ? 'active bg-zinc-50 border-gray-200' : 'border-transparent' ]"
                v-if="!tab.hidden">
-            <i class="mr-2" :class="tab.icon" v-if="tab.icon"></i>
-            <span class="select-none" :class="{ 'text-blue-700' : tab.active }">{{ tab.title }}</span>
+            <i class="mr-2 text-gray-600" :class="tab.icon" v-if="tab.icon"></i>
+            <span class="select-none" :class="[ tab.active ? 'text-gray-700' : 'text-gray-600' ]">{{ tab.title }}</span>
           </div>
         </template>
       </div>
+
       <i class="fa fa-angle-left prev absolute h-full top-0 left-0 flex items-center px-2"></i>
       <i class="fa fa-angle-right next absolute h-full top-0 right-0 flex items-center px-2"></i>
     </div>
-    <div v-for="(tab, index) in data" :key="index" v-show="tab.active" class="tab-page -mt-[1px] bg-zinc-50 pb-4 border-t border-b border-gray-200" :id="`tab`+tab.id">
+
+    <div
+        v-for="(tab, index) in data"
+        :key="index"
+        v-show="tab.active"
+        :id="`tab`+tab.id"
+        class="tab-page -mt-[1px] bg-zinc-50 pb-4 border-t border-b border-gray-200">
       <component :is="getComponent(index, tab)" v-if="tab.component && !tab.hidden"/>
       <slot :name="tab.id" v-else/>
     </div>
+
   </div>
 </template>
 

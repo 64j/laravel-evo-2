@@ -129,7 +129,7 @@
               <ul class="mt-2 py-3 -mx-5 border-t border-gray-200 divide-y divide-gray-100">
                 <li v-for="item in meta.tvs"
                     class="flex flex-1 justify-between px-5 items-center hover:bg-slate-100">
-                  <label class="grow inline-flex items-center py-1 select-none group/item">
+                  <label class="grow inline-flex items-center py-1 select-none text-gray-700 group/item">
                     <input
                         type="checkbox"
                         :id="`checkbox-item-`+item.id"
@@ -139,9 +139,9 @@
                         class="mr-3 peer/check"/>
 
                     <i class="fa fa-lock fa-fw mr-1 text-rose-500" v-if="item.locked"/>
-                    <span class="group-hover/item:text-blue-700 peer-checked/check:font-bold mr-1">
+                    <span class="mr-1 group-hover/item:text-blue-700 peer-checked/check:font-bold">
                           {{ item.name }}
-                        </span>
+                    </span>
                     <span class="text-xs">({{ item.id }})</span>
                     <span class="ml-3 text-xs" v-html="item.description"/>
                   </label>

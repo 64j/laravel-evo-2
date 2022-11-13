@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property SiteTmplvar[]|Collection $tvs
+ * @property SiteTemplate[]|Collection $templates
  */
 class Category extends Model
 {
@@ -200,8 +201,7 @@ class Category extends Model
                 'description',
                 'locked',
                 'category',
-            ])
-            ->orderBy('templatename');
+            ]);
     }
 
     /**
@@ -217,8 +217,7 @@ class Category extends Model
                 'description as intro',
                 'locked',
                 'category',
-            ])
-            ->orderBy('name');
+            ]);
     }
 
     /**
@@ -234,8 +233,7 @@ class Category extends Model
                 'locked',
                 'disabled',
                 'category',
-            ])
-            ->orderBy('name');
+            ]);
     }
 
     /**
@@ -251,8 +249,7 @@ class Category extends Model
                 'locked',
                 'disabled',
                 'category',
-            ])
-            ->orderBy('name');
+            ]);
     }
 
     /**
@@ -268,8 +265,7 @@ class Category extends Model
                 'locked',
                 'disabled',
                 'category',
-            ])
-            ->orderBy('name');
+            ]);
     }
 
     /**
@@ -285,7 +281,6 @@ class Category extends Model
                 'locked',
                 'disabled',
                 'category',
-            ])
-            ->orderBy('name');
+            ]);
     }
 }

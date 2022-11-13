@@ -34,7 +34,7 @@
 
     </div>
 
-    <div v-if="!data" class="text-center p-4">
+    <div v-if="!data" class="text-center p-5">
       <i class="fa fa-spinner fa-spin"/>
     </div>
 
@@ -52,7 +52,7 @@
                   @change="checkAll(category)"
                   class="mr-3 peer/check"/>
 
-              <span class="font-bold mr-1">{{ category.name }}</span>
+              <span class="font-extrabold text-gray-600 mr-1">{{ category.name }}</span>
               <span class="text-xs">({{ category.id }})</span>
             </label>
             <div v-if="category.total && category.total > category['per_page']">
@@ -89,9 +89,9 @@
                     <i v-if="linkIcon" :class="linkIcon" class="mr-2 peer/icon"></i>
                     <i class="fa fa-lock fa-fw mr-1 -ml-5 text-rose-500 text-xs peer-[.fa]/icon:-ml-4 peer-[.fa]/icon:mr-0"
                        v-if="item.locked"/>
-                    <span class="group-hover/item:text-blue-700 mr-1 peer-checked/check:font-bold">{{
-                        item.name
-                      }}</span>
+                    <span class="mr-1 text-gray-700 group-hover/item:text-blue-700 peer-checked/check:font-bold">
+                      {{ item.name }}
+                    </span>
                     <span class="text-xs">({{ item.id }})</span>
                     <span class="ml-3 text-xs" v-html="item.description"/>
 
@@ -108,7 +108,7 @@
                   <i v-if="linkIcon" :class="linkIcon" class="mr-2 peer/icon"></i>
                   <i class="fa fa-lock fa-fw mr-1 -ml-5 text-rose-500 text-xs peer-[.fa]/icon:-ml-4 peer-[.fa]/icon:mr-0"
                      v-if="item.locked"/>
-                  <span class="group-hover/item:text-blue-700 mr-1">{{ item.name }}</span>
+                  <span class="mr-1 text-gray-700 group-hover/item:text-blue-700">{{ item.name }}</span>
                   <span class="text-xs">({{ item.id }})</span>
                   <span class="ml-3 text-xs" v-html="item.description"/>
 
