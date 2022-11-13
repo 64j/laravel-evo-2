@@ -4,13 +4,19 @@
 
       <ul class="nav flex items-center h-full">
 
+        <li class="h-full">
+          <span @click="toggleSidebar" class="inline-flex justify-center items-center w-10 h-full cursor-pointer">
+            <i class="fa fa-bars fa-fw"/>
+          </span>
+        </li>
+
         <li
             class="md:relative h-full"
             @mouseover="hoverItem">
 
           <router-link
               :to="{ name: 'DashboardIndex' }"
-              class="home flex h-full items-center px-3 md:px-4 text-xl uppercase">
+              class="home flex h-full items-center pr-3 md:pr-4 text-xl uppercase">
 
             <span class="logo hover:animate-spin"></span>
             <span class="pl-4 hidden md:inline-block">Evolution</span>
@@ -557,6 +563,7 @@ export default {
       }
     }
   },
+
   setup () {
     document.addEventListener('click', () => {
       const active = document.querySelector('.app-header.active')
@@ -566,6 +573,7 @@ export default {
       }
     })
   },
+
   methods: {
     click (event) {
       if (event.target.closest('.menu ul.nav > li > div')) {
@@ -576,15 +584,18 @@ export default {
         this.$el.parentElement.classList.remove('active')
       }
     },
+
     hoverItem (event) {
       this.$el.querySelectorAll('ul.nav > li.hover').forEach(i => i.classList.remove('hover'))
       event.currentTarget.classList.add('hover')
     },
+
     hoverSubItem (event) {
       this.$el.querySelectorAll('ul.nav > li > ul li.hover').forEach(i => i.classList.remove('hover'))
       event.currentTarget.parentElement.querySelectorAll(':scope > li.hover').forEach(i => i.classList.remove('hover'))
       event.currentTarget.classList.add('hover')
     },
+
     getSubMenu (method, list) {
       for (let i in this.list) {
         if (this.list[i] !== list) {
@@ -601,9 +612,14 @@ export default {
         })
       }
     },
+
     subMenuEnter (e) {
       e.target.parentElement.querySelectorAll(':scope > li.hover').forEach(i => i.classList.remove('hover'))
       e.target.classList.add('hover')
+    },
+
+    toggleSidebar () {
+      this.$root.$el.classList.toggle('tree-hidden')
     }
   }
 }

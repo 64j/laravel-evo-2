@@ -1,19 +1,25 @@
 <template>
   <div class="relative h-full">
-    <div class="separator bg-blue-600 flex justify-center content-center" @mousedown="resizeMousedown" @mouseup="resizeMouseup"/>
+    <div @mousedown="resizeMousedown"
+         @mouseup="resizeMouseup"
+         class="separator absolute z-50 top-0 right-0 w-[4px] h-full opacity-[.05] bg-blue-600 cursor-col-resize hover:opacity-100 group-[.tree-resize]/body:opacity-100 transition"/>
+
     <teleport to="body">
-      <div class="resize-mask" @mousemove="resizeMousemove" @mouseup="resizeMouseup"/>
+      <div @mousemove="resizeMousemove"
+           @mouseup="resizeMouseup"
+           class="resize-mask fixed left-0 top-0 right-0 bottom-0 z-10 cursor-col-resize hidden group-[.tree-resize]/body:block"/>
     </teleport>
+
     <div class="flex flex-col flex-wrap h-full">
-      <div class="app-tree-header flex-grow-0 bg-gray-900">
+      <div class="app-tree-header flex-grow-0 h-8 bg-gray-900">
 
       </div>
-      <div class="app-tree-root flex-grow-1 overflow-hidden bg-gray-800 text-white relative">
-        <div v-if="loading" class="tree-loader text-center px-1 absolute">
+      <div class="app-tree-root flex-grow-1 h-[calc(100%-2rem)] overflow-hidden overflow-y-auto bg-gray-800 text-white relative">
+        <div v-if="loading" class="tree-loader text-center px-1 absolute z-10 top-0 right-0">
           <i class="fa fa-spinner fa-spin"></i>
         </div>
-        <div class="ps-4 py-2 pe-2 fw-bolder">{{ $store.getters['Config/get']('site_name') }}</div>
-        <ul class="list-unstyled m-0">
+        <div class="ps-4 py-2 pe-2 font-bold">{{ $root.config('site_name') }}</div>
+        <ul>
           <tree-node
             v-for="node in data"
             :key="node.id"
@@ -38,7 +44,6 @@ export default {
       loading: false,
       x: 0,
       elTree: null,
-      elMain: null,
       key: 'widthSideBar',
       data: [],
       meta: []
@@ -46,13 +51,9 @@ export default {
   },
   mounted () {
     this.elTree = document.querySelector('.app-tree')
-    this.elMain = document.querySelector('.app-main')
-
     this.x = localStorage.getItem(this.key)
     if (this.x) {
       this.elTree.style.flexBasis = this.x + 'px'
-      this.elMain.style.flexBasis = 'calc(100% - ' + this.x + 'px)'
-      this.elMain.style.maxWidth = 'calc(100% - ' + this.x + 'px)'
     }
     //this.get()
   },
@@ -68,19 +69,14 @@ export default {
     },
     resizeMousemove (e) {
       this.x = Math.abs(e.clientX)
-      if (5 > this.x) {
-        document.body.classList.remove('tree-resize')
-        localStorage.setItem(this.key, this.x)
-        return
+      if (this.x > 100) {
+        this.elTree.style.flexBasis = this.x + 'px'
       }
-      this.elTree.style.flexBasis = this.x + 'px'
-      this.elMain.style.flexBasis = 'calc(100% - ' + this.x + 'px)'
-      this.elMain.style.maxWidth = 'calc(100% - ' + this.x + 'px)'
     },
     get () {
       axios.post(this.controller + '@get').then(result => {
-        this.data = result.data
-        this.meta = result.meta
+        this.data = result.data.data
+        this.meta = result.data.meta
       })
     },
     action(action, node) {
@@ -137,13 +133,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.separator { position: absolute; z-index: 10; top: 0; right: 0; width: 5px; height: 100%; opacity: .05; cursor: col-resize; transition: opacity .1s }
-.separator:hover, .tree-resize .separator { opacity: 1; }
-.resize-mask { display: none; position: absolute; z-index: 9; left: 0; top: 0; right: 0; bottom: 0; cursor: col-resize; }
-.tree-resize .resize-mask { display: block; }
-.app-tree-header { height: 2rem; }
-.app-tree-root { overflow-y: auto !important; height: calc(100% - 2rem); }
-.tree-loader { z-index: 2; top: 0; right: 0; }
-</style>

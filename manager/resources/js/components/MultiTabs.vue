@@ -11,7 +11,8 @@
            @click="clickTab(tab)"
            @dblclick="dblClickTab(tab)">
           <i v-if="tab.icon" :class="tab.icon" class="px-3 py-2 me-1 opacity-75 pointer-events-none icon peer/icon"/>
-          <span v-if="tab.title" v-html="tab.title"
+          <span v-if="tab.title"
+                v-html="tab.title"
                 class="px-3 w-32 pointer-events-none truncate peer-[.icon]/icon:pl-0"/>
           <i v-if="!tab.meta.fixTab" class="fa fa-close inline-flex items-center px-2 h-full hover:text-red-500"
              @click.stop="closeTab(tab)"/>
@@ -20,6 +21,7 @@
       </div>
     </div>
   </div>
+
   <div class="grow overflow-hidden">
     <div class="multi-tabs-panel h-full overflow-auto">
       <router-view v-slot="{ Component }">
@@ -38,6 +40,7 @@
     </div>
     <div class="multi-tabs-panel-frames h-full"></div>
   </div>
+
 </template>
 
 <script>
