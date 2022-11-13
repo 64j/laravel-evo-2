@@ -1,5 +1,5 @@
 <template>
-  <div class="relative h-full">
+  <div class="relative h-full w-full">
     <div @mousedown="resizeMousedown"
          @mouseup="resizeMouseup"
          class="separator absolute z-50 top-0 right-0 w-[4px] h-full opacity-[.05] bg-blue-600 cursor-col-resize hover:opacity-100 group-[.tree-resize]/body:opacity-100 transition"/>
@@ -14,17 +14,18 @@
       <div class="app-tree-header flex-grow-0 h-8 bg-gray-900">
 
       </div>
-      <div class="app-tree-root flex-grow-1 h-[calc(100%-2rem)] overflow-hidden overflow-y-auto bg-gray-800 text-white relative">
+      <div
+          class="app-tree-root flex-grow-1 h-[calc(100%-2rem)] overflow-hidden overflow-y-auto bg-gray-800 text-white relative">
         <div v-if="loading" class="tree-loader text-center px-1 absolute z-10 top-0 right-0">
           <i class="fa fa-spinner fa-spin"></i>
         </div>
         <div class="ps-4 py-2 pe-2 font-bold">{{ $root.config('site_name') }}</div>
         <ul>
           <tree-node
-            v-for="node in data"
-            :key="node.id"
-            :node="node"
-            @action="action"
+              v-for="node in data"
+              :key="node.id"
+              :node="node"
+              @action="action"
           />
         </ul>
       </div>
@@ -38,6 +39,7 @@ import TreeNode from '@/components/TreeNode.vue'
 export default {
   name: 'TreeView',
   components: { TreeNode },
+
   data () {
     return {
       controller: 'Tree',
@@ -49,47 +51,53 @@ export default {
       meta: []
     }
   },
+
   mounted () {
     this.elTree = document.querySelector('.app-tree')
     this.x = localStorage.getItem(this.key)
     if (this.x) {
-      this.elTree.style.flexBasis = this.x + 'px'
+      this.elTree.style.width = this.x + 'px'
     }
     //this.get()
   },
+
   methods: {
     resizeMousedown () {
       document.body.classList.add('tree-resize')
       document.onselectstart = () => false
     },
+
     resizeMouseup () {
       document.body.classList.remove('tree-resize')
       document.onselectstart = () => null
       localStorage.setItem(this.key, this.x)
     },
+
     resizeMousemove (e) {
       this.x = Math.abs(e.clientX)
       if (this.x > 100) {
-        this.elTree.style.flexBasis = this.x + 'px'
+        this.elTree.style.width = this.x + 'px'
       }
     },
-    get () {
-      axios.post(this.controller + '@get').then(result => {
-        this.data = result.data.data
-        this.meta = result.data.meta
-      })
+
+    async get () {
+      let response = await axios.post('api/tree')
+      this.data = response.data.data
+      this.meta = response.data.meta
     },
-    action(action, node) {
+
+    action (action, node) {
       switch (action) {
         case 'toggle':
           this.toggle(node)
-          break;
+          break
 
         case 'click':
           this.click(node)
-          break;
+          break
       }
     },
+
     toggle (node) {
       this.loading = true
       if (node.children) {
@@ -109,6 +117,7 @@ export default {
         })
       }
     },
+
     click (node) {
       this.$router.push({
         name: 'DocumentIndex',
@@ -117,6 +126,7 @@ export default {
         }
       })
     },
+
     updateNode (node, data) {
       data = data || this.data
 

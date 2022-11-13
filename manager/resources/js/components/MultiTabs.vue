@@ -1,46 +1,48 @@
 <template>
-  <div class="grow-0">
-    <div class="multi-tabs h-8 overflow-hidden bg-gray-900">
-      <div class="pane h-16 flex flex-nowrap overflow-auto border-l border-gray-800">
-        <a v-for="(tab, i) in tabs"
-           :key="i"
-           :data-to="tab.fullPath"
-           class="h-8 inline-flex justify-between items-center no-underline hover:bg-gray-700 text-gray-200 border-r border-r-gray-800 hover:border-b-gray-700 hover:text-white relative select-none	cursor-pointer"
-           :class="[tab.active ? 'active bg-gray-600 text-white after:content-[\'\'] after:absolute after:bottom-0 after:w-full after:h-[3px] after:bg-blue-600' : '', tab.class]"
-           :title="tab.title"
-           @click="clickTab(tab)"
-           @dblclick="dblClickTab(tab)">
-          <i v-if="tab.icon" :class="tab.icon" class="px-3 py-2 me-1 opacity-75 pointer-events-none icon peer/icon"/>
-          <span v-if="tab.title"
-                v-html="tab.title"
-                class="px-3 w-32 pointer-events-none truncate peer-[.icon]/icon:pl-0"/>
-          <i v-if="!tab.meta.fixTab" class="fa fa-close inline-flex items-center px-2 h-full hover:text-red-500"
-             @click.stop="closeTab(tab)"/>
-          <span v-if="tab['changed']" class="absolute top-0 left-0 px-1 text-yellow-500 text-lg font-mono">*</span>
-        </a>
+  <div class="flex flex-col grow w-full bg-slate-100">
+    <div class="grow-0">
+      <div class="multi-tabs h-8 overflow-hidden bg-gray-900">
+        <div class="pane h-16 flex flex-nowrap overflow-auto border-l border-gray-800">
+          <a v-for="(tab, i) in tabs"
+             :key="i"
+             :data-to="tab.fullPath"
+             class="h-8 inline-flex justify-between items-center no-underline hover:bg-gray-700 text-gray-200 border-r border-r-gray-800 hover:border-b-gray-700 hover:text-white relative select-none	cursor-pointer"
+             :class="[tab.active ? 'active bg-gray-600 text-white after:content-[\'\'] after:absolute after:bottom-0 after:w-full after:h-[3px] after:bg-blue-600' : '', tab.class]"
+             :title="tab.title"
+             @click="clickTab(tab)"
+             @dblclick="dblClickTab(tab)">
+            <i v-if="tab.icon" :class="tab.icon" class="px-3 py-2 me-1 opacity-75 pointer-events-none icon peer/icon"/>
+            <span v-if="tab.title"
+                  v-html="tab.title"
+                  class="px-3 w-32 pointer-events-none truncate peer-[.icon]/icon:pl-0"/>
+            <i v-if="!tab.meta.fixTab" class="fa fa-close inline-flex items-center px-2 h-full hover:text-red-500"
+               @click.stop="closeTab(tab)"/>
+            <span v-if="tab['changed']" class="absolute top-0 left-0 px-1 text-yellow-500 text-lg font-mono">*</span>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="grow overflow-hidden">
-    <div class="multi-tabs-panel h-full overflow-auto">
-      <router-view v-slot="{ Component }">
-        <CustomKeepAlive :include="keys">
-          <component
-              :key="key"
-              :is="Component"
-              @toTab="toTab"
-              @setTab="setTab"
-              @closeTab="closeTab"
-              @replaceTab="replaceTab"
-              @refreshTab="refreshTab"
-          />
-        </CustomKeepAlive>
-      </router-view>
+    <div class="grow overflow-hidden">
+      <div class="multi-tabs-panel h-full overflow-auto">
+        <router-view v-slot="{ Component }">
+          <CustomKeepAlive :include="keys">
+            <component
+                :key="key"
+                :is="Component"
+                @toTab="toTab"
+                @setTab="setTab"
+                @closeTab="closeTab"
+                @replaceTab="replaceTab"
+                @refreshTab="refreshTab"
+            />
+          </CustomKeepAlive>
+        </router-view>
+      </div>
+      <div class="multi-tabs-panel-frames h-full"></div>
     </div>
-    <div class="multi-tabs-panel-frames h-full"></div>
-  </div>
 
+  </div>
 </template>
 
 <script>
