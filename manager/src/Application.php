@@ -8,6 +8,27 @@ use RuntimeException;
 
 class Application extends \Illuminate\Foundation\Application
 {
+
+    /**
+     * Set the base path for the application.
+     *
+     * @param  string  $basePath
+     * @return $this
+     */
+    public function setBasePath($basePath): static
+    {
+        $this->basePath = rtrim($basePath, '\/');
+
+        $this->useEnvironmentPath(dirname($this->basePath()));
+        $this->useAppPath(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'app');
+        $this->useStoragePath($this->path('storage'));
+
+        $this->bindPathsInContainer();
+
+
+        return $this;
+    }
+
     /**
      * Get the application namespace.
      *

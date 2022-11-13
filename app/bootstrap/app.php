@@ -11,7 +11,7 @@
 |
 */
 
-$app = new Illuminate\Foundation\Application(
+$app = new App\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 
@@ -51,7 +51,5 @@ $app->singleton(
 | from the actual running of the application and sending responses.
 |
 */
-
-$app->useEnvironmentPath(dirname(__DIR__, 2));
 
 return $app;

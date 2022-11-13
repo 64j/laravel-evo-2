@@ -9,6 +9,7 @@ use App\Models\SiteTemplate;
 use App\Models\SiteTmplvarTemplate;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Config;
 use Manager\Http\Requests\TemplateRequest;
 use Manager\Http\Resources\TemplateResource;
 
@@ -118,7 +119,7 @@ class TemplateController extends Controller
                     $category->tvs()
                         ->whereKeyNot($tvs->pluck('id'))
                         ->where(fn($query) => $filter ? $query->where('name', 'like', '%' . $filter . '%') : null)
-                        ->paginate(100, '*', 'page_' . $category->getKey())
+                        ->paginate(Config::get('global.number_of_results'), '*', 'page_' . $category->getKey())
                 );
 
                 return array_merge(

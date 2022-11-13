@@ -51,6 +51,5 @@ $app->singleton(
 | from the actual running of the application and sending responses.
 |
 */
-$app->useEnvironmentPath(dirname(__DIR__, 2));
 
 return $app;

@@ -16,7 +16,7 @@ class SettingsService
      */
     public function get(): array
     {
-        $settings = Cache::rememberForever('evo.settings', function () {
+        $settings = Cache::rememberForever('cms.settings', function () {
             $settings = SystemSetting::query()
                 ->pluck('setting_value', 'setting_name')
                 ->toArray();
@@ -26,7 +26,9 @@ class SettingsService
             return $settings;
         });
 
-        Config::set('evo.settings', $settings);
+        $settings['SITE_URL'] = url('/');
+
+        Config::set('global', $settings);
 
         return $settings;
     }

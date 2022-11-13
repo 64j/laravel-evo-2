@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use JsonSerializable;
+use Manager\Services\CategoryService;
+use Manager\Services\SettingsService;
+use Manager\Services\UserService;
 
 class Controller extends BaseController
 {
@@ -24,11 +27,34 @@ class Controller extends BaseController
     protected Application $app;
 
     /**
-     * @param Application $app
+     * @var SettingsService
      */
-    public function __construct(Application $app)
+    protected SettingsService $settingsService;
+
+    /**
+     * @var UserService
+     */
+    protected UserService $userService;
+
+    /**
+     * @var CategoryService
+     */
+    protected CategoryService $categoryService;
+
+    /**
+     * @param Application $app
+     * @param SettingsService $settingsService
+     */
+    public function __construct(
+        Application $app,
+        UserService $userService,
+        SettingsService $settingsService,
+        CategoryService $categoryService)
     {
         $this->app = $app;
+        $this->userService = $userService;
+        $this->settingsService = $settingsService;
+        $this->categoryService = $categoryService;
 
         if (Auth::check()) {
             // Взять локаль из настроек юзера
@@ -39,6 +65,8 @@ class Controller extends BaseController
                 $app->setLocale($locale);
             }
         }
+
+        $settingsService->get();
     }
 
     /**

@@ -1,33 +1,37 @@
 <template>
   <div class="panel" :class="className">
 
-    <div v-if="searchInput" class="py-3 px-5">
-      <div class="input-group input-group-sm">
-        <router-link
-            v-if="txtNew"
-            :to="{ name: linkName, params: { id : '' } }"
-            class="bg-green-700 border border-transparent hover:bg-green-800 text-white font-bold py-1 px-2 text-xs rounded-l">
-          <i class="fa fa-plus"/>
-          {{ txtNew }}
-        </router-link>
-        <div class="inline-flex items-center relative">
-          <input type="text"
-                 class="py-1 pl-2 pr-5 w-80 text-xs border-0 border-t border-b peer/filter"
-                 :placeholder="$root.lang('element_filter_msg')"
-                 @keyup="setFilter">
-          <i
-              class="fa fa-circle-xmark text-gray-300 hover:text-rose-500 cursor-pointer absolute right-0 mx-1 invisible peer-[.active]/filter:visible"
-              @click="clearFilter"
-          />
-        </div>
-        <span v-if="txtHelp"
-           class="bg-blue-600 border border-transparent hover:bg-blue-700 text-white font-bold py-1 px-2 text-xs rounded-r cursor-pointer"
-           @click="msg=!msg">
-          <i class="far fa-question-circle mr-1"/>
-          {{ $root.lang('help') }}
-        </span>
+    <div v-if="searchInput" class="py-3 px-5 flex flex-wrap md:block justify-between">
+
+      <div class="inline-flex items-center flex-1 relative md:mr-1">
+        <input type="text"
+               :placeholder="$root.lang('element_filter_msg')"
+               @keyup="setFilter"
+               class="py-1 pl-2 pr-5 w-full md:w-80 text-xs peer/filter"
+               autofocus>
+        <i
+            class="fa fa-circle-xmark text-gray-300 hover:text-rose-500 cursor-pointer absolute right-0 mx-1 invisible peer-[.active]/filter:visible"
+            @click="clearFilter"
+        />
       </div>
+
+      <router-link
+          v-if="txtNew"
+          :to="{ name: linkName, params: { id : '' } }"
+          class="bg-green-600 hover:bg-green-700 border border-transparent text-white font-bold py-1 px-2 md:mr-1 text-xs whitespace-nowrap">
+        <i class="fa fa-plus-circle fa-fw"/>
+        <span class="hidden md:inline-block pl-2">{{ txtNew }}</span>
+      </router-link>
+
+      <span v-if="txtHelp"
+            class="bg-white hover:bg-gray-100 border border-gray-300 font-bold py-1 px-2 text-xs whitespace-nowrap cursor-pointer"
+            @click="msg=!msg">
+        <i class="far fa-question-circle fa-fw"/>
+        <span class="hidden md:inline-block pl-2">{{ $root.lang('help') }}</span>
+      </span>
+
       <div class="bg-blue-100 rounded p-4 m-0 mt-3" v-html="txtHelp" v-if="msg"/>
+
     </div>
 
     <div v-if="!data" class="text-center p-4">
@@ -83,8 +87,11 @@
                         class="mr-3 peer/check"/>
 
                     <i v-if="linkIcon" :class="linkIcon" class="mr-2 peer/icon"></i>
-                    <i class="fa fa-lock fa-fw mr-1 -ml-5 text-rose-500 text-xs peer-[.fa]/icon:-ml-4 peer-[.fa]/icon:mr-0" v-if="item.locked"/>
-                    <span class="group-hover/item:text-blue-700 mr-1 peer-checked/check:font-bold">{{ item.name }}</span>
+                    <i class="fa fa-lock fa-fw mr-1 -ml-5 text-rose-500 text-xs peer-[.fa]/icon:-ml-4 peer-[.fa]/icon:mr-0"
+                       v-if="item.locked"/>
+                    <span class="group-hover/item:text-blue-700 mr-1 peer-checked/check:font-bold">{{
+                        item.name
+                      }}</span>
                     <span class="text-xs">({{ item.id }})</span>
                     <span class="ml-3 text-xs" v-html="item.description"/>
 
@@ -99,14 +106,15 @@
                     :class="{ 'text-rose-700/75': item.disabled }">
 
                   <i v-if="linkIcon" :class="linkIcon" class="mr-2 peer/icon"></i>
-                  <i class="fa fa-lock fa-fw mr-1 -ml-5 text-rose-500 text-xs peer-[.fa]/icon:-ml-4 peer-[.fa]/icon:mr-0" v-if="item.locked"/>
+                  <i class="fa fa-lock fa-fw mr-1 -ml-5 text-rose-500 text-xs peer-[.fa]/icon:-ml-4 peer-[.fa]/icon:mr-0"
+                     v-if="item.locked"/>
                   <span class="group-hover/item:text-blue-700 mr-1">{{ item.name }}</span>
                   <span class="text-xs">({{ item.id }})</span>
                   <span class="ml-3 text-xs" v-html="item.description"/>
 
                 </router-link>
 
-                <div v-if="actions">
+                <div v-if="actions" class="inline-flex flex-nowrap">
                   <i v-for="(action, k) in actions"
                      :key="`item-` + item.id + `action-` + k"
                      :class="[action.values ? action.values[item[k]].icon : action.icon]"

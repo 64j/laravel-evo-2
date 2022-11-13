@@ -11,26 +11,25 @@
     @vite(['resources/css/app.css'])
     <style>
         .main { background: url("https://picsum.photos/1600/900") 50% 50% no-repeat; background-size: cover }
-        .logo { width: 2.5rem; height: 2.5rem; }
     </style>
 </head>
 <body>
 <div id="app" class="main w-full h-full">
-    <div class="w-96 max-w-full p-6 bg-black/75 text-white text-opacity-75 flex flex-col justify-between h-full">
+    <div class="w-[30rem] max-w-full p-10 bg-black/[.85] text-gray-300 text-opacity-75 flex flex-col justify-between h-full">
         <form method="post" action="{{ route('login') }}">
             @csrf
 
-            <div class="flex items-center mb-6 pt-4 pl-1 text-xl text-white font-bold uppercase">
-                <span class="logo"></span>
-                <span class="pl-4">Evolution</span>
+            <div class="flex items-center mb-6 pt-4 pl-1">
+                <span class="logo w-16 h-16"></span>
+                <span class="pl-4 text-white uppercase text-4xl sm:text-5xl">Evolution</span>
             </div>
 
-            <div class="form-group form-floating mb-4">
-                <label for="floatingName" class="block text-sm">{{ __('global.username') }}</label>
+            <div class="form-group form-floating mb-6">
+                <label for="floatingName" class="block mb-1">{{ __('global.username') }}</label>
                 <input name="username"
                        type="text"
                        id="floatingName"
-                       class="w-full bg-transparent font-bold text-white {{ $errors->has('username') ? 'border-rose-500' : '' }}"
+                       class="w-full bg-transparent py-3 font-bold text-white text-lg {{ $errors->has('username') ? 'border-rose-500' : '' }}"
                        value="{{ old('username') }}"
                        placeholder="{{ __('global.username') }}"
                        autofocus>
@@ -40,11 +39,11 @@
             </div>
 
             <div class="form-group form-floating mb-6">
-                <label for="floatingPassword" class="block text-sm">{{ __('global.password') }}</label>
+                <label for="floatingPassword" class="block mb-1">{{ __('global.password') }}</label>
                 <input name="password"
                        type="password"
                        id="floatingPassword"
-                       class="w-full bg-transparent font-bold text-white {{ $errors->has('password') ? 'border-rose-500' : '' }}"
+                       class="w-full bg-transparent py-3 font-bold text-white text-lg {{ $errors->has('password') ? 'border-rose-500' : '' }}"
                        value="{{ old('password') }}"
                        placeholder="{{ __('global.password') }}">
                 @if ($errors->has('password'))
@@ -56,6 +55,7 @@
                 <div class="flex items-center">
                     <input name="remember"
                            type="checkbox"
+                           checked="checked"
                            id="remember"
                            class="mr-2 bg-transparent">
                     <label class="text-sm" for="remember">{{ __('global.remember_username') }}</label>

@@ -1,20 +1,20 @@
 <template>
-  <div class="menu flex justify-between h-full m-0 bg-gray-800 text-gray-200 shadow-lg" @click.stop="click">
+  <div class="menu group/menu flex justify-between h-full m-0 bg-gray-800 text-gray-200 shadow-lg" @click.stop="click">
     <div class="flex-auto">
 
       <ul class="nav flex items-center h-full">
 
         <li
-            class="relative h-full"
+            class="md:relative h-full"
             @mouseover="hoverItem">
 
           <router-link
               :to="{ name: 'DashboardIndex' }"
-              class="home flex h-full items-center px-4 text-xl uppercase">
+              class="home flex h-full items-center px-3 md:px-4 text-xl uppercase">
 
-            <span class="logo mr-3 hover:animate-spin"></span>
-            <span>Evolution</span>
-            <sub class="ml-1 text-xs text-gray-400">{{ $root.config('settings_version') }}</sub>
+            <span class="logo hover:animate-spin"></span>
+            <span class="pl-4 hidden md:inline-block">Evolution</span>
+            <sub class="ml-1 text-xs text-gray-400 hidden md:inline-block">{{ $root.config('settings_version') }}</sub>
 
           </router-link>
 
@@ -22,14 +22,15 @@
 
         <li
             v-if="$root.hasPermissions(['edit_template', 'edit_snippet', 'edit_chunk', 'edit_plugin'])"
-            class="relative h-full parent"
+            class="md:relative h-full parent"
             @mouseover="hoverItem">
 
-          <a class="flex h-full items-center px-4 relative z-20 select-none cursor-default">
-            {{ $root.lang('elements') }}
-          </a>
+          <div class="flex h-full items-center px-3 md:px-4 relative z-20 select-none cursor-pointer">
+            <i class="fa fa-th fa-fw md:hidden"/>
+            <span class="hidden md:inline-block">{{ $root.lang('elements') }}</span>
+          </div>
 
-          <ul class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
 
             <li
                 v-if="$root.hasPermissions('edit_template')"
@@ -39,8 +40,10 @@
 
               <router-link
                   :to="{ name: 'ElementsIndex', query: { resourcesTab: 0 } }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
-                <i class="fa fa-newspaper fa-fw mr-3"/> {{ $root.lang('manage_templates') }}
+                  class="flex items-center relative pl-4 pr-8 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                <i class="fa fa-newspaper fa-fw mr-3"/>
+                {{ $root.lang('manage_templates') }}
+                <i class="fa fa-angle-right fa-fw absolute top-0 right-0 h-full inline-flex items-center px-5"/>
               </router-link>
 
               <ul
@@ -51,7 +54,7 @@
                     @mouseenter="subMenuEnter">
                   <router-link
                       :to="{ name: 'TemplateIndex', params: { id: '' } }"
-                      class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                      class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white">
                     <i class="fa fa-plus fa-fw mr-3"/>
                     {{ $root.lang('new_template') }}
                   </router-link>
@@ -64,8 +67,8 @@
 
                   <router-link
                       :to="{ name: 'TemplateIndex', params: { id: item.id } }"
-                      :class="{'fst-italic': item.locked}"
-                      class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                      class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white relative">
+                    <i v-if="item.locked" class="fa fa-lock fa-fw absolute right-4 text-rose-500 text-xs"/>
                     {{ item.templatename }}
                     <small class="ml-1">({{ item.id }})</small>
                   </router-link>
@@ -84,26 +87,39 @@
 
               <router-link
                   :to="{ name: 'ElementsIndex', query: { resourcesTab: 1 } }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
-                <i class="fa fa-list-alt fa-fw mr-3"/> {{ $root.lang('tmplvars') }}
+                  class="flex items-center relative px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                <i class="fa fa-list-alt fa-fw mr-3"/>
+                {{ $root.lang('tmplvars') }}
+                <i class="fa fa-angle-right fa-fw absolute top-0 right-0 h-full inline-flex items-center px-5"/>
               </router-link>
 
-              <ul v-if="list.tvs.length" class="bg-white left-full top-0 overflow-y-auto">
+              <ul
+                  v-if="list.tvs.length"
+                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
 
-                <li @mouseenter="subMenuEnter">
+                <li
+                    @mouseenter="subMenuEnter">
                   <router-link
-                      :to="{ name: 'TvIndex', params: { id: '' } }">
-                    <i class="fa fa-plus fa-fw"/>
+                      :to="{ name: 'TvIndex', params: { id: '' } }"
+                      class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white">
+                    <i class="fa fa-plus fa-fw mr-3"/>
                     {{ $root.lang('new_tmplvars') }}
                   </router-link>
                 </li>
 
-                <li v-for="item in list.tvs" :key="'item-tv-' + item.id" @mouseenter="subMenuEnter">
+                <li
+                    v-for="item in list.tvs"
+                    :key="'item-template-' + item.id"
+                    @mouseenter="subMenuEnter">
+
                   <router-link
-                      :to="{ name: 'TvIndex', params: { id: item.id } }" :class="{'fst-italic': item.locked}">
+                      :to="{ name: 'TvIndex', params: { id: item.id } }"
+                      :class="{'italic': item.locked}"
+                      class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white">
                     {{ item.name }}
-                    <small class="ms-1">({{ item.id }})</small>
+                    <small class="ml-1">({{ item.id }})</small>
                   </router-link>
+
                 </li>
 
               </ul>
@@ -118,8 +134,10 @@
 
               <router-link
                   :to="{ name: 'ElementsIndex', query: { resourcesTab: 2 } }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
-                <i class="fa fa-th-large fa-fw mr-3"/> {{ $root.lang('manage_htmlsnippets') }}
+                  class="flex items-center relative px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                <i class="fa fa-th-large fa-fw mr-3"/>
+                {{ $root.lang('manage_htmlsnippets') }}
+                <i class="fa fa-angle-right fa-fw absolute top-0 right-0 h-full inline-flex items-center px-5"/>
               </router-link>
 
               <ul v-if="list.chunks.length" class="bg-white left-full top-0 overflow-y-auto">
@@ -153,8 +171,10 @@
 
               <router-link
                   :to="{ name: 'ElementsIndex', query: { resourcesTab: 3 } }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
-                <i class="fa fa-code fa-fw mr-3"/> {{ $root.lang('manage_snippets') }}
+                  class="flex items-center relative px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                <i class="fa fa-code fa-fw mr-3"/>
+                {{ $root.lang('manage_snippets') }}
+                <i class="fa fa-angle-right fa-fw absolute top-0 right-0 h-full inline-flex items-center px-5"/>
               </router-link>
 
               <ul v-if="list.snippets.length" class="bg-white left-full top-0 overflow-y-auto">
@@ -186,8 +206,10 @@
 
               <router-link
                   :to="{ name: 'ElementsIndex', query: { resourcesTab: 4 } }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
-                <i class="fa fa-plug fa-fw mr-3"/> {{ $root.lang('manage_plugins') }}
+                  class="flex items-center relative px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                <i class="fa fa-plug fa-fw mr-3"/>
+                {{ $root.lang('manage_plugins') }}
+                <i class="fa fa-angle-right fa-fw absolute top-0 right-0 h-full inline-flex items-center px-5"/>
               </router-link>
 
               <ul v-if="list.plugins.length" class="bg-white left-full top-0 overflow-y-auto">
@@ -221,8 +243,10 @@
 
               <router-link
                   :to="{ name: 'ElementsIndex', query: { resourcesTab: 5 } }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
-                <i class="fa fa-cubes fa-fw mr-3"/> {{ $root.lang('modules') }}
+                  class="flex items-center relative px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                <i class="fa fa-cubes fa-fw mr-3"/>
+                {{ $root.lang('modules') }}
+                <i class="fa fa-angle-right fa-fw absolute top-0 right-0 h-full inline-flex items-center px-5"/>
               </router-link>
 
               <ul v-if="list.modules.length" class="bg-white left-full top-0 overflow-y-auto">
@@ -254,16 +278,17 @@
 
         <li
             v-if="$root.hasPermissions('exec_module')"
-            class="relative h-full parent"
+            class="md:relative h-full parent"
             @mouseover="hoverItem" @mouseenter="getSubMenu('modules', list.modules)">
 
-          <a class="flex h-full items-center px-4 relative z-20 select-none cursor-default">
-            {{ $root.lang('modules') }}
-          </a>
+          <div class="flex h-full items-center px-3 md:px-4 relative z-20 select-none cursor-pointer">
+            <i class="fa fa-cubes fa-fw md:hidden"/>
+            <span class="hidden md:inline-block">{{ $root.lang('modules') }}</span>
+          </div>
 
           <ul
               v-if="list.modules.length"
-              class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+              class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
 
             <li
                 v-for="item in list.modules"
@@ -288,14 +313,15 @@
 
         <li
             v-if="$root.hasPermissions('edit_user', 'edit_web_user', 'edit_role', 'access_permissions', 'web_access_permissions')"
-            class="relative h-full parent"
+            class="md:relative h-full parent"
             @mouseover="hoverItem">
 
-          <a class="flex h-full items-center px-4 relative z-20 select-none cursor-default">
-            {{ $root.lang('users') }}
-          </a>
+          <div class="flex h-full items-center px-3 md:px-4 relative z-20 select-none cursor-pointer">
+            <i class="fa fa-users fa-fw md:hidden"/>
+            <span class="hidden md:inline-block">{{ $root.lang('users') }}</span>
+          </div>
 
-          <ul class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
 
             <li
                 v-if="$root.hasPermissions('edit_user')"
@@ -303,7 +329,7 @@
                 class="group/item">
               <router-link
                   :to="{ name: 'UserList' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                  class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-user-circle fa-fw mr-3"/> {{ $root.lang('users') }}
               </router-link>
             </li>
@@ -314,7 +340,7 @@
                 class="group/item">
               <router-link
                   :to="{ name: 'RoleList' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                  class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-legal fa-fw mr-3"/> {{ $root.lang('role_management_title') }}
               </router-link>
             </li>
@@ -325,7 +351,7 @@
                 class="group/item">
               <router-link
                   :to="{ name: 'UserPermissionsIndex' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                  class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-universal-access fa-fw mr-3"/> {{ $root.lang('manager_permissions') }}
               </router-link>
             </li>
@@ -336,21 +362,22 @@
 
         <li
             v-if="$root.hasPermissions('empty_cache')"
-            class="relative h-full parent"
+            class="md:relative h-full parent"
             @mouseover="hoverItem">
 
-          <a class="flex h-full items-center px-4 relative z-20 select-none cursor-default">
-            {{ $root.lang('tools') }}
-          </a>
+          <div class="flex h-full items-center px-4 relative z-20 select-none cursor-pointer">
+            <i class="fa fa-wrench fa-fw md:hidden"/>
+            <span class="hidden md:inline-block">{{ $root.lang('tools') }}</span>
+          </div>
 
-          <ul class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
 
             <li
                 @mouseover="hoverSubItem"
                 class="group/item">
               <router-link
                   :to="{ name: 'ClearCacheIndex' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                  class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-recycle fa-fw mr-3"/> {{ $root.lang('refresh_site') }}
               </router-link>
             </li>
@@ -360,7 +387,7 @@
                 class="group/item">
               <router-link
                   :to="{ name: 'SearchIndex' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                  class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-search fa-fw mr-3"/> {{ $root.lang('search') }}
               </router-link>
             </li>
@@ -376,22 +403,40 @@
 
       <ul class="nav flex items-center h-full">
 
-        <li class="relative h-full parent"
+        <li class="h-full relative group/item" @mouseover="hoverItem">
+          <div class="flex h-full items-center px-3 md:px-4 cursor-pointer">
+            <i class="fa fa-search fa-fw"/>
+          </div>
+
+<!--          <form
+              class="flex h-full items-center hidden1 absolute right-0 top-0 after:content-[''] after:fixed after:left-0 after:top-0 after:right-0 after:h-12 after:z-20 after:bg-black/75 hidden group-[.active]/menu:flex">
+            <input type="text"
+                   class="relative z-50 bg-transparent w-60 py-1 text-sm">
+          </form>-->
+        </li>
+
+        <li class="h-full" @mouseover="hoverItem">
+          <a :href="$root.config('SITE_URL')" class="flex h-full items-center px-3 md:px-4" target="_blank">
+            <i class="fa fa-desktop fa-fw"/>
+          </a>
+        </li>
+
+        <li class="md:relative h-full parent"
             @mouseover="hoverItem">
 
-          <a class="flex h-full items-center px-4 relative z-20 select-none cursor-default">
-            <span class="mr-2">{{ $store.getters['Auth/username'] }}</span>
-            <i class="fa fa-user-circle text-xl ms-2"/>
-          </a>
+          <div class="flex h-full items-center px-3 md:px-4 relative z-10 select-none cursor-pointer">
+            <span class="mr-2 hidden md:inline-block">{{ $store.getters['Auth/username'] }}</span>
+            <i class="fa fa-user-circle fa-fw text-xl"/>
+          </div>
 
-          <ul class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-80 shadow-2xl rounded-b right-0 divide-y divide-gray-100">
+          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b right-0 divide-y divide-gray-100">
 
             <li
                 @mouseover="hoverSubItem"
                 class="group/item">
               <router-link
                   :to="{ name: 'AuthPasswordChange' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                  class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-lock fa-fw mr-3"/> {{ $root.lang('change_password') }}
               </router-link>
             </li>
@@ -400,7 +445,7 @@
                 @mouseover="hoverSubItem"
                 class="group/item">
               <a href="logout"
-                 class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                 class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-sign-out fa-fw mr-3"/> {{ $root.lang('logout') }}
               </a>
             </li>
@@ -412,13 +457,13 @@
         <li
             v-if="$root.hasPermissions(['settings', 'view_eventlog', 'logs', 'help'])"
             @mouseover="hoverItem"
-            class="relative h-full parent">
+            class="md:relative h-full parent">
 
-          <a class="flex h-full items-center px-4 relative z-20 select-none cursor-default">
-            <i class="fa fa-cogs text-xl"/>
-          </a>
+          <div class="flex h-full items-center px-3 md:px-4 relative z-10 select-none cursor-pointer">
+            <i class="fa fa-cogs fa-fw text-xl"/>
+          </div>
 
-          <ul class="bg-white text-gray-900 hidden absolute z-10 pb-1 w-80 shadow-2xl rounded-b right-0 divide-y divide-gray-100">
+          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b right-0 divide-y divide-gray-100">
 
             <li
                 v-if="$root.hasPermissions('settings')"
@@ -426,7 +471,7 @@
                 class="group/item">
               <router-link
                   :to="{ name: 'ConfigurationIndex' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                  class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-sliders fa-fw mr-3"/> {{ $root.lang('edit_settings') }}
               </router-link>
             </li>
@@ -436,7 +481,7 @@
                 class="group/item">
               <router-link
                   :to="{ name: 'SchedulesIndex' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                  class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-calendar fa-fw mr-3"/> {{ $root.lang('site_schedule') }}
               </router-link>
             </li>
@@ -447,7 +492,7 @@
                 class="group/item">
               <router-link
                   :to="{ name: 'EventLogList' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                  class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-exclamation-triangle fa-fw mr-3"/> {{ $root.lang('eventlog_viewer') }}
               </router-link>
             </li>
@@ -459,7 +504,7 @@
                   class="group/item">
                 <router-link
                     :to="{ name: 'SystemLogIndex' }"
-                    class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                    class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                   <i class="fa fa-user-secret fa-fw mr-3"/> {{ $root.lang('view_logging') }}
                 </router-link>
               </li>
@@ -469,7 +514,7 @@
                   class="group/item">
                 <router-link
                     :to="{ name: 'SystemInfoIndex' }"
-                    class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                    class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                   <i class="fa fa-info-circle fa-fw mr-3"/> {{ $root.lang('view_sysinfo') }}
                 </router-link>
               </li>
@@ -478,10 +523,11 @@
 
             <li
                 v-if="$root.hasPermissions('help')"
-                @mouseover="hoverSubItem">
+                @mouseover="hoverSubItem"
+                class="group/item">
               <router-link
                   :to="{ name: 'HelpIndex' }"
-                  class="flex items-center px-3 py-2 hover:bg-blue-600 hover:text-white">
+                  class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
                 <i class="fa fa-question-circle fa-fw mr-3"/> {{ $root.lang('help') }}
               </router-link>
             </li>
@@ -520,27 +566,9 @@ export default {
       }
     })
   },
-  mounted () {
-    // this.$el.querySelectorAll('ul.nav > li').forEach((i) => {
-    //   i.addEventListener('mouseenter', (e) => {
-    //     this.$el.querySelectorAll('ul.nav > li.hover').forEach(i => i.classList.remove('hover'))
-    //     e.target.classList.add('hover')
-    //   })
-    // })
-    // this.$el.querySelectorAll('ul.nav > li > ul > li').forEach(i => {
-    //   i.addEventListener('mouseenter', (e) => {
-    //     e.target.parentElement.querySelectorAll(':scope > li.hover').forEach(i => i.classList.remove('hover'))
-    //     e.target.classList.add('hover')
-    //   })
-    // })
-  },
   methods: {
     click (event) {
-      let a = event.target.closest('a')
-      if (a && a.classList.contains('home')) {
-        this.$el.classList.remove('active')
-        this.$el.parentElement.classList.remove('active')
-      } else if (event.target.closest('.menu ul.nav > li > a')) {
+      if (event.target.closest('.menu ul.nav > li > div')) {
         this.$el.classList.add('active')
         this.$el.parentElement.classList.add('active')
       } else {
@@ -583,7 +611,7 @@ export default {
 
 <style scoped>
 .menu.active ul.nav > li.hover > ul, .menu ul.nav > li > ul > li.hover > ul { display: block; }
-.menu.active ul.nav > li.parent.hover > a { background-color: white; color: #222; }
+.menu.active ul.nav > li.parent.hover > div { background-color: white; color: #222; }
 .menu ul.nav > li ul { max-height: calc(100vh - 3rem); }
 .menu ul.nav > li > ul > li > ul { left: 100%; top: 0; overflow-y: auto; }
 </style>

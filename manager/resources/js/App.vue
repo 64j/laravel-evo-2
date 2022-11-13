@@ -3,7 +3,7 @@
     <div class="app-header grow-0 border-bottom peer/header">
       <MenuView ref="Menu"/>
     </div>
-    <div class="app-body grow flex flex-nowrap before:hidden before:content-[''] before:absolute before:z-40 before:left-0 before:top-0 before:right-0 before:bottom-0 before:bg-gray-900/25 before:peer-[.active]/header:block">
+    <div class="app-body grow flex flex-nowrap before:invisible before:opacity-0 before:content-[''] before:absolute before:z-40 before:left-0 before:top-0 before:right-0 before:bottom-0 before:bg-black/10 before:peer-[.active]/header:visible before:peer-[.active]/header:opacity-100 before:transition">
       <div class="app-tree flex-auto overflow-hidden">
         <Tree ref="Tree"/>
       </div>
