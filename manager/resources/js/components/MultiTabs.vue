@@ -1,8 +1,9 @@
 <template>
-  <div class="flex flex-col grow w-full bg-slate-100">
+  <div class="flex flex-col grow w-full">
+
     <div class="grow-0">
       <div class="multi-tabs h-8 overflow-hidden bg-gray-900">
-        <div class="pane h-16 flex flex-nowrap overflow-auto border-l border-gray-800">
+        <div class="pane h-16 flex flex-nowrap overflow-auto">
           <a v-for="(tab, i) in tabs"
              :key="i"
              :data-to="tab.fullPath"

@@ -5,7 +5,7 @@
       <ul class="nav flex items-center h-full">
 
         <li class="h-full">
-          <span @click="toggleSidebar" class="inline-flex justify-center items-center w-10 h-full cursor-pointer">
+          <span @click="$emit('toggleSidebar')" class="inline-flex justify-center items-center w-10 h-full cursor-pointer">
             <i class="fa fa-bars fa-fw"/>
           </span>
         </li>
@@ -616,10 +616,6 @@ export default {
     subMenuEnter (e) {
       e.target.parentElement.querySelectorAll(':scope > li.hover').forEach(i => i.classList.remove('hover'))
       e.target.classList.add('hover')
-    },
-
-    toggleSidebar () {
-      this.$root.$el.classList.toggle('tree-hidden')
     }
   }
 }

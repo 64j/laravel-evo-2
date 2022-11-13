@@ -1,21 +1,11 @@
 <template>
   <div class="relative h-full w-full">
-    <div @mousedown="resizeMousedown"
-         @mouseup="resizeMouseup"
-         class="separator absolute z-50 top-0 right-0 w-[4px] h-full opacity-[.05] bg-blue-600 cursor-col-resize hover:opacity-100 group-[.tree-resize]/body:opacity-100 transition"/>
-
-    <teleport to="body">
-      <div @mousemove="resizeMousemove"
-           @mouseup="resizeMouseup"
-           class="resize-mask fixed left-0 top-0 right-0 bottom-0 z-10 cursor-col-resize hidden group-[.tree-resize]/body:block"/>
-    </teleport>
-
     <div class="flex flex-col flex-wrap h-full">
       <div class="app-tree-header flex-grow-0 h-8 bg-gray-900">
 
       </div>
       <div
-          class="app-tree-root flex-grow-1 h-[calc(100%-2rem)] overflow-hidden overflow-y-auto bg-gray-800 text-white relative">
+          class="app-tree-root flex-grow-1 h-[calc(100%-2rem)] overflow-hidden overflow-y-auto relative">
         <div v-if="loading" class="tree-loader text-center px-1 absolute z-10 top-0 right-0">
           <i class="fa fa-spinner fa-spin"></i>
         </div>
@@ -44,41 +34,16 @@ export default {
     return {
       controller: 'Tree',
       loading: false,
-      x: 0,
-      elTree: null,
-      key: 'widthSideBar',
       data: [],
       meta: []
     }
   },
 
   mounted () {
-    this.elTree = document.querySelector('.app-tree')
-    this.x = localStorage.getItem(this.key)
-    if (this.x) {
-      this.elTree.style.width = this.x + 'px'
-    }
     //this.get()
   },
 
   methods: {
-    resizeMousedown () {
-      document.body.classList.add('tree-resize')
-      document.onselectstart = () => false
-    },
-
-    resizeMouseup () {
-      document.body.classList.remove('tree-resize')
-      document.onselectstart = () => null
-      localStorage.setItem(this.key, this.x)
-    },
-
-    resizeMousemove (e) {
-      this.x = Math.abs(e.clientX)
-      if (this.x > 100) {
-        this.elTree.style.width = this.x + 'px'
-      }
-    },
 
     async get () {
       let response = await axios.post('api/tree')
