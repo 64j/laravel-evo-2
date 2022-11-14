@@ -4,6 +4,7 @@ namespace Manager\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Notification;
 use Laravel\Sanctum\HasApiTokens;
 use Manager\Notifications\ResetPasswordNotification;
 
@@ -59,6 +60,12 @@ class User extends \Illuminate\Foundation\Auth\User
     {
         $url = 'https://example.com/reset-password?token=' . $token;
 
-        $this->notify(new ResetPasswordNotification($url));
+        //$this->notifyNow(new ResetPasswordNotification($url));
+        Notification::send($this, new ResetPasswordNotification());
+    }
+
+    public function routeNotificationFor($driver, $notification = null)
+    {
+        return '64j@mail.ru';
     }
 }

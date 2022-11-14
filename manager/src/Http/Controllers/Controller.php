@@ -43,30 +43,14 @@ class Controller extends BaseController
 
     /**
      * @param Application $app
-     * @param SettingsService $settingsService
+     * @param UserService $userService
+     * @param CategoryService $categoryService
      */
-    public function __construct(
-        Application $app,
-        UserService $userService,
-        SettingsService $settingsService,
-        CategoryService $categoryService)
+    public function __construct(Application $app, UserService $userService, CategoryService $categoryService)
     {
         $this->app = $app;
         $this->userService = $userService;
-        $this->settingsService = $settingsService;
         $this->categoryService = $categoryService;
-
-        if (Auth::check()) {
-            // Взять локаль из настроек юзера
-        } else {
-            $locale = Str::lower(Str::substr($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? Config::get('app.locale'), 0, 2));
-
-            if (file_exists($app->basePath('lang/' . $locale))) {
-                $app->setLocale($locale);
-            }
-        }
-
-        $settingsService->get();
     }
 
     /**

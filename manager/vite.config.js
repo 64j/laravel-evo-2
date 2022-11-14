@@ -3,7 +3,7 @@ import laravel from 'laravel-vite-plugin'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 
-process.env.ASSET_URL = '/manager/public/'
+//process.env.ASSET_URL = '/manager/public/'
 
 export default defineConfig({
   // base: '',
