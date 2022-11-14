@@ -1,6 +1,3 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
-const plugin = require('tailwindcss/plugin')
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -15,7 +12,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: 'sans-serif'
+        sans: '-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"'
       }
     }
   },

@@ -1,10 +1,11 @@
 import { defineConfig } from 'vite'
 import laravel from 'laravel-vite-plugin'
 import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
+import path from 'path'
+
+process.env.ASSET_URL = '/manager/public/'
 
 export default defineConfig({
-  // root: process.cwd(),
   // base: '',
   // envDir: './',
   // build: {
@@ -39,7 +40,7 @@ export default defineConfig({
     vue({
       template: {
         transformAssetUrls: {
-          base: null,
+          //base: null,
           includeAbsolute: false
         }
       }
@@ -48,7 +49,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': '/resources/js',
-      '@assets': resolve(__dirname, '/resources/js/assets'),
+      '@assets': path.resolve(__dirname, '/resources/js/assets'),
     },
     extensions: ['.js', '.vue', '.json']
   }

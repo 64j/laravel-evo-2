@@ -2,43 +2,63 @@
 
 namespace Manager\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Manager\Notifications\ResetPasswordNotification;
 
-class User extends Authenticatable
+/**
+ * @property string $username
+ */
+class User extends \Illuminate\Foundation\Auth\User
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
+     * @var bool
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    public $timestamps = false;
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
+     * @var string
+     */
+    protected $rememberTokenName = 'access_token';
+
+    /**
+     * @var string[]
      */
     protected $hidden = [
         'password',
-        'remember_token',
+        'cachepwd',
+        'verified_key',
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
+     * @var string[]
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
+    protected $fillable = [
+        'username',
+        'password',
+        'cachepwd',
+        'verified_key',
+        'refresh_token',
+        'access_token',
+        'valid_to',
     ];
+
+    /**
+     * Send a password reset notification to the user.
+     *
+     * @param string $token
+     *
+     * @return void
+     */
+    public function sendPasswordResetNotification($token): void
+    {
+        $url = 'https://example.com/reset-password?token=' . $token;
+
+        $this->notify(new ResetPasswordNotification($url));
+    }
 }

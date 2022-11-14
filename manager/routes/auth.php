@@ -1,17 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Manager\Http\Controllers\Auth\AuthenticatedSessionController;
+use Manager\Http\Controllers\AuthController;
 
 Route::middleware('guest')
     ->prefix(env('MGR_DIR'))
     ->group(fn() => [
-        Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login'),
-        Route::post('login', [AuthenticatedSessionController::class, 'store']),
+        Route::view('login', 'login')->name('login'),
+        Route::post('login', [AuthController::class, 'login']),
+        Route::view('forgot', 'forgot')->name('forgot'),
+        Route::post('forgot', [AuthController::class, 'forgot'])->name('password.reset'),
     ]);
 
 Route::middleware('auth')
     ->prefix(env('MGR_DIR'))
     ->group(fn() => [
-        Route::any('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout'),
+        Route::any('logout', [AuthController::class, 'logout'])->name('logout'),
     ]);

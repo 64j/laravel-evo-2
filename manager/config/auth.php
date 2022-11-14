@@ -47,10 +47,6 @@ return [
             'hash' => true,
             'input_key' => 'access_token',
             'storage_key' => 'access_token',
-            'except_methods' => [
-                'Auth@login',
-                'Auth@logout',
-            ],
         ],
     ],
 
@@ -74,7 +70,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => Manager\Models\User::class,
         ],
 
         // 'users' => [
@@ -101,7 +97,7 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => 'password_resets',
+            'table' => 'users',
             'expire' => 60,
             'throttle' => 60,
         ],

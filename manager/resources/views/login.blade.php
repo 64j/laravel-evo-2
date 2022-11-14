@@ -10,12 +10,33 @@
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
     @vite(['resources/css/app.css'])
     <style>
-        .main { background: url("https://picsum.photos/1600/900") 50% 50% no-repeat; background-size: cover }
+        .bg { position: absolute; z-index: 1; left: 0; top: 0; right: 0; bottom: 0; opacity: 1; background: 50% 50% no-repeat; background-size: cover; transition: opacity 2s }
+        .bg.hide { opacity: 0; }
+        .bg1 { background-image: url("https://picsum.photos/1600/900") }
     </style>
+    <script>
+      let bg = 1
+      setInterval(() => fetch('https://picsum.photos/1600/900').then(response => {
+        let mainImage = new Image()
+        mainImage.src = response.url
+        mainImage.onload = () => {
+          let bgEl1 = document.querySelector('.bg' + bg);
+          bg = bg !== 1 ? 1 : 2
+          let bgEl2 = document.querySelector('.bg' + bg)
+
+          bgEl2.style.backgroundImage = 'url(' + response.url + ')'
+
+          bgEl1.classList.add('hide')
+          bgEl2.classList.remove('hide')
+        }
+      }), 10000)
+    </script>
 </head>
 <body>
 <div id="app" class="main w-full h-full">
-    <div class="w-[30rem] max-w-full p-10 bg-black/[.85] text-gray-300 text-opacity-75 flex flex-col justify-between h-full">
+    <div class="bg bg1"></div>
+    <div class="bg bg2 hide"></div>
+    <div class="z-50 relative w-[30rem] max-w-full p-10 bg-black/[.85] text-gray-300 text-opacity-75 flex flex-col justify-between h-full">
         <form method="post" action="{{ route('login') }}">
             @csrf
 
@@ -74,7 +95,7 @@
         </form>
 
         <div class="text-center text-sm text-gray-500 hover:text-gray-400">
-            <a href="#">{{ __('global.forgot_your_password') }}</a>
+            <a href="{{ route('forgot') }}">{{ __('global.forgot_your_password') }}</a>
         </div>
     </div>
 </div>
