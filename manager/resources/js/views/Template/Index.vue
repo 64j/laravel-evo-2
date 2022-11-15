@@ -267,7 +267,7 @@ export default {
     },
 
     setData (data) {
-      this.data = data?.data || {}
+      this.data = data?.data || { category: 0, selectable: 1 }
       this.meta = data?.meta || {}
       this.$emit('setTab', { title: this.title })
       this.loading = true
