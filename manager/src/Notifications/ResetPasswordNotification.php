@@ -7,7 +7,6 @@ namespace Manager\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Manager\Models\UserAttribute;
 
 class ResetPasswordNotification extends Notification
 {
@@ -33,9 +32,9 @@ class ResetPasswordNotification extends Notification
 //        $url = url('/manager/reset-password?token=' . $notifiable->refresh_token);
 //        $email = UserAttribute::query()->find($notifiable->getKey())->value('email');
 
-
         return (new MailMessage())
             ->mailer('sendmail')
+            ->replyTo('mail@mail.ru')
             ->greeting('Hello!')
             ->line('One of your invoices has been paid!')
 //            ->action('View Invoice', $url)

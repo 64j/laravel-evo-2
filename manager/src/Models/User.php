@@ -60,12 +60,22 @@ class User extends \Illuminate\Foundation\Auth\User
     {
         $url = 'https://example.com/reset-password?token=' . $token;
 
-        //$this->notifyNow(new ResetPasswordNotification($url));
-        Notification::send($this, new ResetPasswordNotification());
+        $this->notify(new ResetPasswordNotification($url));
+        //Notification::send($this, new ResetPasswordNotification());
     }
 
-    public function routeNotificationFor($driver, $notification = null)
+    /**
+     * @param $driver
+     * @param $notification
+     *
+     * @return string[]
+     */
+    public function routeNotificationForMail($driver, $notification = null): array
     {
-        return '64j@mail.ru';
+        /** @var UserAttribute $attributes */
+        $attributes = UserAttribute::query()
+            ->firstWhere('internalKey', $this->getKey());
+
+        return [$attributes->email => $this->username];
     }
 }
