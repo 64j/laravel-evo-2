@@ -21,6 +21,7 @@ const queuePostRenderEffect = queueEffectWithSuspense
 const devtoolsComponentAdded = /*#__PURE__*/ createDevtoolsComponentHook('component:added' /* DevtoolsHooks.COMPONENT_ADDED */)
 const isAsyncWrapper = (i) => !!i.type.__asyncLoader
 const isSuspense = (type) => type.__isSuspense
+const isProdDevTools = typeof global !== 'undefined' && global.__VUE_PROD_DEVTOOLS__ || null
 
 function createDevtoolsComponentHook (hook) {
   return (component) => {
@@ -118,7 +119,7 @@ const KeepAliveImpl = {
     const cache = new Map()
     const keys = new Set()
     let current = null
-    if ((process.env.NODE_ENV !== 'production') || global.__VUE_PROD_DEVTOOLS__) {
+    if ((process.env.NODE_ENV !== 'production') || isProdDevTools) {
       instance.__v_cache = cache
     }
     const parentSuspense = instance.suspense
@@ -139,7 +140,7 @@ const KeepAliveImpl = {
           invokeVNodeHook(vnodeHook, instance.parent, vnode)
         }
       }, parentSuspense)
-      if ((process.env.NODE_ENV !== 'production') || global.__VUE_PROD_DEVTOOLS__) {
+      if ((process.env.NODE_ENV !== 'production') || isProdDevTools) {
         // Update components tree
         devtoolsComponentAdded(instance)
       }
@@ -157,7 +158,7 @@ const KeepAliveImpl = {
         }
         instance.isDeactivated = true
       }, parentSuspense)
-      if ((process.env.NODE_ENV !== 'production') || global.__VUE_PROD_DEVTOOLS__) {
+      if ((process.env.NODE_ENV !== 'production') || isProdDevTools) {
         // Update components tree
         devtoolsComponentAdded(instance)
       }
