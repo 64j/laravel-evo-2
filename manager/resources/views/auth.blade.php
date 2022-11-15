@@ -15,7 +15,7 @@
     <div class="bg1 absolute left-0 top-0 right-0 bottom-0 bg-no-repeat bg-center bg-cover transition transition-opacity duration-1000"></div>
     <div class="bg2 absolute left-0 top-0 right-0 bottom-0 bg-no-repeat bg-center bg-cover transition transition-opacity duration-1000 opacity-0"></div>
 
-    <div class="z-50 relative w-[30rem] max-w-full p-10 bg-black/[.85] text-gray-300 text-opacity-75 flex flex-col justify-between h-full">
+    <div class="z-50 relative w-[30rem] max-w-full p-10 bg-black/75 text-gray-300 text-opacity-75 flex flex-col justify-between h-full">
         @yield('content')
     </div>
 </div>

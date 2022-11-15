@@ -5,7 +5,12 @@ declare(strict_types=1);
 namespace Manager\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\SiteHtmlsnippet;
+use App\Models\SiteModule;
+use App\Models\SitePlugin;
+use App\Models\SiteSnippet;
 use App\Models\SiteTemplate;
+use App\Models\SiteTmplvar;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -44,7 +49,7 @@ class CategoryController extends Controller
                                 fn($query) => $filter ? $query->where('templatename', 'like', '%' . $filter . '%')
                                     : null
                             )
-                            ->paginate(Config::get('global.number_of_results'), '*', 'page_0')
+                            ->simplePaginate(Config::get('global.number_of_results'), '*', 'page_0')
                             ->appends('filter', $filter)
                     ),
             )
@@ -59,7 +64,11 @@ class CategoryController extends Controller
                                     fn($query) => $filter ? $query->where('templatename', 'like', '%' . $filter . '%')
                                         : null
                                 )
-                                ->paginate(Config::get('global.number_of_results'), '*', 'page_' . $category->getKey())
+                                ->simplePaginate(
+                                    Config::get('global.number_of_results'),
+                                    '*',
+                                    'page_' . $category->getKey()
+                                )
                                 ->appends('filter', $filter)
                         );
 
@@ -69,7 +78,9 @@ class CategoryController extends Controller
                             $category->templates->toArray()
                         );
                     })
-            );
+            )
+            ->filter(fn($category) => $category['data'])
+            ->values();
 
         return $this->ok($categories);
     }
@@ -77,115 +88,335 @@ class CategoryController extends Controller
     /**
      * @param Request $request
      *
-     * @return array
+     * @return JsonResponse
      */
-    public function tvs(Request $request): array
+    public function tvs(Request $request): JsonResponse
     {
-        return [
-            'data' => Collection::make([Category::tvsNoCategory()])->merge(
-                Category::query()
-                    ->with('tvs', fn($query) => $query->paginate())
-                    ->whereHas('tvs')
-                    ->get()
-                    ->map(function ($category) {
-                        $category->data = $category->tvs;
-                        unset($category->tvs);
+        $filter = $request->get('filter');
 
-                        return $category;
+        $categories = Collection::make()
+            ->add(
+                Collection::make([
+                    'id' => 0,
+                    'name' => __('global.no_category'),
+                    'rank' => 0,
+                ])
+                    ->merge(
+                        SiteTmplvar::query()
+                            ->select([
+                                'id',
+                                'name',
+                                'caption as description',
+                                'description as intro',
+                                'locked',
+                                'category',
+                            ])
+                            ->where('category', 0)
+                            ->where(
+                                fn($query) => $filter ? $query->where('name', 'like', '%' . $filter . '%')
+                                    : null
+                            )
+                            ->simplePaginate(Config::get('global.number_of_results'), '*', 'page_0')
+                            ->appends('filter', $filter)
+                    ),
+            )
+            ->merge(
+                Category::query()
+                    ->get(['id', 'category as name', 'rank'])
+                    ->map(function (Category $category) use ($filter) {
+                        $category->setRelation(
+                            'tvs',
+                            $category->tvs()
+                                ->where(
+                                    fn($query) => $filter ? $query->where('name', 'like', '%' . $filter . '%')
+                                        : null
+                                )
+                                ->simplePaginate(
+                                    Config::get('global.number_of_results'),
+                                    '*',
+                                    'page_' . $category->getKey()
+                                )
+                                ->appends('filter', $filter)
+                        );
+
+                        return array_merge(
+                            ['@selected' => false],
+                            $category->attributesToArray(),
+                            $category->tvs->toArray()
+                        );
                     })
-            ),
-        ];
+            )
+            ->filter(fn($category) => $category['data'])
+            ->values();
+
+        return $this->ok($categories);
     }
 
     /**
      * @param Request $request
      *
-     * @return array
+     * @return JsonResponse
      */
-    public function chunks(Request $request): array
+    public function chunks(Request $request): JsonResponse
     {
-        return [
-            'data' => Collection::make([Category::chunksNoCategory()])->merge(
-                Category::query()
-                    ->with('chunks', fn($query) => $query->paginate())
-                    ->whereHas('chunks')
-                    ->get()
-                    ->map(function ($category) {
-                        $category->data = $category->chunks;
-                        unset($category->chunks);
+        $filter = $request->get('filter');
 
-                        return $category;
+        $categories = Collection::make()
+            ->add(
+                Collection::make([
+                    'id' => 0,
+                    'name' => __('global.no_category'),
+                    'rank' => 0,
+                ])
+                    ->merge(
+                        SiteHtmlsnippet::query()
+                            ->select([
+                                'id',
+                                'name',
+                                'description',
+                                'locked',
+                                'disabled',
+                                'category',
+                            ])
+                            ->where('category', 0)
+                            ->where(
+                                fn($query) => $filter ? $query->where('name', 'like', '%' . $filter . '%')
+                                    : null
+                            )
+                            ->simplePaginate(Config::get('global.number_of_results'), '*', 'page_0')
+                            ->appends('filter', $filter)
+                    ),
+            )
+            ->merge(
+                Category::query()
+                    ->get(['id', 'category as name', 'rank'])
+                    ->map(function (Category $category) use ($filter) {
+                        $category->setRelation(
+                            'chunks',
+                            $category->chunks()
+                                ->where(
+                                    fn($query) => $filter ? $query->where('name', 'like', '%' . $filter . '%')
+                                        : null
+                                )
+                                ->simplePaginate(
+                                    Config::get('global.number_of_results'),
+                                    '*',
+                                    'page_' . $category->getKey()
+                                )
+                                ->appends('filter', $filter)
+                        );
+
+                        return array_merge(
+                            ['@selected' => false],
+                            $category->attributesToArray(),
+                            $category->chunks->toArray()
+                        );
                     })
-            ),
-        ];
+            )
+            ->filter(fn($category) => $category['data'])
+            ->values();
+
+        return $this->ok($categories);
     }
 
     /**
      * @param Request $request
      *
-     * @return array
+     * @return JsonResponse
      */
-    public function snippets(Request $request): array
+    public function snippets(Request $request): JsonResponse
     {
-        return [
-            'data' => Collection::make([Category::snippetsNoCategory()])->merge(
-                Category::query()
-                    ->with('snippets', fn($query) => $query->paginate())
-                    ->whereHas('snippets')
-                    ->get()
-                    ->map(function ($category) {
-                        $category->data = $category->snippets;
-                        unset($category->snippets);
+        $filter = $request->get('filter');
 
-                        return $category;
+        $categories = Collection::make()
+            ->add(
+                Collection::make([
+                    'id' => 0,
+                    'name' => __('global.no_category'),
+                    'rank' => 0,
+                ])
+                    ->merge(
+                        SiteSnippet::query()
+                            ->select([
+                                'id',
+                                'name',
+                                'description',
+                                'locked',
+                                'disabled',
+                                'category',
+                            ])
+                            ->where('category', 0)
+                            ->where(
+                                fn($query) => $filter ? $query->where('name', 'like', '%' . $filter . '%')
+                                    : null
+                            )
+                            ->simplePaginate(Config::get('global.number_of_results'), '*', 'page_0')
+                            ->appends('filter', $filter)
+                    ),
+            )
+            ->merge(
+                Category::query()
+                    ->get(['id', 'category as name', 'rank'])
+                    ->map(function (Category $category) use ($filter) {
+                        $category->setRelation(
+                            'snippets',
+                            $category->snippets()
+                                ->where(
+                                    fn($query) => $filter ? $query->where('name', 'like', '%' . $filter . '%')
+                                        : null
+                                )
+                                ->simplePaginate(
+                                    Config::get('global.number_of_results'),
+                                    '*',
+                                    'page_' . $category->getKey()
+                                )
+                                ->appends('filter', $filter)
+                        );
+
+                        return array_merge(
+                            ['@selected' => false],
+                            $category->attributesToArray(),
+                            $category->snippets->toArray()
+                        );
                     })
-            ),
-        ];
+            )
+            ->filter(fn($category) => $category['data'])
+            ->values();
+
+        return $this->ok($categories);
     }
 
     /**
      * @param Request $request
      *
-     * @return array
+     * @return JsonResponse
      */
-    public function plugins(Request $request): array
+    public function plugins(Request $request): JsonResponse
     {
-        return [
-            'data' => Collection::make([Category::pluginsNoCategory()])->merge(
-                Category::query()
-                    ->with('plugins', fn($query) => $query->paginate())
-                    ->whereHas('plugins')
-                    ->get()
-                    ->map(function ($category) {
-                        $category->data = $category->plugins;
-                        unset($category->plugins);
+        $filter = $request->get('filter');
 
-                        return $category;
+        $categories = Collection::make()
+            ->add(
+                Collection::make([
+                    'id' => 0,
+                    'name' => __('global.no_category'),
+                    'rank' => 0,
+                ])
+                    ->merge(
+                        SitePlugin::query()
+                            ->select([
+                                'id',
+                                'name',
+                                'description',
+                                'locked',
+                                'disabled',
+                                'category',
+                            ])
+                            ->where('category', 0)
+                            ->where(
+                                fn($query) => $filter ? $query->where('name', 'like', '%' . $filter . '%')
+                                    : null
+                            )
+                            ->simplePaginate(Config::get('global.number_of_results'), '*', 'page_0')
+                            ->appends('filter', $filter)
+                    ),
+            )
+            ->merge(
+                Category::query()
+                    ->get(['id', 'category as name', 'rank'])
+                    ->map(function (Category $category) use ($filter) {
+                        $category->setRelation(
+                            'plugins',
+                            $category->plugins()
+                                ->where(
+                                    fn($query) => $filter ? $query->where('name', 'like', '%' . $filter . '%')
+                                        : null
+                                )
+                                ->simplePaginate(
+                                    Config::get('global.number_of_results'),
+                                    '*',
+                                    'page_' . $category->getKey()
+                                )
+                                ->appends('filter', $filter)
+                        );
+
+                        return array_merge(
+                            ['@selected' => false],
+                            $category->attributesToArray(),
+                            $category->plugins->toArray()
+                        );
                     })
-            ),
-        ];
+            )
+            ->filter(fn($category) => $category['data'])
+            ->values();
+
+        return $this->ok($categories);
     }
 
     /**
      * @param Request $request
      *
-     * @return array
+     * @return JsonResponse
      */
-    public function modules(Request $request): array
+    public function modules(Request $request): JsonResponse
     {
-        return [
-            'data' => Collection::make([Category::modulesNoCategory()])->merge(
-                Category::query()
-                    ->with('modules', fn($query) => $query->paginate())
-                    ->whereHas('modules')
-                    ->get()
-                    ->map(function ($category) {
-                        $category->data = $category->modules;
-                        unset($category->modules);
+        $filter = $request->get('filter');
 
-                        return $category;
+        $categories = Collection::make()
+            ->add(
+                Collection::make([
+                    'id' => 0,
+                    'name' => __('global.no_category'),
+                    'rank' => 0,
+                ])
+                    ->merge(
+                        SiteModule::query()
+                            ->select([
+                                'id',
+                                'name',
+                                'description',
+                                'locked',
+                                'disabled',
+                                'category',
+                            ])
+                            ->where('category', 0)
+                            ->where(
+                                fn($query) => $filter ? $query->where('name', 'like', '%' . $filter . '%')
+                                    : null
+                            )
+                            ->simplePaginate(Config::get('global.number_of_results'), '*', 'page_0')
+                            ->appends('filter', $filter)
+                    ),
+            )
+            ->merge(
+                Category::query()
+                    ->get(['id', 'category as name', 'rank'])
+                    ->map(function (Category $category) use ($filter) {
+                        $category->setRelation(
+                            'modules',
+                            $category->modules()
+                                ->where(
+                                    fn($query) => $filter ? $query->where('name', 'like', '%' . $filter . '%')
+                                        : null
+                                )
+                                ->simplePaginate(
+                                    Config::get('global.number_of_results'),
+                                    '*',
+                                    'page_' . $category->getKey()
+                                )
+                                ->appends('filter', $filter)
+                        );
+
+                        return array_merge(
+                            ['@selected' => false],
+                            $category->attributesToArray(),
+                            $category->modules->toArray()
+                        );
                     })
-            ),
-        ];
+            )
+            ->filter(fn($category) => $category['data'])
+            ->values();
+
+        return $this->ok($categories);
     }
 }

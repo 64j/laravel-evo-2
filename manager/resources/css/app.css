@@ -8,7 +8,7 @@
     }
 }
 html { font-size: 13px; }
-body { font-size: 1rem; min-width: 320px }
+body { font-size: 1rem; color: #444; min-width: 320px }
 html, body, #app { width: 100%; height: 100%; overflow: hidden; }
 .logo { min-width: 2rem; min-height: 2rem; background: url("../img/logo-empty.svg") no-repeat center center; background-size: contain; }
 [type='checkbox'], [type='radio'], [type='text'], [type='email'], [type='url'], [type='password'], [type='number'], [type='date'], [type='datetime-local'], [type='month'], [type='search'], [type='tel'], [type='time'], [type='week'], [multiple], textarea, select {

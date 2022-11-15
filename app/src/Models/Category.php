@@ -11,6 +11,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property SiteTmplvar[]|Collection $tvs
  * @property SiteTemplate[]|Collection $templates
+ * @property SiteHtmlsnippet[]|Collection $chunks
+ * @property SiteSnippet[]|Collection $snippets
+ * @property SitePlugin[]|Collection $plugins
+ * @property SiteModule[]|Collection $modules
  */
 class Category extends Model
 {

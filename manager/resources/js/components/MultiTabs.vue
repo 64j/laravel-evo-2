@@ -40,7 +40,7 @@
           </CustomKeepAlive>
         </router-view>
       </div>
-      <div class="multi-tabs-panel-frames h-full"></div>
+      <div class="multi-tabs-panel-frames h-full w-full relative"></div>
     </div>
 
   </div>

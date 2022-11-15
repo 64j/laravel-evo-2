@@ -55,7 +55,7 @@
               <span class="font-extrabold text-gray-600 mr-1">{{ category.name }}</span>
               <span class="text-xs">({{ category.id }})</span>
             </label>
-            <div v-if="category.total && category.total > category['per_page']">
+            <div v-if="category['prev_page_url'] || category['next_page_url']">
               <i
                   :class="{ 'pointer-events-none text-gray-400' : !category['prev_page_url'] }"
                   class="fa fa-angle-left fa-fw text-lg cursor-pointer hover:text-blue-500"
@@ -89,7 +89,7 @@
                     <i v-if="linkIcon" :class="linkIcon" class="mr-2 peer/icon"></i>
                     <i class="fa fa-lock fa-fw mr-1 -ml-5 text-rose-500 text-xs peer-[.fa]/icon:-ml-4 peer-[.fa]/icon:mr-0"
                        v-if="item.locked"/>
-                    <span class="mr-1 text-gray-700 group-hover/item:text-blue-700 peer-checked/check:font-bold">
+                    <span class="mr-1 group-hover/item:text-blue-700 peer-checked/check:font-bold">
                       {{ item.name }}
                     </span>
                     <span class="text-xs">({{ item.id }})</span>
@@ -103,12 +103,15 @@
                     v-else
                     :to="{ name: linkName, params: { id: item.id } }"
                     class="grow inline-flex items-center py-1 pr-5 select-none group/item"
-                    :class="{ 'text-rose-700/75': item.disabled }">
+                    :class="{ 'text-rose-600': item.disabled }">
 
                   <i v-if="linkIcon" :class="linkIcon" class="mr-2 peer/icon"></i>
                   <i class="fa fa-lock fa-fw mr-1 -ml-5 text-rose-500 text-xs peer-[.fa]/icon:-ml-4 peer-[.fa]/icon:mr-0"
                      v-if="item.locked"/>
-                  <span class="mr-1 text-gray-700 group-hover/item:text-blue-700">{{ item.name }}</span>
+                  <span class="mr-1"
+                        :class="[ item.disabled ? 'group-hover/item:text-rose-700' : 'group-hover/item:text-blue-700' ]">
+                    {{ item.name }}
+                  </span>
                   <span class="text-xs">({{ item.id }})</span>
                   <span class="ml-3 text-xs" v-html="item.description"/>
 

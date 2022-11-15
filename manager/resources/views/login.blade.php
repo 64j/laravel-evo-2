@@ -52,10 +52,6 @@
             </div>
         </div>
 
-        @if ($errors->has('username') || $errors->has('password'))
-            <div class="errors text-rose-500 py-3 text-center">{{ __('global.login_processor_unknown_user') }}</div>
-        @endif
-
     </form>
 
     <div class="text-center text-sm text-gray-500 hover:text-gray-400">

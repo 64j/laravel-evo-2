@@ -1,6 +1,6 @@
 <template>
   <div>
-    <iframe :srcdoc="data" class="w-100 h-100 overflow-auto border-0"/>
+    <iframe :src="data" class="w-full h-full overflow-auto border-none"/>
   </div>
 </template>
 

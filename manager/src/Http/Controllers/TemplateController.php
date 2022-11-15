@@ -20,7 +20,7 @@ class TemplateController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return TemplateResource::collection(SiteTemplate::all());
+        return TemplateResource::collection(SiteTemplate::query()->orderBy('templatename')->get());
     }
 
     /**

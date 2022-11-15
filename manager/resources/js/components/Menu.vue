@@ -115,12 +115,12 @@
 
                 <li
                     v-for="item in list.tvs"
-                    :key="'item-template-' + item.id"
+                    :key="'item-tv-' + item.id"
                     @mouseenter="subMenuEnter">
 
                   <router-link
                       :to="{ name: 'TvIndex', params: { id: item.id } }"
-                      :class="{'italic': item.locked}"
+                      :class="{ 'italic': item.locked, 'text-rose-700' : item.disabled }"
                       class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white">
                     {{ item.name }}
                     <small class="ml-1">({{ item.id }})</small>
@@ -146,23 +146,34 @@
                 <i class="fa fa-angle-right fa-fw absolute top-0 right-0 h-full inline-flex items-center px-5"/>
               </router-link>
 
-              <ul v-if="list.chunks.length" class="bg-white left-full top-0 overflow-y-auto">
+              <ul
+                  v-if="list.tvs.length"
+                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
 
-                <li @mouseenter="subMenuEnter">
+                <li
+                    @mouseenter="subMenuEnter">
                   <router-link
-                      :to="{ name: 'ChunkIndex', params: { id: '' } }">
-                    <i class="fa fa-plus fa-fw"/>
+                      :to="{ name: 'ChunkIndex', params: { id: '' } }"
+                      class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white">
+                    <i class="fa fa-plus fa-fw mr-3"/>
                     {{ $root.lang('new_htmlsnippet') }}
                   </router-link>
                 </li>
 
-                <li v-for="item in list.chunks" :key="'item-chunk-' + item.id" @mouseenter="subMenuEnter">
+                <li
+                    v-for="item in list.chunks"
+                    :key="'item-chunk-' + item.id"
+                    @mouseenter="subMenuEnter">
+
                   <router-link
                       :to="{ name: 'ChunkIndex', params: { id: item.id } }"
-                      :class="{'fst-italic': item.locked, 'text-danger opacity-50': item.disabled}">
+                      :class="{ 'text-rose-700' : item.disabled }"
+                      class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white relative">
+                    <i v-if="item.locked" class="fa fa-lock fa-fw absolute right-4 text-rose-500 text-xs"/>
                     {{ item.name }}
-                    <small class="ms-1">({{ item.id }})</small>
+                    <small class="ml-1">({{ item.id }})</small>
                   </router-link>
+
                 </li>
 
               </ul>
@@ -183,21 +194,34 @@
                 <i class="fa fa-angle-right fa-fw absolute top-0 right-0 h-full inline-flex items-center px-5"/>
               </router-link>
 
-              <ul v-if="list.snippets.length" class="bg-white left-full top-0 overflow-y-auto">
+              <ul
+                  v-if="list.snippets.length"
+                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
 
-                <li @mouseenter="subMenuEnter">
-                  <router-link :to="{ name: 'SnippetIndex', params: { id: '' } }">
-                    <i class="fa fa-plus fa-fw"/>
+                <li
+                    @mouseenter="subMenuEnter">
+                  <router-link
+                      :to="{ name: 'SnippetIndex', params: { id: '' } }"
+                      class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white">
+                    <i class="fa fa-plus fa-fw mr-3"/>
                     {{ $root.lang('new_snippet') }}
                   </router-link>
                 </li>
 
-                <li v-for="item in list.snippets" :key="'item-snippet-' + item.id" @mouseenter="subMenuEnter">
-                  <router-link :to="{ name: 'SnippetIndex', params: { id: item.id } }"
-                               :class="{'fst-italic': item.locked, 'text-danger opacity-50': item.disabled}">
+                <li
+                    v-for="item in list.snippets"
+                    :key="'item-snippet-' + item.id"
+                    @mouseenter="subMenuEnter">
+
+                  <router-link
+                      :to="{ name: 'SnippetIndex', params: { id: item.id } }"
+                      :class="{ 'text-rose-700' : item.disabled }"
+                      class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white relative">
+                    <i v-if="item.locked" class="fa fa-lock fa-fw absolute right-4 text-rose-500 text-xs"/>
                     {{ item.name }}
-                    <small class="ms-1">({{ item.id }})</small>
+                    <small class="ml-1">({{ item.id }})</small>
                   </router-link>
+
                 </li>
 
               </ul>
@@ -218,23 +242,34 @@
                 <i class="fa fa-angle-right fa-fw absolute top-0 right-0 h-full inline-flex items-center px-5"/>
               </router-link>
 
-              <ul v-if="list.plugins.length" class="bg-white left-full top-0 overflow-y-auto">
+              <ul
+                  v-if="list.plugins.length"
+                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
 
-                <li @mouseenter="subMenuEnter">
+                <li
+                    @mouseenter="subMenuEnter">
                   <router-link
-                      :to="{ name: 'PluginIndex', params: { id: '' } }">
-                    <i class="fa fa-plus fa-fw"/>
+                      :to="{ name: 'PluginIndex', params: { id: '' } }"
+                      class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white">
+                    <i class="fa fa-plus fa-fw mr-3"/>
                     {{ $root.lang('new_plugin') }}
                   </router-link>
                 </li>
 
-                <li v-for="item in list.plugins" :key="'item-plugin-' + item.id" @mouseenter="subMenuEnter">
+                <li
+                    v-for="item in list.plugins"
+                    :key="'item-plugin-' + item.id"
+                    @mouseenter="subMenuEnter">
+
                   <router-link
                       :to="{ name: 'PluginIndex', params: { id: item.id } }"
-                      :class="{'fst-italic': item.locked, 'text-danger opacity-50': item.disabled}">
+                      :class="{ 'text-rose-700' : item.disabled }"
+                      class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white relative">
+                    <i v-if="item.locked" class="fa fa-lock fa-fw absolute right-4 text-rose-500 text-xs"/>
                     {{ item.name }}
-                    <small class="ms-1">({{ item.id }})</small>
+                    <small class="ml-1">({{ item.id }})</small>
                   </router-link>
+
                 </li>
 
               </ul>
@@ -255,23 +290,34 @@
                 <i class="fa fa-angle-right fa-fw absolute top-0 right-0 h-full inline-flex items-center px-5"/>
               </router-link>
 
-              <ul v-if="list.modules.length" class="bg-white left-full top-0 overflow-y-auto">
+              <ul
+                  v-if="list.modules.length"
+                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
 
-                <li @mouseenter="subMenuEnter">
+                <li
+                    @mouseenter="subMenuEnter">
                   <router-link
-                      :to="{ name: 'ModuleIndex', params: { id: '' } }">
-                    <i class="fa fa-plus fa-fw"/>
+                      :to="{ name: 'ModuleIndex', params: { id: '' } }"
+                      class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white">
+                    <i class="fa fa-plus fa-fw mr-3"/>
                     {{ $root.lang('new_module') }}
                   </router-link>
                 </li>
 
-                <li v-for="item in list.modules" :key="'item-module-' + item.id" @mouseenter="subMenuEnter">
+                <li
+                    v-for="item in list.modules"
+                    :key="'item-module-' + item.id"
+                    @mouseenter="subMenuEnter">
+
                   <router-link
                       :to="{ name: 'ModuleIndex', params: { id: item.id } }"
-                      :class="{'fst-italic': item.locked, 'text-danger opacity-50': item.disabled}">
+                      :class="{ 'text-rose-700' : item.disabled }"
+                      class="flex items-center px-4 py-2 hover:bg-blue-600 hover:text-white relative">
+                    <i v-if="item.locked" class="fa fa-lock fa-fw absolute right-4 text-rose-500 text-xs"/>
                     {{ item.name }}
-                    <small class="ms-1">({{ item.id }})</small>
+                    <small class="ml-1">({{ item.id }})</small>
                   </router-link>
+
                 </li>
 
               </ul>
@@ -304,10 +350,9 @@
                 class="group/item">
 
               <router-link
-                  :to="{ name: 'ModuleExec', params: { id: item.id } }"
-                  :class="{'fst-italic': item.locked, 'text-danger opacity-50': item.disabled}"
-                  class="group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
-                <i class="fa fa-cube"/>
+                  :to="{ name: 'ModuleExec', query: { id: item.id } }"
+                  class="flex items-center relative pl-4 pr-8 py-2 hover:bg-blue-600 hover:text-white group-[.hover]/item:bg-blue-600 group-[.hover]/item:text-white">
+                <i class="fa fa-cube fa-fw mr-3"/>
                 {{ item.name }}
               </router-link>
 
