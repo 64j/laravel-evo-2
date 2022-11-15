@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * @property string $username
+ * @property UserSetting[]|Collection $settings
  */
 class User extends \Illuminate\Foundation\Auth\User
 {

@@ -1,31 +1,26 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Manager\Http\Controllers\AuthController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-Route::prefix(env('MGR_DIR'))->get('/', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::prefix(env('MGR_DIR'))->group(fn() => [
+    Route::middleware('guest')
+        ->group(fn() => [
+            Route::view('login', 'login')->name('login'),
+            Route::post('login', [AuthController::class, 'login']),
+            Route::view('forgot', 'forgot')->name('forgot'),
+            Route::post('forgot', [AuthController::class, 'forgot'])->name('password.reset'),
+        ]),
 
-//Route::get('/manager', function () {
-//    return view('dashboard');
-//})->middleware(['auth'])->name('dashboard');
+    Route::any('logout', [AuthController::class, 'logout'])
+        ->middleware('auth')
+        ->name('logout'),
 
-require __DIR__ . '/auth.php';
+    Route::view('/', 'dashboard')
+        ->middleware('auth')
+        ->name('dashboard'),
 
-Route::view('/' . env('MGR_DIR') . '/{any}', 'dashboard')
-    ->middleware('auth')
-    ->where('any', '.*');
-
-//Route::view('/manager/{any}', 'dashboard')
-//    ->middleware('auth')
-//    ->where('any', '.*');
+    Route::view('/{any}', 'dashboard')
+        ->middleware('auth')
+        ->where('any', '.*'),
+]);

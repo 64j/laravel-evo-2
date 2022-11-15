@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Manager\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Config;
 
 class BootstrapController extends Controller
 {
@@ -14,7 +15,7 @@ class BootstrapController extends Controller
     public function index(): JsonResponse
     {
         return $this->ok([
-            'config' => $this->settingsService->get(),
+            'config' => Config::get('global'),
             'user' => $this->userService->getAuthUser(),
             'permissions' => $this->userService->getAuthPermissions(),
             'categories' => $this->categoryService->list(),
