@@ -20,7 +20,7 @@
     },
     "private": true,
     "scripts": {
-        "dev": "vite",
+        "dev": "vite --base=/manager/public",
         "build": "vite build",
         "build-ssr": "vite build && vite build --ssr",
         "serve": "vue-cli-service serve",

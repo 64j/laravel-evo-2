@@ -35,7 +35,7 @@
   })
 
   loadBg()
-  setInterval(loadBg, 10000)
+  setInterval(loadBg, 20000)
 </script>
 
 </body>

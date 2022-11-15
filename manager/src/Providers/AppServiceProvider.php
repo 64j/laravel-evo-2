@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        $this->app->useEnvironmentPath(dirname($this->app->basePath()));
     }
 
     /**
@@ -27,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+
         (new SettingsService())->get();
 
         if (Auth::check()) {
