@@ -8,13 +8,9 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Str;
 use JsonSerializable;
 use Manager\Services\CategoryService;
-use Manager\Services\SettingsService;
 use Manager\Services\UserService;
 
 class Controller extends BaseController
@@ -25,11 +21,6 @@ class Controller extends BaseController
      * @var Application
      */
     protected Application $app;
-
-    /**
-     * @var SettingsService
-     */
-    protected SettingsService $settingsService;
 
     /**
      * @var UserService
