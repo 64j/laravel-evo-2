@@ -1,5 +1,5 @@
 <template>
-  <div class="menu group/menu flex justify-between h-full m-0 bg-gray-800 text-gray-300 shadow-lg" @click.stop="click">
+  <div class="menu group/menu flex justify-between h-full m-0 bg-gray-800 text-gray-300 shadow-md shadow-black/50" @click.stop="click">
     <div class="flex-auto">
 
       <ul class="nav flex items-center h-full">
@@ -28,15 +28,15 @@
 
         <li
             v-if="$root.hasPermissions(['edit_template', 'edit_snippet', 'edit_chunk', 'edit_plugin'])"
-            class="md:relative h-full parent"
+            class="md:relative h-full parent group/li"
             @mouseover="hoverItem">
 
-          <div class="flex h-full items-center px-3 md:px-4 relative z-20 select-none cursor-pointer">
+          <div class="flex h-full items-center px-3 md:px-4 relative z-20 select-none cursor-pointer group-[.active]/menu:group-[.hover]/li:bg-white group-[.active]/menu:group-[.hover]/li:text-gray-700 dark:group-[.active]/menu:group-[.hover]/li:bg-gray-700 dark:group-[.active]/menu:group-[.hover]/li:text-gray-300">
             <i class="fa fa-th fa-fw md:hidden"/>
             <span class="hidden md:inline-block">{{ $root.lang('elements') }}</span>
           </div>
 
-          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
+          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800 group-[.active]/menu:group-[.hover]/li:block">
 
             <li
                 v-if="$root.hasPermissions('edit_template')"
@@ -330,17 +330,17 @@
 
         <li
             v-if="$root.hasPermissions('exec_module')"
-            class="md:relative h-full parent"
+            class="md:relative h-full parent group/li"
             @mouseover="hoverItem" @mouseenter="getSubMenu('modules', list.modules)">
 
-          <div class="flex h-full items-center px-3 md:px-4 relative z-20 select-none cursor-pointer">
+          <div class="flex h-full items-center px-3 md:px-4 relative z-20 select-none cursor-pointer group-[.active]/menu:group-[.hover]/li:bg-white group-[.active]/menu:group-[.hover]/li:text-gray-700 dark:group-[.active]/menu:group-[.hover]/li:bg-gray-700 dark:group-[.active]/menu:group-[.hover]/li:text-gray-300">
             <i class="fa fa-cubes fa-fw md:hidden"/>
             <span class="hidden md:inline-block">{{ $root.lang('modules') }}</span>
           </div>
 
           <ul
               v-if="list.modules.length"
-              class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
+              class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800 group-[.active]/menu:group-[.hover]/li:block">
 
             <li
                 v-for="item in list.modules"
@@ -364,15 +364,15 @@
 
         <li
             v-if="$root.hasPermissions('edit_user', 'edit_web_user', 'edit_role', 'access_permissions', 'web_access_permissions')"
-            class="md:relative h-full parent"
+            class="md:relative h-full parent group/li"
             @mouseover="hoverItem">
 
-          <div class="flex h-full items-center px-3 md:px-4 relative z-20 select-none cursor-pointer">
+          <div class="flex h-full items-center px-3 md:px-4 relative z-20 select-none cursor-pointer group-[.active]/menu:group-[.hover]/li:bg-white group-[.active]/menu:group-[.hover]/li:text-gray-700 dark:group-[.active]/menu:group-[.hover]/li:bg-gray-700 dark:group-[.active]/menu:group-[.hover]/li:text-gray-300">
             <i class="fa fa-users fa-fw md:hidden"/>
             <span class="hidden md:inline-block">{{ $root.lang('users') }}</span>
           </div>
 
-          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
+          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800 group-[.active]/menu:group-[.hover]/li:block">
 
             <li
                 v-if="$root.hasPermissions('edit_user')"
@@ -413,15 +413,15 @@
 
         <li
             v-if="$root.hasPermissions('empty_cache')"
-            class="md:relative h-full parent"
+            class="md:relative h-full parent group/li"
             @mouseover="hoverItem">
 
-          <div class="flex h-full items-center px-4 relative z-20 select-none cursor-pointer">
+          <div class="flex h-full items-center px-4 relative z-20 select-none cursor-pointer group-[.active]/menu:group-[.hover]/li:bg-white group-[.active]/menu:group-[.hover]/li:text-gray-700 dark:group-[.active]/menu:group-[.hover]/li:bg-gray-700 dark:group-[.active]/menu:group-[.hover]/li:text-gray-300">
             <i class="fa fa-wrench fa-fw md:hidden"/>
             <span class="hidden md:inline-block">{{ $root.lang('tools') }}</span>
           </div>
 
-          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
+          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800 group-[.active]/menu:group-[.hover]/li:block">
 
             <li
                 @mouseover="hoverSubItem"
@@ -478,15 +478,15 @@
           </a>
         </li>
 
-        <li class="md:relative h-full parent"
+        <li class="md:relative h-full parent group/li"
             @mouseover="hoverItem">
 
-          <div class="flex h-full items-center px-3 md:px-4 relative z-10 select-none cursor-pointer">
+          <div class="flex h-full items-center px-3 md:px-4 relative z-10 select-none cursor-pointer group-[.active]/menu:group-[.hover]/li:bg-white group-[.active]/menu:group-[.hover]/li:text-gray-700 dark:group-[.active]/menu:group-[.hover]/li:bg-gray-700 dark:group-[.active]/menu:group-[.hover]/li:text-gray-300">
             <span class="mr-2 hidden md:inline-block">{{ $store.getters['Auth/username'] }}</span>
             <i class="fa fa-user-circle fa-fw text-xl"/>
           </div>
 
-          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b right-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
+          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b right-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800 group-[.active]/menu:group-[.hover]/li:block">
 
             <li
                 @mouseover="hoverSubItem"
@@ -514,13 +514,13 @@
         <li
             v-if="$root.hasPermissions(['settings', 'view_eventlog', 'logs', 'help'])"
             @mouseover="hoverItem"
-            class="md:relative h-full parent">
+            class="md:relative h-full parent group/li">
 
-          <div class="flex h-full items-center px-3 md:px-4 relative z-10 select-none cursor-pointer">
+          <div class="flex h-full items-center px-3 md:px-4 relative z-10 select-none cursor-pointer group-[.active]/menu:group-[.hover]/li:bg-white group-[.active]/menu:group-[.hover]/li:text-gray-700 dark:group-[.active]/menu:group-[.hover]/li:bg-gray-700 dark:group-[.active]/menu:group-[.hover]/li:text-gray-300">
             <i class="fa fa-cogs fa-fw text-xl"/>
           </div>
 
-          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b right-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
+          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b right-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800 group-[.active]/menu:group-[.hover]/li:block">
 
             <li
                 v-if="$root.hasPermissions('settings')"
@@ -647,8 +647,13 @@ export default {
     },
     click (event) {
       if (event.target.closest('.menu ul.nav > li > div')) {
-        this.$el.classList.add('active')
-        this.$el.parentElement.classList.add('active')
+        if (this.$el.classList.contains('active')) {
+          this.$el.classList.remove('active')
+          this.$el.parentElement.classList.remove('active')
+        } else {
+          this.$el.classList.add('active')
+          this.$el.parentElement.classList.add('active')
+        }
       } else {
         this.$el.classList.remove('active')
         this.$el.parentElement.classList.remove('active')
@@ -692,8 +697,6 @@ export default {
 </script>
 
 <style scoped>
-.menu.active ul.nav > li.hover > ul, .menu ul.nav > li > ul > li.hover > ul { display: block; }
-.menu.active ul.nav > li.parent.hover > div { background-color: white; color: #222; }
-.menu ul.nav > li ul { max-height: calc(100vh - 3rem); }
-.menu ul.nav > li > ul > li > ul { left: 100%; top: 0; overflow-y: auto; }
+/*.menu.active ul.nav > li.hover > ul, .menu ul.nav > li > ul > li.hover > ul { display: block; }
+.menu.active ul.nav > li.parent.hover > div { background-color: white; color: #222; }*/
 </style>

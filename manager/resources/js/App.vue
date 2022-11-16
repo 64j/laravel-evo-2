@@ -1,12 +1,12 @@
 <template>
   <div class="app flex flex-wrap flex-col h-full w-full group/app">
 
-    <div class="app-header border-bottom h-12 z-20 peer/header">
+    <div class="app-header h-12 z-20 peer/header">
       <MenuView ref="Menu" @toggleSidebar="toggle"/>
     </div>
 
     <div
-        class="app-body flex flex-nowrap z-10 w-full h-[calc(100%-3rem)] before:content-[''] before:invisible before:opacity-0 before:absolute before:z-40 before:left-0 before:top-0 before:right-0 before:bottom-0 before:bg-black/10 before:peer-[.active]/header:visible before:peer-[.active]/header:opacity-100 before:transition">
+        class="app-body flex flex-nowrap z-10 w-full h-[calc(100%-3rem)] before:content-[''] before:invisible before:opacity-0 before:absolute before:z-40 before:left-0 before:top-0 before:right-0 before:bottom-0 before:bg-black/10 before:peer-[.active]/header:visible before:peer-[.active]/header:opacity-100 before:transition-all">
 
       <div
           :style="`width: ${x}px`"
