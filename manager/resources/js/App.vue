@@ -1,37 +1,18 @@
 <template>
-  <div class="app flex flex-wrap flex-col h-full w-full group/app">
-
-    <div class="app-header h-12 z-20 peer/header">
+  <div class="app">
+    <div class="header">
       <MenuView ref="Menu" @toggleSidebar="toggle"/>
     </div>
-
-    <div
-        class="app-body flex flex-nowrap z-10 w-full h-[calc(100%-3rem)] before:content-[''] before:invisible before:opacity-0 before:absolute before:z-40 before:left-0 before:top-0 before:right-0 before:bottom-0 before:bg-black/10 before:peer-[.active]/header:visible before:peer-[.active]/header:opacity-100 before:transition-all">
-
-      <div
-          :style="`width: ${x}px`"
-          class="app-tree flex grow-0 shrink-0 w-full overflow-hidden bg-gray-800 text-gray-100">
+    <div class="body">
+      <div class="tree" :style="`width: ${x}px`">
         <Tree ref="Tree"/>
       </div>
-
-      <div
-          @mouseup="resizeUp"
-          @mousedown="resizeDown"
-          class="relative grow-0 shrink-0 w-[1px] bg-gray-700 cursor-col-resize hover:bg-blue-600 hover:opacity-100 group-[.tree-resize]/app:opacity-100 group-[.tree-resize]/app:bg-blue-600 group/separator">
-        <div class="absolute left-0 top-0 h-full w-3 -ml-[.35rem]"/>
-      </div>
-
-      <div class="app-main flex flex-col grow shrink-0 basis-0 overflow-hidden bg-slate-100 dark:bg-gray-800 dark:text-gray-200">
+      <div class="separator" @mouseup="resizeUp" @mousedown="resizeDown"/>
+      <div class="main">
         <MultiTabs ref="MultiTabs"/>
       </div>
-
-      <div
-          @mouseup="resizeUp"
-          @mousemove="resizeMove"
-          class="resize-mask fixed left-0 top-0 right-0 bottom-0 z-10 cursor-col-resize hidden group-[.tree-resize]/app:block"/>
-
+      <div class="mask" @mouseup="resizeUp" @mousemove="resizeMove"/>
     </div>
-
   </div>
 </template>
 
@@ -101,3 +82,45 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.app {
+  @apply flex flex-wrap flex-col h-full w-full dark:text-gray-300 bg-slate-100 dark:bg-evo-800
+}
+.header {
+  @apply h-12 z-20 bg-evo-800 text-gray-300 shadow-md shadow-black/50
+}
+.body {
+  @apply flex flex-nowrap z-10 w-full;
+  height: calc(100% - 3rem);
+}
+.body::before {
+  @apply invisible opacity-0 absolute z-40 left-0 top-0 right-0 bottom-0 bg-black/10 transition-all;
+  content: "";
+}
+.header.active ~ .body::before {
+  @apply visible opacity-100
+}
+.tree {
+  @apply flex grow-0 shrink-0 w-full overflow-hidden bg-evo-800 text-gray-100
+}
+.separator {
+  @apply relative grow-0 shrink-0 w-[1px] bg-evo-700 cursor-col-resize hover:bg-blue-600 hover:opacity-100 dark:bg-evo-600
+}
+.app.tree-resize .separator {
+  @apply opacity-100 bg-blue-600
+}
+.separator::before {
+  @apply absolute left-0 top-0 h-full w-3 -ml-[.35rem];
+  content: "";
+}
+.main {
+  @apply flex flex-col grow shrink-0 basis-0 overflow-hidden
+}
+.mask {
+  @apply fixed left-0 top-0 right-0 bottom-0 z-10 cursor-col-resize hidden
+}
+.app.tree-resize .mask {
+  @apply block
+}
+</style>

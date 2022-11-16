@@ -30,11 +30,11 @@ export default {
           values: {
             0: {
               icon: 'far fa-times-circle text-rose-600',
-              title: this.$root.lang('disabled')
+              title: this.$root.lang('disable')
             },
             1: {
               icon: 'far fa-check-circle text-green-500',
-              title: this.$root.lang('enabled')
+              title: this.$root.lang('enable')
             }
           }
         },

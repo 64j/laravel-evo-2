@@ -2,13 +2,12 @@
   <div class="flex flex-col grow w-full">
 
     <div class="grow-0">
-      <div class="multi-tabs h-8 overflow-hidden relative bg-gray-900 after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-0 after:h-[1px] after:bg-gray-700 after:z-[1]">
-        <div class="pane h-16 flex flex-nowrap overflow-auto relative z-[2]">
+      <div class="multi-tabs">
+        <div class="multi-tabs-pane">
           <a v-for="(tab, i) in tabs"
              :key="i"
              :data-to="tab.fullPath"
-             class="h-8 inline-flex justify-between items-center no-underline hover:bg-gray-800 text-gray-200 border-r border-r-gray-700 border-b border-b-gray-700 hover:text-white relative select-none	cursor-pointer"
-             :class="[tab.active ? 'active bg-gray-800 text-white after:content-[\'\'] after:absolute after:bottom-[-1px] after:w-full after:h-[3px] after:bg-blue-600' : '', tab.class]"
+             :class="[tab.active ? 'active bg-evo-600 text-white dark:bg-evo-700 after:content-[\'\'] after:absolute after:bottom-[-1px] after:w-full after:h-[3px] after:bg-blue-600' : '', tab.class]"
              :title="tab.title"
              @click="clickTab(tab)"
              @dblclick="dblClickTab(tab)">
@@ -218,3 +217,22 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.multi-tabs {
+  @apply h-8 overflow-hidden relative bg-evo-900
+}
+.multi-tabs::after {
+  @apply absolute left-0 right-0 bottom-0 h-[1px] bg-evo-700 z-[1] dark:bg-evo-600;
+  content: "";
+}
+.multi-tabs-pane {
+  @apply  h-16 flex flex-nowrap overflow-auto relative z-[2]
+}
+.multi-tabs-pane a {
+  @apply h-8 inline-flex justify-between items-center no-underline hover:bg-evo-600 text-gray-200 border-r border-r-evo-700 border-b border-b-evo-700 hover:text-white relative select-none cursor-pointer dark:hover:bg-evo-700 dark:border-b-evo-600
+}
+.multi-tabs-panel > div {
+  @apply h-full
+}
+</style>

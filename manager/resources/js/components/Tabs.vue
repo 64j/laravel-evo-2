@@ -1,5 +1,5 @@
 <template>
-  <div class="dynamic-tab-pane-control tab-pane" :id="id+`Pane`">
+  <div class="tab-pane" :id="id+`Pane`">
 
     <div class="tab-row-container overflow-hidden relative h-11 px-6">
 
@@ -7,8 +7,8 @@
         <template v-for="(tab, index) in data">
           <div :key="index"
                @mousedown="select(tab)"
-               class="tab pt-3 pb-2 px-4 h-11 whitespace-nowrap cursor-pointer border-l border-t border-r uppercase"
-               :class="[ tab.active ? 'active bg-zinc-50 border-gray-200 dark:bg-gray-700 dark:border-gray-600' : 'border-transparent' ]"
+               class="tab"
+               :class="[ tab.active ? 'active bg-gray-50 border-gray-200 dark:bg-evo-700 dark:border-evo-600' : 'border-transparent' ]"
                v-if="!tab.hidden">
             <i class="mr-2 text-gray-600 dark:text-gray-300" :class="tab.icon" v-if="tab.icon"></i>
             <span class="select-none" :class="[ tab.active ? 'text-gray-700 dark:text-gray-100' : 'text-gray-600 dark:text-gray-300' ]">{{ tab.title }}</span>
@@ -16,8 +16,8 @@
         </template>
       </div>
 
-      <i class="fa fa-angle-left prev absolute h-full top-0 left-0 flex items-center px-2"></i>
-      <i class="fa fa-angle-right next absolute h-full top-0 right-0 flex items-center px-2"></i>
+      <i class="fa fa-angle-left prev left-0"></i>
+      <i class="fa fa-angle-right next right-0"></i>
     </div>
 
     <div
@@ -25,7 +25,7 @@
         :key="index"
         v-show="tab.active"
         :id="`tab`+tab.id"
-        class="tab-page -mt-[1px] bg-zinc-50 pb-4 border-t border-b border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+        class="tab-page">
       <component :is="getComponent(index, tab)" v-if="tab.component && !tab.hidden"/>
       <slot :name="tab.id" v-else/>
     </div>
@@ -95,3 +95,15 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.tab-pane .tab {
+  @apply pt-3 pb-2 px-4 h-11 whitespace-nowrap cursor-pointer border-l border-t border-r uppercase
+}
+.tab-pane .prev, .tab-pane .next {
+  @apply absolute h-full top-0 flex items-center px-2
+}
+.tab-page {
+  @apply -mt-[1px] bg-gray-50 pb-4 border-t border-b border-gray-200 dark:bg-evo-700 dark:border-evo-600
+}
+</style>

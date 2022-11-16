@@ -43,7 +43,7 @@
         <li :key="'category-' + category.id" v-if="Object.values(category.data).filter(v => !v.hidden).length">
 
           <div v-if="!hiddenCategories"
-               class="flex justify-between items-center px-5 bg-slate-200 dark:bg-slate-600">
+               class="flex justify-between items-center px-5 bg-slate-200 border-t border-b border-gray-200 dark:bg-evo-800 dark:border-evo-600">
             <label class="py-1">
               <input
                   v-if="checkbox"
@@ -69,11 +69,11 @@
             </div>
           </div>
 
-          <ul class="divide-y divide-gray-100 pb-2 dark:divide-gray-800">
+          <ul class="divide-y pb-2 dark:divide-evo-800">
             <template v-for="item in category.data">
               <li v-if="!item.hidden"
                   :key="'item-' + item.id"
-                  class="flex flex-1 justify-between px-5 items-center hover:bg-slate-100 dark:hover:bg-slate-800">
+                  class="flex flex-1 justify-between px-5 items-center hover:bg-slate-100 dark:hover:bg-evo-800">
 
                 <template v-if="checkbox">
 

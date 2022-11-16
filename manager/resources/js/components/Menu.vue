@@ -318,8 +318,8 @@
       <ul class="nav">
 
         <li>
-          <span>
-            <i class="fa" :class="[ darkMode ? 'fa-sun' : 'fa-moon' ]" @click.stop="toggleMode"/>
+          <span @click.stop="toggleMode">
+            <i class="fa" :class="[ darkMode ? 'fa-sun' : 'fa-moon' ]"/>
           </span>
         </li>
 
@@ -451,7 +451,7 @@ export default {
 
   setup () {
     document.addEventListener('click', () => {
-      const active = document.querySelector('.app-header.active')
+      const active = document.querySelector('.app > .header.active')
       if (active) {
         active.firstElementChild.classList.remove('active')
         active.classList.remove('active')
@@ -531,7 +531,7 @@ export default {
 
 <style scoped>
 .menu {
-  @apply flex justify-between h-full m-0 bg-gray-800 text-gray-300 shadow-md shadow-black/50;
+  @apply flex justify-between h-full m-0;
 }
 .menu > div {
   @apply flex-auto
@@ -549,7 +549,7 @@ export default {
   @apply flex h-full items-center px-3 md:px-4 relative z-10 select-none cursor-pointer
 }
 .menu.active .nav > li.hover > div {
-  @apply bg-white text-gray-700 dark:bg-gray-700 dark:text-gray-300
+  @apply bg-white text-gray-600 dark:bg-evo-600 dark:text-gray-200
 }
 .menu .nav > li > span {
   @apply flex h-full items-center px-3 md:px-4 cursor-pointer
@@ -558,7 +558,7 @@ export default {
   @apply hidden md:inline-block
 }
 .menu .nav > li ul {
-  @apply w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800
+  @apply w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b divide-y divide-gray-100 dark:bg-evo-600 dark:text-gray-300 dark:divide-zinc-700
 }
 .menu > div:last-child .nav > li ul {
   @apply right-0

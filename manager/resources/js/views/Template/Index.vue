@@ -126,10 +126,10 @@
             <div v-if="Object.values(meta.tvs || {}).length">
               <p class="font-bold">{{ $root.lang('template_tv_msg') }}</p>
 
-              <ul class="mt-2 py-3 -mx-5 border-t border-gray-200 divide-y divide-gray-100">
+              <ul class="mt-2 py-3 -mx-5 border-t border-gray-200 divide-y dark:border-evo-800 dark:divide-evo-800">
                 <li v-for="item in meta.tvs"
-                    class="flex flex-1 justify-between px-5 items-center hover:bg-slate-100">
-                  <label class="grow inline-flex items-center py-1 select-none text-gray-700 group/item">
+                    class="flex flex-1 justify-between px-5 items-center hover:bg-slate-100 dark:hover:bg-evo-800">
+                  <label class="grow inline-flex items-center py-1 select-none group/item">
                     <input
                         type="checkbox"
                         :id="`checkbox-item-`+item.id"
@@ -139,7 +139,7 @@
                         class="mr-3 peer/check"/>
 
                     <i class="fa fa-lock fa-fw mr-1 text-rose-500" v-if="item.locked"/>
-                    <span class="mr-1 group-hover/item:text-blue-700 peer-checked/check:font-bold">
+                    <span class="mr-1 peer-checked/check:font-bold">
                           {{ item.name }}
                     </span>
                     <span class="text-xs">({{ item.id }})</span>

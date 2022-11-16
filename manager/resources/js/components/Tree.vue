@@ -1,24 +1,21 @@
 <template>
-  <div class="relative h-full w-full">
-    <div class="flex flex-col flex-wrap h-full">
-      <div class="app-tree-header flex-grow-0 h-8 bg-gray-900 border-b border-gray-700">
+  <div class="tree">
+    <div class="header">
 
+    </div>
+    <div class="root">
+      <div v-if="loading" class="tree-loader text-center px-1 absolute z-10 top-0 right-0">
+        <i class="fa fa-spinner fa-spin"></i>
       </div>
-      <div
-          class="app-tree-root flex-grow-1 h-[calc(100%-2rem)] overflow-hidden overflow-y-auto relative">
-        <div v-if="loading" class="tree-loader text-center px-1 absolute z-10 top-0 right-0">
-          <i class="fa fa-spinner fa-spin"></i>
-        </div>
-        <div class="ps-4 py-2 pe-2 font-bold">{{ $root.config('site_name') }}</div>
-        <ul>
-          <tree-node
-              v-for="node in data"
-              :key="node.id"
-              :node="node"
-              @action="action"
-          />
-        </ul>
-      </div>
+      <div class="ps-4 py-2 pe-2 font-bold">{{ $root.config('site_name') }}</div>
+      <ul>
+        <tree-node
+            v-for="node in data"
+            :key="node.id"
+            :node="node"
+            @action="action"
+        />
+      </ul>
     </div>
   </div>
 </template>
@@ -101,3 +98,16 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.tree {
+  @apply relative h-full w-full flex flex-col flex-wrap h-full
+}
+.header {
+  @apply flex-grow-0 h-8 bg-evo-900 border-b border-evo-700 dark:border-evo-600
+}
+.root {
+  @apply flex-grow overflow-hidden overflow-y-auto relative;
+  height: calc(100% - 2rem);
+}
+</style>
