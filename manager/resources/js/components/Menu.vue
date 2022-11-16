@@ -1,5 +1,5 @@
 <template>
-  <div class="menu group/menu flex justify-between h-full m-0 bg-gray-800 text-gray-200 shadow-lg" @click.stop="click">
+  <div class="menu group/menu flex justify-between h-full m-0 bg-gray-800 text-gray-300 shadow-lg" @click.stop="click">
     <div class="flex-auto">
 
       <ul class="nav flex items-center h-full">
@@ -36,7 +36,7 @@
             <span class="hidden md:inline-block">{{ $root.lang('elements') }}</span>
           </div>
 
-          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
 
             <li
                 v-if="$root.hasPermissions('edit_template')"
@@ -54,7 +54,7 @@
 
               <ul
                   v-if="list.templates.length"
-                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
 
                 <li
                     @mouseenter="subMenuEnter">
@@ -101,7 +101,7 @@
 
               <ul
                   v-if="list.tvs.length"
-                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
 
                 <li
                     @mouseenter="subMenuEnter">
@@ -148,7 +148,7 @@
 
               <ul
                   v-if="list.tvs.length"
-                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
 
                 <li
                     @mouseenter="subMenuEnter">
@@ -196,7 +196,7 @@
 
               <ul
                   v-if="list.snippets.length"
-                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
 
                 <li
                     @mouseenter="subMenuEnter">
@@ -244,7 +244,7 @@
 
               <ul
                   v-if="list.plugins.length"
-                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
 
                 <li
                     @mouseenter="subMenuEnter">
@@ -292,7 +292,7 @@
 
               <ul
                   v-if="list.modules.length"
-                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+                  class="bg-white text-gray-900 bg-white absolute z-10 left-full top-0 overflow-y-auto pb-1 w-80 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
 
                 <li
                     @mouseenter="subMenuEnter">
@@ -340,7 +340,7 @@
 
           <ul
               v-if="list.modules.length"
-              class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+              class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
 
             <li
                 v-for="item in list.modules"
@@ -372,7 +372,7 @@
             <span class="hidden md:inline-block">{{ $root.lang('users') }}</span>
           </div>
 
-          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
 
             <li
                 v-if="$root.hasPermissions('edit_user')"
@@ -421,7 +421,7 @@
             <span class="hidden md:inline-block">{{ $root.lang('tools') }}</span>
           </div>
 
-          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100">
+          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b left-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
 
             <li
                 @mouseover="hoverSubItem"
@@ -454,6 +454,12 @@
 
       <ul class="nav flex items-center h-full">
 
+        <li>
+          <span class="flex h-full items-center px-3 md:px-4 cursor-pointer">
+            <i class="fa fa-fw" :class="[ darkMode ? 'fa-sun' : 'fa-moon' ]" @click.stop="toggleMode"/>
+          </span>
+        </li>
+
         <li class="h-full relative group/item" @mouseover="hoverItem">
           <div class="flex h-full items-center px-3 md:px-4 cursor-pointer">
             <i class="fa fa-search fa-fw"/>
@@ -480,7 +486,7 @@
             <i class="fa fa-user-circle fa-fw text-xl"/>
           </div>
 
-          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b right-0 divide-y divide-gray-100">
+          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b right-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
 
             <li
                 @mouseover="hoverSubItem"
@@ -514,7 +520,7 @@
             <i class="fa fa-cogs fa-fw text-xl"/>
           </div>
 
-          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b right-0 divide-y divide-gray-100">
+          <ul class="w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b right-0 divide-y divide-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:divide-gray-800">
 
             <li
                 v-if="$root.hasPermissions('settings')"
@@ -598,6 +604,7 @@ export default {
   name: 'MenuView',
   data () {
     return {
+      darkMode: false,
       list: {
         templates: [],
         tvs: [],
@@ -619,7 +626,25 @@ export default {
     })
   },
 
+  created () {
+    this.darkMode = localStorage.getItem('EVO.THEME.MODE') === 'dark'
+    if (this.darkMode) {
+      document.documentElement.classList.add('dark')
+    }
+  },
+
   methods: {
+    toggleMode() {
+      if (this.darkMode) {
+        this.darkMode = false
+        document.documentElement.classList.remove('dark')
+        localStorage.removeItem('EVO.THEME.MODE')
+      } else {
+        this.darkMode = true
+        document.documentElement.classList.add('dark')
+        localStorage.setItem('EVO.THEME.MODE', 'dark')
+      }
+    },
     click (event) {
       if (event.target.closest('.menu ul.nav > li > div')) {
         this.$el.classList.add('active')

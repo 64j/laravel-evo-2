@@ -8,10 +8,10 @@
           <div :key="index"
                @mousedown="select(tab)"
                class="tab pt-3 pb-2 px-4 h-11 whitespace-nowrap cursor-pointer border-l border-t border-r uppercase"
-               :class="[ tab.active ? 'active bg-zinc-50 border-gray-200' : 'border-transparent' ]"
+               :class="[ tab.active ? 'active bg-zinc-50 border-gray-200 dark:bg-gray-700 dark:border-gray-600' : 'border-transparent' ]"
                v-if="!tab.hidden">
-            <i class="mr-2 text-gray-600" :class="tab.icon" v-if="tab.icon"></i>
-            <span class="select-none" :class="[ tab.active ? 'text-gray-700' : 'text-gray-600' ]">{{ tab.title }}</span>
+            <i class="mr-2 text-gray-600 dark:text-gray-300" :class="tab.icon" v-if="tab.icon"></i>
+            <span class="select-none" :class="[ tab.active ? 'text-gray-700 dark:text-gray-100' : 'text-gray-600 dark:text-gray-300' ]">{{ tab.title }}</span>
           </div>
         </template>
       </div>
@@ -25,7 +25,7 @@
         :key="index"
         v-show="tab.active"
         :id="`tab`+tab.id"
-        class="tab-page -mt-[1px] bg-zinc-50 pb-4 border-t border-b border-gray-200">
+        class="tab-page -mt-[1px] bg-zinc-50 pb-4 border-t border-b border-gray-200 dark:bg-gray-700 dark:border-gray-600">
       <component :is="getComponent(index, tab)" v-if="tab.component && !tab.hidden"/>
       <slot :name="tab.id" v-else/>
     </div>

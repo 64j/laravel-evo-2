@@ -10,7 +10,7 @@
                class="py-1 pl-2 pr-5 w-full md:w-80 text-xs peer/filter"
                autofocus>
         <i
-            class="fa fa-circle-xmark text-gray-300 hover:text-rose-500 cursor-pointer absolute right-0 mx-1 invisible peer-[.active]/filter:visible"
+            class="fa fa-circle-xmark text-gray-300 hover:text-rose-500 cursor-pointer absolute right-0 mx-1 invisible peer-[.active]/filter:visible dark:text-gray-500"
             @click="clearFilter"
         />
       </div>
@@ -24,13 +24,13 @@
       </router-link>
 
       <span v-if="txtHelp"
-            class="bg-white hover:bg-gray-100 border border-gray-300 font-bold py-1 px-2 text-xs whitespace-nowrap cursor-pointer"
+            class="bg-white hover:bg-gray-100 border border-gray-300 font-bold py-1 px-2 text-xs whitespace-nowrap cursor-pointer dark:bg-gray-500 dark:border-gray-400 dark:hover:bg-gray-600 dark:hover:border-gray-450"
             @click="msg=!msg">
         <i class="far fa-question-circle fa-fw"/>
         <span class="hidden md:inline-block pl-2">{{ $root.lang('help') }}</span>
       </span>
 
-      <div class="bg-blue-100 rounded p-4 m-0 mt-3" v-html="txtHelp" v-if="msg"/>
+      <div class="bg-blue-100 rounded p-4 m-0 mt-3 dark:bg-blue-500/50" v-html="txtHelp" v-if="msg"/>
 
     </div>
 
@@ -43,7 +43,7 @@
         <li :key="'category-' + category.id" v-if="Object.values(category.data).filter(v => !v.hidden).length">
 
           <div v-if="!hiddenCategories"
-               class="flex justify-between items-center px-5 bg-slate-200">
+               class="flex justify-between items-center px-5 bg-slate-200 dark:bg-slate-600">
             <label class="py-1">
               <input
                   v-if="checkbox"
@@ -52,28 +52,28 @@
                   @change="checkAll(category)"
                   class="mr-3 peer/check"/>
 
-              <span class="font-extrabold text-gray-600 mr-1">{{ category.name }}</span>
+              <span class="font-extrabold text-gray-600 mr-1 dark:text-gray-300">{{ category.name }}</span>
               <span class="text-xs">({{ category.id }})</span>
             </label>
             <div v-if="category['prev_page_url'] || category['next_page_url']">
               <i
-                  :class="{ 'pointer-events-none text-gray-400' : !category['prev_page_url'] }"
+                  :class="{ 'pointer-events-none opacity-50' : !category['prev_page_url'] }"
                   class="fa fa-angle-left fa-fw text-lg cursor-pointer hover:text-blue-500"
                   @click="$emit('action', 'paginate', category['prev_page_url'], category)"
               />
               <i
-                  :class="{ 'pointer-events-none text-gray-400' : !category['next_page_url'] }"
+                  :class="{ 'pointer-events-none opacity-50' : !category['next_page_url'] }"
                   class="fa fa-angle-right fa-fw text-lg cursor-pointer hover:text-blue-500"
                   @click="$emit('action', 'paginate', category['next_page_url'], category)"
               />
             </div>
           </div>
 
-          <ul class="divide-y divide-gray-100 pb-2">
+          <ul class="divide-y divide-gray-100 pb-2 dark:divide-gray-800">
             <template v-for="item in category.data">
               <li v-if="!item.hidden"
                   :key="'item-' + item.id"
-                  class="flex flex-1 justify-between px-5 items-center hover:bg-slate-100">
+                  class="flex flex-1 justify-between px-5 items-center hover:bg-slate-100 dark:hover:bg-slate-800">
 
                 <template v-if="checkbox">
 
@@ -89,7 +89,7 @@
                     <i v-if="linkIcon" :class="linkIcon" class="mr-2 peer/icon"></i>
                     <i class="fa fa-lock fa-fw mr-1 -ml-5 text-rose-500 text-xs peer-[.fa]/icon:-ml-4 peer-[.fa]/icon:mr-0"
                        v-if="item.locked"/>
-                    <span class="mr-1 group-hover/item:text-blue-700 peer-checked/check:font-bold">
+                    <span class="mr-1 peer-checked/check:font-bold">
                       {{ item.name }}
                     </span>
                     <span class="text-xs">({{ item.id }})</span>
@@ -109,7 +109,7 @@
                   <i class="fa fa-lock fa-fw mr-1 -ml-5 text-rose-500 text-xs peer-[.fa]/icon:-ml-4 peer-[.fa]/icon:mr-0"
                      v-if="item.locked"/>
                   <span class="mr-1"
-                        :class="[ item.disabled ? 'group-hover/item:text-rose-700' : 'group-hover/item:text-blue-700' ]">
+                        :class="{ 'group-hover/item:text-rose-700': item.disabled }">
                     {{ item.name }}
                   </span>
                   <span class="text-xs">({{ item.id }})</span>

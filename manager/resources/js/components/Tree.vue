@@ -1,7 +1,7 @@
 <template>
   <div class="relative h-full w-full">
     <div class="flex flex-col flex-wrap h-full">
-      <div class="app-tree-header flex-grow-0 h-8 bg-gray-900">
+      <div class="app-tree-header flex-grow-0 h-8 bg-gray-900 border-b border-gray-700">
 
       </div>
       <div

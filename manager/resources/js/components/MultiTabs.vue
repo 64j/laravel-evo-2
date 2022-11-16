@@ -2,13 +2,13 @@
   <div class="flex flex-col grow w-full">
 
     <div class="grow-0">
-      <div class="multi-tabs h-8 overflow-hidden bg-gray-900">
-        <div class="pane h-16 flex flex-nowrap overflow-auto">
+      <div class="multi-tabs h-8 overflow-hidden relative bg-gray-900 after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-0 after:h-[1px] after:bg-gray-700 after:z-[1]">
+        <div class="pane h-16 flex flex-nowrap overflow-auto relative z-[2]">
           <a v-for="(tab, i) in tabs"
              :key="i"
              :data-to="tab.fullPath"
-             class="h-8 inline-flex justify-between items-center no-underline hover:bg-gray-700 text-gray-200 border-r border-r-gray-800 hover:border-b-gray-700 hover:text-white relative select-none	cursor-pointer"
-             :class="[tab.active ? 'active bg-gray-600 text-white after:content-[\'\'] after:absolute after:bottom-0 after:w-full after:h-[3px] after:bg-blue-600' : '', tab.class]"
+             class="h-8 inline-flex justify-between items-center no-underline hover:bg-gray-800 text-gray-200 border-r border-r-gray-700 border-b border-b-gray-700 hover:text-white relative select-none	cursor-pointer"
+             :class="[tab.active ? 'active bg-gray-800 text-white after:content-[\'\'] after:absolute after:bottom-[-1px] after:w-full after:h-[3px] after:bg-blue-600' : '', tab.class]"
              :title="tab.title"
              @click="clickTab(tab)"
              @dblclick="dblClickTab(tab)">

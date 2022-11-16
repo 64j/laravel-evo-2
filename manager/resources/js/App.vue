@@ -17,11 +17,11 @@
       <div
           @mouseup="resizeUp"
           @mousedown="resizeDown"
-          class="relative grow-0 shrink-0 w-[2px] bg-gray-800 cursor-col-resize hover:bg-blue-600 hover:opacity-100 group-[.tree-resize]/app:opacity-100 group-[.tree-resize]/app:bg-blue-600 transition group/separator">
-        <div class="absolute left-0 top-0 h-full w-2 -ml-[2px]"/>
+          class="relative grow-0 shrink-0 w-[1px] bg-gray-700 cursor-col-resize hover:bg-blue-600 hover:opacity-100 group-[.tree-resize]/app:opacity-100 group-[.tree-resize]/app:bg-blue-600 group/separator">
+        <div class="absolute left-0 top-0 h-full w-3 -ml-[.35rem]"/>
       </div>
 
-      <div class="app-main flex flex-col grow shrink-0 basis-0 overflow-hidden bg-slate-100">
+      <div class="app-main flex flex-col grow shrink-0 basis-0 overflow-hidden bg-slate-100 dark:bg-gray-800 dark:text-gray-200">
         <MultiTabs ref="MultiTabs"/>
       </div>
 
