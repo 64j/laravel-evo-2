@@ -18,13 +18,13 @@
       <router-link
           v-if="txtNew"
           :to="{ name: linkName, params: { id : '' } }"
-          class="bg-green-600 hover:bg-green-700 border border-transparent text-white font-bold py-1 px-2 md:mr-1 text-xs whitespace-nowrap">
+          class="btn-sm btn-success md:mr-1 text-xs">
         <i class="fa fa-plus-circle fa-fw"/>
         <span class="hidden md:inline-block pl-2">{{ txtNew }}</span>
       </router-link>
 
       <span v-if="txtHelp"
-            class="bg-white hover:bg-gray-100 border border-gray-300 font-bold py-1 px-2 text-xs whitespace-nowrap cursor-pointer dark:bg-gray-500 dark:border-gray-400 dark:hover:bg-gray-600 dark:hover:border-gray-450"
+            class="btn-sm btn-secondary"
             @click="msg=!msg">
         <i class="far fa-question-circle fa-fw"/>
         <span class="hidden md:inline-block pl-2">{{ $root.lang('help') }}</span>
