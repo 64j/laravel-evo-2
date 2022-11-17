@@ -1,30 +1,31 @@
 <template>
-  <div class="flex flex-col grow w-full">
+  <div class="multi-tabs">
 
     <div class="grow-0">
-      <div class="multi-tabs">
-        <div class="multi-tabs-pane">
+      <div class="tabs">
+        <div class="pane">
+
           <a v-for="(tab, i) in tabs"
              :key="i"
              :data-to="tab.fullPath"
-             :class="[tab.active ? 'active bg-evo-600 text-white dark:bg-evo-700 after:content-[\'\'] after:absolute after:bottom-[-1px] after:w-full after:h-[3px] after:bg-blue-600' : '', tab.class]"
+             :class="[tab.active ? 'active' : '', tab.class]"
              :title="tab.title"
              @click="clickTab(tab)"
              @dblclick="dblClickTab(tab)">
-            <i v-if="tab.icon" :class="tab.icon" class="px-3 py-2 me-1 opacity-75 pointer-events-none icon peer/icon"/>
-            <span v-if="tab.title"
-                  v-html="tab.title"
-                  class="px-3 w-32 pointer-events-none truncate peer-[.icon]/icon:pl-0"/>
-            <i v-if="!tab.meta.fixTab" class="fa fa-close inline-flex items-center px-2 h-full hover:text-red-500"
-               @click.stop="closeTab(tab)"/>
-            <span v-if="tab['changed']" class="absolute top-0 left-0 px-1 text-yellow-500 text-lg font-mono">*</span>
+
+            <i v-if="tab.icon" :class="tab.icon" class="icon"/>
+            <span v-if="tab.title" v-html="tab.title" class="title"/>
+            <i v-if="!tab.meta.fixTab" class="fa fa-close close" @click.stop="closeTab(tab)"/>
+            <span v-if="tab['changed']" class="change">*</span>
+
           </a>
+
         </div>
       </div>
     </div>
 
     <div class="grow overflow-hidden">
-      <div class="multi-tabs-panel h-full overflow-auto">
+      <div class="panel">
         <router-view v-slot="{ Component }">
           <CustomKeepAlive :include="keys">
             <component
@@ -39,7 +40,7 @@
           </CustomKeepAlive>
         </router-view>
       </div>
-      <div class="multi-tabs-panel-frames h-full w-full relative"></div>
+      <div class="frames"></div>
     </div>
 
   </div>
@@ -119,8 +120,8 @@ export default {
       if (route.name && !route.meta['noTab']) {
         this.$store.dispatch('MultiTabs/addTab', this.route(route)).then(tab => {
           const key = this.tabKey(route)
-          const panel = this.$el.parentElement.querySelector('.multi-tabs-panel')
-          const frames = this.$el.parentElement.querySelector('.multi-tabs-panel-frames')
+          const panel = this.$el.parentElement.querySelector('.panel')
+          const frames = this.$el.parentElement.querySelector('.frames')
           let isFrame = false
           let frame = frames.querySelector('iframe[data-key="' + key + '"]')
           frames.querySelectorAll('iframe[data-key]').forEach(f => f.style.display = 'none')
@@ -143,7 +144,7 @@ export default {
     closeTab (tab) {
       if (!tab['changed'] || tab['changed'] && confirm(this.$root.lang('close') + '?')) {
         const key = this.tabKey(tab)
-        const frames = this.$el.parentElement.querySelector('.multi-tabs-panel-frames')
+        const frames = this.$el.parentElement.querySelector('.frames')
         if (frames) {
           frames.querySelectorAll('iframe[data-key="' + key + '"]').forEach(i => i.parentElement.removeChild(i))
         }
@@ -220,19 +221,52 @@ export default {
 
 <style scoped>
 .multi-tabs {
+  @apply flex flex-col grow w-full
+}
+.tabs {
   @apply h-8 overflow-hidden relative bg-evo-900
 }
-.multi-tabs::after {
+.tabs::after {
   @apply absolute left-0 right-0 bottom-0 h-[1px] bg-evo-700 z-[1] dark:bg-evo-600;
   content: "";
 }
-.multi-tabs-pane {
-  @apply  h-16 flex flex-nowrap overflow-auto relative z-[2]
+.pane {
+  @apply h-16 flex flex-nowrap overflow-auto relative z-[2]
 }
-.multi-tabs-pane a {
+.pane a {
   @apply h-8 inline-flex justify-between items-center no-underline hover:bg-evo-600 text-gray-200 border-r border-r-evo-700 border-b border-b-evo-700 hover:text-white relative select-none cursor-pointer dark:hover:bg-evo-700 dark:border-b-evo-600
 }
-.multi-tabs-panel > div {
+.pane .active {
+  @apply bg-evo-600 text-white dark:bg-evo-700
+}
+.pane .active::after {
+  @apply absolute w-full bg-blue-600;
+  content: "";
+  bottom: -1px;
+  height: 3px;
+}
+.panel {
+  @apply h-full overflow-auto
+}
+.panel > div {
   @apply h-full
+}
+.icon {
+  @apply px-3 py-2 opacity-75 pointer-events-none
+}
+.title {
+  @apply px-3 w-32 pointer-events-none truncate
+}
+.icon + .title {
+  @apply pl-0
+}
+.close {
+  @apply inline-flex items-center px-2 h-full hover:text-red-500
+}
+.change {
+  @apply absolute top-0 left-0 px-1 text-yellow-500 text-lg font-mono
+}
+.frames {
+  @apply h-full w-full relative
 }
 </style>

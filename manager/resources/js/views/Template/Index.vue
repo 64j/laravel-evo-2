@@ -126,30 +126,15 @@
             <div v-if="Object.values(meta.tvs || {}).length">
               <p class="font-bold">{{ $root.lang('template_tv_msg') }}</p>
 
-              <ul class="mt-2 py-3 -mx-5 border-t border-gray-200 divide-y dark:border-evo-800 dark:divide-evo-800">
-                <li v-for="item in meta.tvs"
-                    class="flex flex-1 justify-between px-5 items-center hover:bg-slate-100 dark:hover:bg-evo-800">
-                  <label class="grow inline-flex items-center py-1 select-none group/item">
-                    <input
-                        type="checkbox"
-                        :id="`checkbox-item-`+item.id"
-                        :value="item.id"
-                        v-model="item['@selected']"
-                        checked="checked"
-                        class="mr-3 peer/check"/>
-
-                    <i class="fa fa-lock fa-fw mr-1 text-rose-500" v-if="item.locked"/>
-                    <span class="mr-1 peer-checked/check:font-bold">
-                          {{ item.name }}
-                    </span>
-                    <span class="text-xs">({{ item.id }})</span>
-                    <span class="ml-3 text-xs" v-html="item.description"/>
-                  </label>
-                  <router-link :to="{ name: 'TvIndex', params: { id: item.id } }">
-                    <i class="far fa-edit fa-fw hover:text-blue-500"/>
-                  </router-link>
-                </li>
-              </ul>
+              <Panel
+                  :data="[{ data: meta.tvs }]"
+                  :actions="categoriesActions"
+                  :hiddenCategories="true"
+                  class-name="py-3 -mx-5 mt-2 border-t border-gray-200 dark:border-evo-800"
+                  link-name="TvIndex"
+                  checkbox="checkbox"
+                  @action="action"
+              />
             </div>
 
             <p v-else class="font-bold text-rose-500 mb-3">{{ $root.lang('template_no_tv') }}</p>
@@ -164,7 +149,6 @@
                   link-name="TvIndex"
                   :search-input="true"
                   :txt-new="$root.lang('new_tmplvars')"
-                  :txt-help="$root.lang('tmplvars_management_msg')"
                   checkbox="checkbox"
                   filter="ajax"
                   @action="action"
@@ -219,7 +203,8 @@ export default {
   created () {
     this.$emit('setTab', {
       icon: this.icon,
-      title: this.title
+      title: this.title,
+      changed: false
     })
 
     if (this.id) {
