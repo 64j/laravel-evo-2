@@ -80,7 +80,9 @@ export default {
       if (this.x < this.m) {
         this.x = this.m
         this.resizeUp()
+        document.onselectstart = () => false
         localStorage.setItem(this.sh, '1')
+        localStorage.setItem(this.sw, this.w)
         this.$el.classList.add('tree-hidden')
       } else if (this.$el.classList.contains('tree-hidden')) {
         localStorage.removeItem(this.sh)
