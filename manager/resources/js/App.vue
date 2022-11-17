@@ -1,17 +1,17 @@
 <template>
   <div class="app">
-    <div class="header">
-      <MenuView ref="Menu" @toggleSidebar="toggle"/>
+    <div class="app-header">
+      <MenuView ref="Menu"/>
     </div>
-    <div class="body">
-      <div class="tree" :style="`width: ${x}px`">
-        <Tree ref="Tree"/>
+    <div class="app-body">
+      <div class="app-tree" :style="`width: ${x}px`">
+        <Tree ref="Tree" @toggleSidebar="toggle"/>
       </div>
-      <div class="separator" @mouseup="resizeUp" @mousedown="resizeDown"/>
-      <div class="main">
+      <div class="app-separator" @mouseup="resizeUp" @mousedown="resizeDown"/>
+      <div class="app-main">
         <MultiTabs ref="MultiTabs"/>
       </div>
-      <div class="mask" @mouseup="resizeUp" @mousemove="resizeMove"/>
+      <div class="app-mask" @mouseup="resizeUp" @mousemove="resizeMove"/>
     </div>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
   components: { MenuView, Tree, MultiTabs },
   data () {
     this.w = 250
-    this.m = 10
+    this.m = 40
     this.sw = 'EVO.SIDEBAR.WIDTH'
     this.sh = 'EVO.SIDEBAR.HIDE'
 
@@ -41,6 +41,7 @@ export default {
     localStorage.setItem(this.sw, this.x)
     if (localStorage.getItem(this.sh)) {
       this.x = this.m
+      this.$el.classList.add('tree-hidden')
     }
   },
 
@@ -54,9 +55,11 @@ export default {
       if (this.x > this.m) {
         this.x = this.m
         localStorage.setItem(this.sh, '1')
+        this.$el.classList.add('tree-hidden')
       } else {
         this.x = localStorage.getItem(this.sw)
         localStorage.removeItem(this.sh)
+        this.$el.classList.remove('tree-hidden')
       }
     },
 
@@ -77,6 +80,11 @@ export default {
       if (this.x < this.m) {
         this.x = this.m
         this.resizeUp()
+        localStorage.setItem(this.sh, '1')
+        this.$el.classList.add('tree-hidden')
+      } else if (this.$el.classList.contains('tree-hidden')) {
+        localStorage.removeItem(this.sh)
+        this.$el.classList.remove('tree-hidden')
       }
     }
   }
@@ -87,40 +95,43 @@ export default {
 .app {
   @apply flex flex-wrap flex-col h-full w-full dark:text-gray-300 bg-slate-100 dark:bg-evo-800
 }
-.header {
+.app-header {
   @apply h-12 z-20 bg-evo-800 text-gray-300 shadow-md shadow-black/50
 }
-.body {
+.app-body {
   @apply flex flex-nowrap z-10 w-full;
   height: calc(100% - 3rem);
 }
-.body::before {
+.app-body::before {
   @apply invisible opacity-0 absolute z-40 left-0 top-0 right-0 bottom-0 bg-black/10 transition-all;
   content: "";
 }
-.header.active ~ .body::before {
+.app-header.active ~ .app-body::before {
   @apply visible opacity-100
 }
-.tree {
+.app-tree {
   @apply flex grow-0 shrink-0 w-full overflow-hidden bg-evo-800 text-gray-100
 }
-.separator {
+.tree-hidden .app-tree {
+  @apply bg-evo-900
+}
+.app-separator {
   @apply relative grow-0 shrink-0 w-[1px] bg-evo-700 cursor-col-resize hover:bg-blue-600 hover:opacity-100 dark:bg-evo-600
 }
-.app.tree-resize .separator {
+.app.tree-resize .app-separator {
   @apply opacity-100 bg-blue-600
 }
-.separator::before {
+.app-separator::before {
   @apply absolute left-0 top-0 h-full w-3 -ml-[.35rem];
   content: "";
 }
-.main {
+.app-main {
   @apply flex flex-col grow shrink-0 basis-0 overflow-hidden
 }
-.mask {
+.app-mask {
   @apply fixed left-0 top-0 right-0 bottom-0 z-10 cursor-col-resize hidden
 }
-.app.tree-resize .mask {
+.app.tree-resize .app-mask {
   @apply block
 }
 </style>

@@ -4,11 +4,11 @@
 
       <ul class="nav">
 
-        <li>
-          <span @click="$emit('toggleSidebar')">
-            <i class="fa fa-bars"/>
-          </span>
-        </li>
+<!--        <li>-->
+<!--          <span @click="$emit('toggleSidebar')">-->
+<!--            <i class="fa fa-bars"/>-->
+<!--          </span>-->
+<!--        </li>-->
 
         <li @mouseover="hoverItem">
 
@@ -47,13 +47,11 @@
                 </li>
 
                 <li v-for="item in list.templates" :key="'item-template-' + item.id" @mouseenter="subMenuEnter">
-
                   <router-link :to="{ name: 'TemplateIndex', params: { id: item.id } }">
                     <i v-if="item.locked" class="fa fa-lock absolute right-4 text-rose-500 text-xs"/>
                     {{ item.templatename }}
                     <small class="ml-1">({{ item.id }})</small>
                   </router-link>
-
                 </li>
 
               </ul>
@@ -78,13 +76,11 @@
                 </li>
 
                 <li v-for="item in list.tvs" :key="'item-tv-' + item.id" @mouseenter="subMenuEnter">
-
                   <router-link :to="{ name: 'TvIndex', params: { id: item.id } }"
                                :class="{ 'italic': item.locked, 'text-rose-700' : item.disabled }">
                     {{ item.name }}
                     <small class="ml-1">({{ item.id }})</small>
                   </router-link>
-
                 </li>
 
               </ul>
@@ -109,7 +105,6 @@
                 </li>
 
                 <li v-for="item in list.chunks" :key="'item-chunk-' + item.id" @mouseenter="subMenuEnter">
-
                   <router-link
                       :to="{ name: 'ChunkIndex', params: { id: item.id } }"
                       :class="{ 'text-rose-700' : item.disabled }">
@@ -117,7 +112,6 @@
                     {{ item.name }}
                     <small class="ml-1">({{ item.id }})</small>
                   </router-link>
-
                 </li>
 
               </ul>
@@ -142,14 +136,12 @@
                 </li>
 
                 <li v-for="item in list.snippets" :key="'item-snippet-' + item.id" @mouseenter="subMenuEnter">
-
                   <router-link :to="{ name: 'SnippetIndex', params: { id: item.id } }"
                                :class="{ 'text-rose-700' : item.disabled }">
                     <i v-if="item.locked" class="fa fa-lock absolute right-4 text-rose-500 text-xs"/>
                     {{ item.name }}
                     <small class="ml-1">({{ item.id }})</small>
                   </router-link>
-
                 </li>
 
               </ul>
@@ -174,14 +166,12 @@
                 </li>
 
                 <li v-for="item in list.plugins" :key="'item-plugin-' + item.id" @mouseenter="subMenuEnter">
-
                   <router-link :to="{ name: 'PluginIndex', params: { id: item.id } }"
                                :class="{ 'text-rose-700' : item.disabled }">
                     <i v-if="item.locked" class="fa fa-lock absolute right-4 text-rose-500 text-xs"/>
                     {{ item.name }}
                     <small class="ml-1">({{ item.id }})</small>
                   </router-link>
-
                 </li>
 
               </ul>
@@ -206,14 +196,12 @@
                 </li>
 
                 <li v-for="item in list.modules" :key="'item-module-' + item.id" @mouseenter="subMenuEnter">
-
                   <router-link :to="{ name: 'ModuleIndex', params: { id: item.id } }"
                                :class="{ 'text-rose-700' : item.disabled }">
                     <i v-if="item.locked" class="fa fa-lock absolute right-4 text-rose-500 text-xs"/>
                     {{ item.name }}
                     <small class="ml-1">({{ item.id }})</small>
                   </router-link>
-
                 </li>
 
               </ul>
@@ -233,16 +221,11 @@
 
           <ul v-if="list.modules.length">
 
-            <li v-for="item in list.modules"
-                :key="'item-module-exec-' + item.id"
-                @mouseover="hoverSubItem"
-                @mouseenter="subMenuEnter">
-
+            <li v-for="item in list.modules" :key="'item-module-exec-' + item.id" @mouseover="hoverSubItem" @mouseenter="subMenuEnter">
               <router-link :to="{ name: 'ModuleExec', query: { id: item.id } }">
                 <i class="fa fa-cube mr-3"/>
                 {{ item.name }}
               </router-link>
-
             </li>
 
           </ul>
@@ -438,6 +421,7 @@ export default {
   data () {
     return {
       darkMode: false,
+      counter: 0,
       list: {
         templates: [],
         tvs: [],
@@ -505,19 +489,24 @@ export default {
     },
 
     getSubMenu (method, list) {
+      clearTimeout(this.counter)
+
       for (let i in this.list) {
         if (this.list[i] !== list) {
           this.list[i] = []
         }
       }
+
       if (!list.length) {
-        axios.get('api/' + method).then(result => {
-          if (typeof result.data?.data === 'object') {
-            for (let i in result.data.data) {
-              list.push(result.data.data[i])
+        this.counter = setTimeout(() => {
+          axios.get('api/' + method).then(result => {
+            if (typeof result.data?.data === 'object') {
+              for (let i in result.data.data) {
+                list.push(result.data.data[i])
+              }
             }
-          }
-        })
+          })
+        }, 160)
       }
     },
 
@@ -546,7 +535,7 @@ export default {
   @apply h-full md:relative
 }
 .menu .nav > li > div {
-  @apply flex h-full items-center px-3 md:px-4 relative z-10 select-none cursor-pointer
+  @apply flex h-full items-center px-3 md:px-4 relative z-10 select-none cursor-pointer transition-all duration-100
 }
 .menu.active .nav > li.hover > div {
   @apply bg-white text-gray-600 dark:bg-evo-600 dark:text-gray-200
@@ -554,17 +543,20 @@ export default {
 .menu .nav > li > span {
   @apply flex h-full items-center px-3 md:px-4 cursor-pointer
 }
+.menu .nav > li:hover > div, .menu .nav > li:hover > span, .menu .nav > li:hover > a {
+  @apply text-gray-100
+}
 .menu .nav > li > div > span, .menu .home sub {
   @apply hidden md:inline-block
 }
 .menu .nav > li ul {
-  @apply w-full md:w-80 bg-white text-gray-900 hidden absolute z-10 pb-1 shadow-2xl rounded-b divide-y divide-gray-100 dark:bg-evo-600 dark:text-gray-300 dark:divide-zinc-700
+  @apply w-full md:w-80 bg-white text-gray-900 opacity-0 invisible absolute left-0 z-10 pb-1 shadow-2xl rounded-b divide-y divide-gray-100 dark:bg-evo-600 dark:text-gray-300 dark:divide-zinc-700 transition-all duration-100
 }
 .menu > div:last-child .nav > li ul {
-  @apply right-0
+  @apply left-auto right-0
 }
 .menu.active .nav li.hover > ul {
-  @apply block
+  @apply opacity-100 visible
 }
 .menu .nav > li > ul > li > ul {
   @apply top-0 left-full
@@ -576,7 +568,7 @@ export default {
   @apply bg-blue-600 text-white
 }
 .menu .home {
-  @apply flex h-full items-center pr-3 md:pr-4 text-xl uppercase
+  @apply flex h-full items-center px-3 md:pr-4 text-xl uppercase
 }
 .menu .fa {
   text-align: center;
