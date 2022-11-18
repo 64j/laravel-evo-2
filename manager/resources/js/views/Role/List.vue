@@ -9,7 +9,7 @@
       :link-name="element"
       table-class="table-sm"
       @getData="list">
-      <router-link :to="{ name: element, params: { id: '' } }" class="btn btn-success btn-sm">
+      <router-link :to="{ name: element, params: { id: '' } }" class="btn btn-green btn-sm">
         <i class="fa fa-plus"></i>
         {{ $store.getters['Lang/get']('new_role') }}
       </router-link>

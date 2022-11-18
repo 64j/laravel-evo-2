@@ -27,13 +27,13 @@ html, body, #app { width: 100%; height: 100%; overflow: hidden; }
 [type="checkbox"]:focus:not(:focus-visible), [type="radio"]:focus:not(:focus-visible) {
     @apply focus:ring-0 focus:ring-offset-0
 }
-.btn-success {
+.btn-green {
     @apply bg-green-600 hover:bg-green-700 text-white
 }
-.btn-danger {
+.btn-red {
     @apply bg-rose-600 hover:bg-rose-700 text-white
 }
-.btn-secondary {
+.btn-gray {
     @apply bg-slate-200 hover:bg-slate-300 text-gray-900
 }
 .btn-sm {
@@ -42,6 +42,6 @@ html, body, #app { width: 100%; height: 100%; overflow: hidden; }
 .btn-sm:disabled {
     cursor: none;
 }
-.dark .btn-secondary {
+.dark .btn-gray {
     @apply bg-gray-500 hover:bg-gray-600 text-gray-100
 }

@@ -124,13 +124,16 @@
           <div class="py-4 px-5">
 
             <div v-if="Object.values(meta.tvs || {}).length">
-              <p class="font-bold">{{ $root.lang('template_tv_msg') }}</p>
-
               <Panel
-                  :data="[{ data: meta.tvs }]"
+                  :data="[{
+                    name: $root.lang('template_tv_msg'),
+                    description: $root.lang('template_tv_edit_message'),
+                    '@selected': true,
+                    data: meta.tvs
+                  }]"
                   :actions="categoriesActions"
-                  :hiddenCategories="true"
-                  class-name="py-3 -mx-5 mt-2 border-t border-gray-200 dark:border-evo-800"
+                  :hiddenCategories="false"
+                  class-name="pb-3 -mx-5"
                   link-name="TvIndex"
                   checkbox="checkbox"
                   @action="action"

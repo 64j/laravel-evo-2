@@ -18,13 +18,13 @@
       <router-link
           v-if="txtNew"
           :to="{ name: linkName, params: { id : '' } }"
-          class="btn-sm btn-success md:mr-1 text-xs">
+          class="btn-sm btn-green md:mr-1 text-xs">
         <i class="fa fa-plus-circle fa-fw"/>
         <span class="hidden md:inline-block pl-2">{{ txtNew }}</span>
       </router-link>
 
       <span v-if="txtHelp"
-            class="btn-sm btn-secondary"
+            class="btn-sm btn-gray"
             @click="msg=!msg">
         <i class="far fa-question-circle fa-fw"/>
         <span class="hidden md:inline-block pl-2">{{ $root.lang('help') }}</span>
@@ -52,8 +52,11 @@
                   @change="checkAll(category)"
                   class="mr-3 peer/check"/>
 
-              <span class="font-extrabold text-gray-600 mr-1 dark:text-gray-300">{{ category.name }}</span>
-              <span class="text-xs">({{ category.id }})</span>
+              <span class="text-gray-600 mr-1 dark:text-gray-300">
+                <span class="font-extrabold">{{ category.name }}</span>
+                <span class="text-xs block" v-if="category.description">{{ category.description }}</span>
+              </span>
+              <span class="text-xs" v-if="category.id">({{ category.id }})</span>
             </label>
             <div v-if="category['prev_page_url'] || category['next_page_url']">
               <i
@@ -68,6 +71,12 @@
               />
             </div>
           </div>
+
+<!--          <draggable v-model="category.data" tag="transition-group" item-key="id">-->
+<!--            <template #item="{item}">-->
+<!--              <div> {{element.name}} </div>-->
+<!--            </template>-->
+<!--          </draggable>-->
 
           <ul class="divide-y pb-2 dark:divide-evo-800">
             <template v-for="item in category.data">
@@ -140,8 +149,11 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+
 export default {
   name: 'PanelView',
+  components: { draggable },
   props: {
     data: {
       type: [null, Object, Array],

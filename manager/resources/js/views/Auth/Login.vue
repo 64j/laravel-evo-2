@@ -57,7 +57,7 @@
         </div>
       </div>
       <div class="col-auto">
-        <button class="btn btn-success rounded-0" type="submit">Login</button>
+        <button class="btn btn-green rounded-0" type="submit">Login</button>
       </div>
     </div>
 

@@ -19,7 +19,7 @@
           <div class="fw-bolder mb-1">{{ $store.getters['Lang/get']('access_permissions_add_user_group') }}</div>
           <div class="input-group">
             <input type="text" class="form-control">
-            <button class="btn btn-success">{{ $store.getters['Lang/get']('submit') }}</button>
+            <button class="btn btn-green">{{ $store.getters['Lang/get']('submit') }}</button>
           </div>
         </div>
       </template>
@@ -32,7 +32,7 @@
           <div class="fw-bolder mb-1">{{ $store.getters['Lang/get']('access_permissions_add_resource_group') }}</div>
           <div class="input-group">
             <input type="text" class="form-control">
-            <button class="btn btn-success">{{ $store.getters['Lang/get']('submit') }}</button>
+            <button class="btn btn-green">{{ $store.getters['Lang/get']('submit') }}</button>
           </div>
         </div>
       </template>
