@@ -44,7 +44,7 @@
 
           <div v-if="!hiddenCategories"
                class="flex justify-between items-center px-5 bg-slate-200 border-t border-b border-gray-200 dark:bg-evo-800 dark:border-evo-600">
-            <label class="py-1">
+            <label class="py-1 inline-flex items-center">
               <input
                   v-if="checkbox"
                   type="checkbox"
