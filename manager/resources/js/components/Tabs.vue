@@ -1,23 +1,19 @@
 <template>
   <div class="tab-pane" :id="id+`Pane`">
 
-    <div class="tab-row-container overflow-hidden relative h-11 px-6">
+    <div class="tab-row-container">
 
-      <div class="tab-row overflow-hidden overflow-x-auto h-20 flex flex-nowrap">
+      <div class="tab-row">
         <template v-for="(tab, index) in data">
-          <div :key="index"
-               @mousedown="select(tab)"
-               class="tab"
-               :class="[ tab.active ? 'active bg-gray-50 border-gray-200 dark:bg-evo-700 dark:border-evo-600' : 'border-transparent' ]"
-               v-if="!tab.hidden">
-            <i class="mr-2 text-gray-600 dark:text-gray-300" :class="tab.icon" v-if="tab.icon"></i>
-            <span class="select-none" :class="[ tab.active ? 'text-gray-700 dark:text-gray-100' : 'text-gray-600 dark:text-gray-300' ]">{{ tab.title }}</span>
+          <div class="tab" v-if="!tab.hidden" :key="index" @mousedown="select(tab)" :class="{ 'active' : tab.active }">
+            <i class="icon" :class="tab.icon" v-if="tab.icon"/>
+            <span>{{ tab.title }}</span>
           </div>
         </template>
       </div>
 
-      <i class="fa fa-angle-left prev left-0"></i>
-      <i class="fa fa-angle-right next right-0"></i>
+      <i class="fa fa-angle-left prev"></i>
+      <i class="fa fa-angle-right next"></i>
     </div>
 
     <div
@@ -97,11 +93,35 @@ export default {
 </script>
 
 <style scoped>
+.tab-row-container {
+  @apply overflow-hidden relative h-12 px-6
+}
+.tab-row {
+  @apply overflow-hidden overflow-x-auto h-20 flex flex-nowrap
+}
 .tab-pane .tab {
-  @apply pt-3 pb-2 px-4 h-11 whitespace-nowrap cursor-pointer border-l border-t border-r uppercase
+  @apply py-3 px-4 h-12 whitespace-nowrap cursor-pointer border-l border-t border-r border-transparent uppercase select-none
+}
+.tab-pane .tab.active {
+  @apply bg-gray-50 border-gray-200 dark:bg-evo-700 dark:border-evo-600
+}
+.tab-pane .tab .icon {
+  @apply mr-2 text-gray-600 dark:text-gray-300
+}
+.tab-pane .tab span {
+  @apply text-gray-600 dark:text-gray-300
+}
+.tab-pane .tab.active span {
+  @apply text-gray-700 dark:text-gray-100
 }
 .tab-pane .prev, .tab-pane .next {
   @apply absolute h-full top-0 flex items-center px-2
+}
+.tab-pane .prev {
+  @apply left-0
+}
+.tab-pane .next {
+  @apply right-0
 }
 .tab-page {
   @apply -mt-[1px] bg-gray-50 pb-4 border-t border-b border-gray-200 dark:bg-evo-700 dark:border-evo-600
