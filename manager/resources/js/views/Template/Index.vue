@@ -190,6 +190,25 @@ export default {
         '@selected': true,
         draggable: true,
         sortable: false,
+        actions: {
+          categorySort: {
+            values: [
+              {
+                icon: 'fa fa-solid fa-arrow-up-1-9',
+                selected: true
+              },
+              {
+                icon: 'fa fa-solid fa-arrow-down-1-9'
+              },
+              {
+                icon: 'fa fa-solid fa-arrow-up-a-z'
+              },
+              {
+                icon: 'fa fa-solid fa-arrow-up-z-a'
+              }
+            ]
+          }
+        },
         data: []
       }
     }
@@ -251,6 +270,10 @@ export default {
 
         case 'paginate':
           this.paginate(item, category)
+          break
+
+        case 'sortTvs':
+          console.log(item, category)
           break
       }
     },

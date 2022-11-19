@@ -59,13 +59,13 @@
               </span>
             </label>
             <div v-if="category.actions">
-              <i v-for="(action, k) in actions"
+              <i v-for="(action, k) in category.actions"
                  :key="`category-` + category.id + `action-` + k"
-                 :class="[action.values ? action.values[category[k]].icon : action.icon]"
+                 :class="[action.values ? action.values.filter(value => value.selected)[0].icon : action.icon]"
                  class="ml-2"
                  role="button"
-                 :title="[action.values ? action.values[category[k]].title : action.title]"
-                 @click="$emit('actionCategory', k, category)"
+                 :title="[action.values ? action.values.filter(value => value.selected)[0].title : action.title]"
+                 @click="[$emit('action', 'sortTvs', action, category)]"
               />
             </div>
             <div v-if="category['prev_page_url'] || category['next_page_url']">
