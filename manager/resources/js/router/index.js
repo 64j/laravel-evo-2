@@ -56,6 +56,14 @@ const routes = [
     }
   },
   {
+    path: '/tvs/sort',
+    name: 'TvSort',
+    component: () => import('@/views/Tv/SortList'),
+    meta: {
+      layout: 'Default'
+    }
+  },
+  {
     path: '/chunk/:id?',
     name: 'ChunkIndex',
     component: () => import('@/views/Chunk/Index'),

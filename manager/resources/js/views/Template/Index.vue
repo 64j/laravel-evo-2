@@ -241,8 +241,8 @@ export default {
   },
 
   methods: {
-    action (name, item, category) {
-      switch (name) {
+    action (action, item, category) {
+      switch (action) {
         case 'save':
           this.loading = false
           if (this.data.id) {

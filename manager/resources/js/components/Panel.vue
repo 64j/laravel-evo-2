@@ -23,6 +23,10 @@
         <span class="hidden md:inline-block pl-2">{{ txtNew }}</span>
       </router-link>
 
+      <a v-if="txtCustom" :href="linkCustom" class="btn-sm btn-gray md:mr-1 text-xs">
+        {{ txtCustom }}
+      </a>
+
       <span v-if="txtHelp"
             class="btn-sm btn-gray"
             @click="msg=!msg">
@@ -112,7 +116,7 @@
                 </template>
 
                 <router-link
-                    v-else
+                    v-else-if="linkName"
                     :to="{ name: linkName, params: { id: item.id } }"
                     class="grow inline-flex items-center py-1 pr-5 select-none group/item"
                     :class="{ 'text-rose-600': item.disabled }">
@@ -127,6 +131,23 @@
                   <span class="ml-3 text-xs" v-html="item.description"/>
 
                 </router-link>
+
+                <div
+                    v-else
+                    :to="{ name: linkName, params: { id: item.id } }"
+                    class="grow inline-flex items-center py-1 pr-5 select-none group/item"
+                    :class="{ 'text-rose-600': item.disabled }">
+
+                  <i v-if="linkIcon" :class="linkIcon" class="mr-2 peer/icon"></i>
+                  <i class="fa fa-lock fa-fw mr-1 -ml-5 text-rose-500 text-xs peer-[.fa]/icon:-ml-4 peer-[.fa]/icon:mr-0"
+                     v-if="item.locked"/>
+                  <span class="mr-1" :class="{ 'group-hover/item:text-rose-700': item.disabled }">
+                    {{ item.name }}
+                  </span>
+                  <span class="text-xs">({{ item.id }})</span>
+                  <span class="ml-3 text-xs" v-html="item.description"/>
+
+                </div>
 
                 <div v-if="actions" class="inline-flex flex-nowrap">
                   <i v-for="(action, k) in actions"
@@ -162,9 +183,15 @@ export default {
     },
     linkName: {
       type: String,
-      required: true
+      required: false
     },
     linkIcon: {
+      type: String
+    },
+    txtCustom: {
+      type: String
+    },
+    linkCustom: {
       type: String
     },
     className: {

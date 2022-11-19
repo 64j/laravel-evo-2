@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Manager\Http\Controllers;
 
 use App\Models\SiteTmplvar;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Request;
 use Manager\Http\Requests\ModuleRequest;
 use Manager\Http\Resources\ModuleResource;
 
@@ -65,5 +67,19 @@ class TvController extends Controller
         $tv->delete();
 
         return response()->noContent();
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function sort(Request $request): JsonResponse
+    {
+        return $this->ok(
+            SiteTmplvar::query()
+                ->orderBy('rank')
+                ->get(['id', 'name', 'rank'])
+        );
     }
 }

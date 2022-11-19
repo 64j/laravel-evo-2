@@ -21,6 +21,7 @@ Route::group([
 
 Route::apiResource('template', TemplateController::class);
 Route::apiResource('tv', TvController::class);
+Route::get('tvs/sort', [TvController::class, 'sort']);
 Route::apiResource('chunk', ChunkController::class);
 Route::apiResource('snippet', SnippetController::class);
 Route::apiResource('plugin', PluginController::class);
