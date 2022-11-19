@@ -38,9 +38,9 @@
       <i class="fa fa-spinner fa-spin"/>
     </div>
 
-    <ul v-else>
+    <div v-else>
       <template v-for="category in data">
-        <li :key="'category-' + category.id" v-if="Object.values(category.data).filter(v => !v.hidden).length">
+        <div :key="'category-' + category.id" v-if="Object.values(category.data).filter(v => !v.hidden).length">
 
           <div v-if="!hiddenCategories"
                class="flex justify-between items-center px-5 bg-slate-200 border-t border-b border-gray-200 dark:bg-evo-800 dark:border-evo-600">
@@ -72,18 +72,11 @@
             </div>
           </div>
 
-<!--          <draggable v-model="category.data" tag="transition-group" item-key="id">-->
-<!--            <template #item="{item}">-->
-<!--              <div> {{element.name}} </div>-->
-<!--            </template>-->
-<!--          </draggable>-->
-
-          <ul class="divide-y pb-2 dark:divide-evo-800">
-            <template v-for="item in category.data">
-              <li v-if="!item.hidden"
-                  :key="'item-' + item.id"
-                  class="flex flex-1 justify-between px-5 items-center hover:bg-slate-100 dark:hover:bg-evo-800">
-
+          <draggable :list="category.data" :disabled="!category.draggable" item-key="id" @end="category.sortable=true"
+                     class="divide-y pb-2 dark:divide-evo-800">
+            <template #item="{ element: item }">
+              <div v-if="!item.hidden"
+                   class="flex flex-1 justify-between px-5 items-center hover:bg-slate-100 dark:hover:bg-evo-800">
                 <template v-if="checkbox">
 
                   <label class="grow inline-flex items-center py-1 select-none group/item">
@@ -99,8 +92,8 @@
                     <i class="fa fa-lock fa-fw mr-1 -ml-5 text-rose-500 text-xs peer-[.fa]/icon:-ml-4 peer-[.fa]/icon:mr-0"
                        v-if="item.locked"/>
                     <span class="mr-1 peer-checked/check:font-bold">
-                      {{ item.name }}
-                    </span>
+                                      {{ item.name }}
+                                    </span>
                     <span class="text-xs">({{ item.id }})</span>
                     <span class="ml-3 text-xs" v-html="item.description"/>
 
@@ -119,8 +112,8 @@
                      v-if="item.locked"/>
                   <span class="mr-1"
                         :class="{ 'group-hover/item:text-rose-700': item.disabled }">
-                    {{ item.name }}
-                  </span>
+                                    {{ item.name }}
+                                  </span>
                   <span class="text-xs">({{ item.id }})</span>
                   <span class="ml-3 text-xs" v-html="item.description"/>
 
@@ -136,14 +129,13 @@
                      @click="$emit('action', k, item, category)"
                   />
                 </div>
-
-              </li>
+              </div>
             </template>
-          </ul>
+          </draggable>
 
-        </li>
+        </div>
       </template>
-    </ul>
+    </div>
 
   </div>
 </template>

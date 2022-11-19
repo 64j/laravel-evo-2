@@ -123,14 +123,9 @@
         <template #Tvs>
           <div class="py-4 px-5">
 
-            <div v-if="Object.values(meta.tvs || {}).length">
+            <div v-if="this.dataTvs.data.length">
               <Panel
-                  :data="[{
-                    name: $root.lang('template_tv_msg'),
-                    description: $root.lang('template_tv_edit_message'),
-                    '@selected': true,
-                    data: meta.tvs
-                  }]"
+                  :data="[dataTvs]"
                   :actions="categoriesActions"
                   :hiddenCategories="false"
                   class-name="pb-3 -mx-5"
@@ -142,11 +137,11 @@
 
             <p v-else class="font-bold text-rose-500 mb-3">{{ $root.lang('template_no_tv') }}</p>
 
-            <div v-if="meta.categories != null">
+            <div v-if="dataCategories != null">
               <p class="font-bold">{{ $root.lang('template_notassigned_tv') }}</p>
 
               <Panel
-                  :data="meta.categories"
+                  :data="dataCategories"
                   :actions="categoriesActions"
                   class-name="px-0 -mx-5"
                   link-name="TvIndex"
@@ -183,13 +178,19 @@ export default {
       icon: 'fa fa-newspaper',
       errors: {},
       data: {},
-      meta: {
-        categories: []
-      },
       categoriesActions: {
         tvEdit: {
           icon: 'far fa-edit fa-fw hover:text-blue-500'
         }
+      },
+      dataCategories: [],
+      dataTvs: {
+        name: this.$root.lang('template_tv_msg'),
+        description: this.$root.lang('template_tv_edit_message'),
+        '@selected': true,
+        draggable: true,
+        sortable: false,
+        data: []
       }
     }
   },
@@ -224,9 +225,9 @@ export default {
         case 'save':
           this.loading = false
           if (this.data.id) {
-            this.update({ ...this.data, tvs: this.tvs() })
+            this.update({ ...this.data, tvs: this.tvs(), sortable: this.dataTvs.sortable })
           } else {
-            this.create({ ...this.data, tvs: this.tvs() })
+            this.create({ ...this.data, tvs: this.tvs(), sortable: this.dataTvs.sortable })
           }
           break
 
@@ -256,7 +257,9 @@ export default {
 
     setData (data) {
       this.data = data?.data || { category: 0, selectable: 1 }
-      this.meta = data?.meta || {}
+      this.dataCategories = data?.meta?.categories || []
+      this.dataTvs.data = data?.meta?.tvs || []
+      this.dataTvs.sortable = false
       this.$emit('setTab', { title: this.title })
       this.loading = true
 
@@ -310,7 +313,7 @@ export default {
     async filter (str) {
       if (!str || str.length > 1) {
         let response = await axios.get('api/template/' + this.id + '?filter=' + str)
-        this.meta.categories = response.data.meta['categories'] ?? []
+        this.dataCategories = response.data.meta['categories'] ?? []
       }
     },
 
@@ -319,7 +322,7 @@ export default {
         if (response.data.meta['categories'] != null) {
           response.data.meta['categories'].forEach((cat, i) => {
             if (category.id === cat.id) {
-              this.meta.categories[i] = cat
+              this.dataCategories[i] = cat
             }
           })
         }
@@ -329,10 +332,10 @@ export default {
     tvs () {
       let tvs = []
 
-      this.meta.tvs.forEach(tv => tv['@selected'] && tvs.push(tv.id))
+      this.dataTvs.data.forEach(tv => tv['@selected'] && tvs.push(tv.id))
 
-      if (this.meta.categories != null) {
-        this.meta.categories.forEach(category => {
+      if (this.dataCategories != null) {
+        this.dataCategories.forEach(category => {
           category.data.forEach(tv => tv['@selected'] && tvs.push(tv.id))
         })
       }
