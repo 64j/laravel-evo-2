@@ -68,13 +68,13 @@ export default {
     },
 
     async list (data) {
-      let response = await axios.get('api/category/tvs', data)
+      let response = await axios.get('api/category/list/tvs', data)
       this.data = response.data.data
     },
 
     async filter (str) {
       if (!str || str.length > 1) {
-        let response = await axios.get('api/category/tvs?filter=' + str)
+        let response = await axios.get('api/category/list/tvs?filter=' + str)
         this.data = response.data.data ?? []
       }
     },

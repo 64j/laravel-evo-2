@@ -187,7 +187,7 @@ export default {
       dataTvs: {
         name: this.$root.lang('template_tv_msg'),
         description: this.$root.lang('template_tv_edit_message'),
-        '@selected': true,
+        selected: true,
         draggable: true,
         sort: '1-9',
         actions: {
@@ -289,7 +289,7 @@ export default {
       this.data = data?.data || { category: 0, selectable: 1 }
       this.dataCategories = data?.meta?.categories || []
       this.dataTvs.data = data?.meta?.tvs || []
-      this.dataTvs['@selected'] = !!this.dataTvs.data.length
+      this.dataTvs.selected = !!this.dataTvs.data.length
       this.dataTvs.sortable = data?.meta?.['tvsSortable'] || false
       this.dataTvs.sort = this.checkSort()
       this.$emit('setTab', {
@@ -367,11 +367,11 @@ export default {
     tvs () {
       let tvs = []
 
-      this.dataTvs.data.forEach(tv => tv['@selected'] && tvs.push(tv.id))
+      this.dataTvs.data.forEach(tv => tv.selected && tvs.push(tv.id))
 
       if (this.dataCategories != null) {
         this.dataCategories.forEach(category => {
-          category.data.forEach(tv => tv['@selected'] && tvs.push(tv.id))
+          category.data.forEach(tv => tv.selected && tvs.push(tv.id))
         })
       }
 

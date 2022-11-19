@@ -112,7 +112,7 @@ class TemplateController extends Controller
             ->map(function (SiteTmplvarTemplate $tv) use (&$tvsSortable) {
                 $rank = $tv->rank;
                 $tv = $tv->tmplvar->toArray();
-                $tv['@selected'] = true;
+                $tv['selected'] = true;
                 $tv['rank'] = $rank;
 
                 $tvsSortable[] = $rank;
@@ -135,7 +135,7 @@ class TemplateController extends Controller
                 );
 
                 return array_merge(
-                    ['@selected' => false],
+                    ['selected' => false],
                     $category->attributesToArray(),
                     $category->tvs->toArray()
                 );

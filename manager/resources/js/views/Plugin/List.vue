@@ -83,13 +83,13 @@ export default {
     },
 
     async list (data) {
-      let response = await axios.get('api/category/plugins', data)
+      let response = await axios.get('api/category/list/plugins', data)
       this.data = response.data.data
     },
 
     async filter (str) {
       if (!str || str.length > 1) {
-        let response = await axios.get('api/category/plugins?filter=' + str)
+        let response = await axios.get('api/category/list/plugins?filter=' + str)
         this.data = response.data.data ?? []
       }
     },

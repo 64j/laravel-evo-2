@@ -48,7 +48,7 @@
               <input
                   v-if="checkbox"
                   type="checkbox"
-                  v-model="category['@selected']"
+                  v-model="category.selected"
                   @change="checkAll(category)"
                   class="mr-3 peer/check"/>
 
@@ -95,7 +95,7 @@
                         type="checkbox"
                         :id="`checkbox-item-`+item.id"
                         :value="item.id"
-                        v-model="item['@selected']"
+                        v-model="item.selected"
                         class="mr-3 peer/check"/>
 
                     <i v-if="linkIcon" :class="linkIcon" class="mr-2 peer/icon"></i>
@@ -203,7 +203,7 @@ export default {
   },
   methods: {
     checkAll (category) {
-      category.data.forEach(item => item['@selected'] = category['@selected'])
+      category.data.forEach(item => item.selected = category.selected)
     },
     clearFilter (event) {
       const filterElement = event.target.previousElementSibling

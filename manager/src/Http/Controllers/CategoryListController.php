@@ -16,14 +16,45 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 
-class CategoryController extends Controller
+class CategoryListController extends Controller
 {
+    /**
+     * @param Request $request
+     * @param string $list
+     *
+     * @return JsonResponse|void
+     */
+    public function show(Request $request, string $list)
+    {
+        switch ($list) {
+            case 'templates':
+                return $this->templates($request);
+
+            case 'tvs':
+                return $this->tvs($request);
+
+            case 'chunks':
+                return $this->chunks($request);
+
+            case 'snippets':
+                return $this->snippets($request);
+
+            case 'plugins':
+                return $this->plugins($request);
+
+            case 'modules':
+                return $this->modules($request);
+        }
+
+        abort(404);
+    }
+
     /**
      * @param Request $request
      *
      * @return JsonResponse
      */
-    public function templates(Request $request): JsonResponse
+    protected function templates(Request $request): JsonResponse
     {
         $filter = $request->get('filter');
 
@@ -73,7 +104,7 @@ class CategoryController extends Controller
                         );
 
                         return array_merge(
-                            ['@selected' => false],
+                            ['selected' => false],
                             $category->attributesToArray(),
                             $category->templates->toArray()
                         );
@@ -90,7 +121,7 @@ class CategoryController extends Controller
      *
      * @return JsonResponse
      */
-    public function tvs(Request $request): JsonResponse
+    protected function tvs(Request $request): JsonResponse
     {
         $filter = $request->get('filter');
 
@@ -140,7 +171,7 @@ class CategoryController extends Controller
                         );
 
                         return array_merge(
-                            ['@selected' => false],
+                            ['selected' => false],
                             $category->attributesToArray(),
                             $category->tvs->toArray()
                         );
@@ -157,7 +188,7 @@ class CategoryController extends Controller
      *
      * @return JsonResponse
      */
-    public function chunks(Request $request): JsonResponse
+    protected function chunks(Request $request): JsonResponse
     {
         $filter = $request->get('filter');
 
@@ -207,7 +238,7 @@ class CategoryController extends Controller
                         );
 
                         return array_merge(
-                            ['@selected' => false],
+                            ['selected' => false],
                             $category->attributesToArray(),
                             $category->chunks->toArray()
                         );
@@ -224,7 +255,7 @@ class CategoryController extends Controller
      *
      * @return JsonResponse
      */
-    public function snippets(Request $request): JsonResponse
+    protected function snippets(Request $request): JsonResponse
     {
         $filter = $request->get('filter');
 
@@ -274,7 +305,7 @@ class CategoryController extends Controller
                         );
 
                         return array_merge(
-                            ['@selected' => false],
+                            ['selected' => false],
                             $category->attributesToArray(),
                             $category->snippets->toArray()
                         );
@@ -291,7 +322,7 @@ class CategoryController extends Controller
      *
      * @return JsonResponse
      */
-    public function plugins(Request $request): JsonResponse
+    protected function plugins(Request $request): JsonResponse
     {
         $filter = $request->get('filter');
 
@@ -341,7 +372,7 @@ class CategoryController extends Controller
                         );
 
                         return array_merge(
-                            ['@selected' => false],
+                            ['selected' => false],
                             $category->attributesToArray(),
                             $category->plugins->toArray()
                         );
@@ -358,7 +389,7 @@ class CategoryController extends Controller
      *
      * @return JsonResponse
      */
-    public function modules(Request $request): JsonResponse
+    protected function modules(Request $request): JsonResponse
     {
         $filter = $request->get('filter');
 
@@ -408,7 +439,7 @@ class CategoryController extends Controller
                         );
 
                         return array_merge(
-                            ['@selected' => false],
+                            ['selected' => false],
                             $category->attributesToArray(),
                             $category->modules->toArray()
                         );
