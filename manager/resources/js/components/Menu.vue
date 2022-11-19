@@ -4,12 +4,6 @@
 
       <ul class="nav">
 
-<!--        <li>-->
-<!--          <span @click="$emit('toggleSidebar')">-->
-<!--            <i class="fa fa-bars"/>-->
-<!--          </span>-->
-<!--        </li>-->
-
         <li @mouseover="hoverItem">
 
           <router-link :to="{ name: 'DashboardIndex' }" class="home">
@@ -435,7 +429,7 @@ export default {
 
   setup () {
     document.addEventListener('click', () => {
-      const active = document.querySelector('.app > .header.active')
+      const active = document.querySelector('.app > .app-header.active')
       if (active) {
         active.firstElementChild.classList.remove('active')
         active.classList.remove('active')

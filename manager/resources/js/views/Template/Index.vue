@@ -292,7 +292,10 @@ export default {
       this.dataTvs['@selected'] = !!this.dataTvs.data.length
       this.dataTvs.sortable = data?.meta?.['tvsSortable'] || false
       this.dataTvs.sort = this.checkSort()
-      this.$emit('setTab', { title: this.title })
+      this.$emit('setTab', {
+        title: this.title,
+        changed: false
+      })
       this.loading = true
 
       const unwatchData = this.$watch('data', () => {
