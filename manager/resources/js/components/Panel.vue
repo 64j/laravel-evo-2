@@ -110,10 +110,9 @@
                   <i v-if="linkIcon" :class="linkIcon" class="mr-2 peer/icon"></i>
                   <i class="fa fa-lock fa-fw mr-1 -ml-5 text-rose-500 text-xs peer-[.fa]/icon:-ml-4 peer-[.fa]/icon:mr-0"
                      v-if="item.locked"/>
-                  <span class="mr-1"
-                        :class="{ 'group-hover/item:text-rose-700': item.disabled }">
-                                    {{ item.name }}
-                                  </span>
+                  <span class="mr-1" :class="{ 'group-hover/item:text-rose-700': item.disabled }">
+                    {{ item.name }}
+                  </span>
                   <span class="text-xs">({{ item.id }})</span>
                   <span class="ml-3 text-xs" v-html="item.description"/>
 
