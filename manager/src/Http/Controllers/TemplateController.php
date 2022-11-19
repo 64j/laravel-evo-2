@@ -65,6 +65,7 @@ class TemplateController extends Controller
             ->delete();
 
         $sortableTvs = $request->input('sortableTvs');
+        $sortTvs = $request->input('sortTvs');
         $tvsTemplates = $request->input('tvs', []);
         foreach ($tvsTemplates as $k => &$tvsTemplate) {
             $tvsTemplate = [
@@ -72,7 +73,7 @@ class TemplateController extends Controller
                 'templateid' => $template->getKey(),
             ];
 
-            $tvsTemplate['rank'] = $sortableTvs ? $k + 1 : 0;
+            $tvsTemplate['rank'] = $sortableTvs && $sortTvs != '1-9' ? $k + 1 : 0;
         }
 
         SiteTmplvarTemplate::query()->upsert($tvsTemplates, 'tmplvarid');

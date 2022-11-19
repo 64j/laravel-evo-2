@@ -58,14 +58,14 @@
                 <span class="text-xs block" v-if="category.description">{{ category.description }}</span>
               </span>
             </label>
-            <div v-if="category.actions">
+            <div v-if="category.actions" class="inline-flex flex-nowrap">
               <i v-for="(action, k) in category.actions"
                  :key="`category-` + category.id + `action-` + k"
-                 :class="[action.values ? action.values.filter(value => value.selected)[0].icon : action.icon]"
+                 :class="[action.values ? action.values[category[k]].icon : action.icon]"
                  class="ml-2"
                  role="button"
-                 :title="[action.values ? action.values.filter(value => value.selected)[0].title : action.title]"
-                 @click="[$emit('action', 'sortTvs', action, category)]"
+                 :title="[action.values ? action.values[category[k]].title : action.title]"
+                 @click="$emit('action', k, action.values ? category[k] : action, category)"
               />
             </div>
             <div v-if="category['prev_page_url'] || category['next_page_url']">
@@ -82,7 +82,7 @@
             </div>
           </div>
 
-          <draggable :list="category.data" :disabled="!category.draggable" item-key="id" @end="category.sortable=true"
+          <draggable :list="category.data" :disabled="!category.draggable" item-key="id" @end="$emit('action', 'sortable')"
                      class="divide-y pb-2 dark:divide-evo-800">
             <template #item="{ element: item }">
               <div v-if="!item.hidden"
@@ -102,8 +102,8 @@
                     <i class="fa fa-lock fa-fw mr-1 -ml-5 text-rose-500 text-xs peer-[.fa]/icon:-ml-4 peer-[.fa]/icon:mr-0"
                        v-if="item.locked"/>
                     <span class="mr-1 peer-checked/check:font-bold">
-                                      {{ item.name }}
-                                    </span>
+                      {{ item.name }}
+                    </span>
                     <span class="text-xs">({{ item.id }})</span>
                     <span class="ml-3 text-xs" v-html="item.description"/>
 

@@ -37,7 +37,7 @@ html, body, #app { width: 100%; height: 100%; overflow: hidden; }
     @apply bg-slate-200 hover:bg-slate-300 text-gray-900
 }
 .btn-sm {
-    @apply inline-flex items-center text-sm font-bold py-1 px-2 rounded whitespace-nowrap cursor-pointer
+    @apply inline-flex items-center text-sm py-1 px-2 border-0 whitespace-nowrap cursor-pointer
 }
 .btn-sm:disabled {
     cursor: none;

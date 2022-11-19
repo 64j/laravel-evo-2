@@ -189,24 +189,26 @@ export default {
         description: this.$root.lang('template_tv_edit_message'),
         '@selected': true,
         draggable: true,
-        sortable: false,
+        sort: '1-9',
         actions: {
-          categorySort: {
-            values: [
-              {
-                icon: 'fa fa-solid fa-arrow-up-1-9',
-                selected: true
+          sort: {
+            values: {
+              '0': {
+                icon: 'fa-solid fa-sort fa-fw'
               },
-              {
-                icon: 'fa fa-solid fa-arrow-down-1-9'
+              '1-9': {
+                icon: 'fa-solid fa-arrow-up-1-9 fa-fw'
               },
-              {
-                icon: 'fa fa-solid fa-arrow-up-a-z'
+              '9-1': {
+                icon: 'fa-solid fa-arrow-down-1-9 fa-fw'
               },
-              {
-                icon: 'fa fa-solid fa-arrow-up-z-a'
+              'a-z': {
+                icon: 'fa-solid fa-arrow-up-a-z fa-fw'
+              },
+              'z-a': {
+                icon: 'fa-solid fa-arrow-up-z-a fa-fw'
               }
-            ]
+            }
           }
         },
         data: []
@@ -244,9 +246,9 @@ export default {
         case 'save':
           this.loading = false
           if (this.data.id) {
-            this.update({ ...this.data, tvs: this.tvs(), sortableTvs: this.dataTvs.sortable })
+            this.update({ ...this.data, tvs: this.tvs(), sortableTvs: this.dataTvs.sortable, sortTvs: this.dataTvs.sort })
           } else {
-            this.create({ ...this.data, tvs: this.tvs(), sortableTvs: this.dataTvs.sortable })
+            this.create({ ...this.data, tvs: this.tvs(), sortableTvs: this.dataTvs.sortable, sortTvs: this.dataTvs.sort })
           }
           break
 
@@ -272,8 +274,13 @@ export default {
           this.paginate(item, category)
           break
 
-        case 'sortTvs':
-          console.log(item, category)
+        case 'sortable':
+          this.dataTvs.sortable = true
+          this.dataTvs.sort = this.checkSort()
+          break
+
+        case 'sort':
+          this.sort(item, category)
           break
       }
     },
@@ -282,7 +289,9 @@ export default {
       this.data = data?.data || { category: 0, selectable: 1 }
       this.dataCategories = data?.meta?.categories || []
       this.dataTvs.data = data?.meta?.tvs || []
+      this.dataTvs['@selected'] = !!this.dataTvs.data.length
       this.dataTvs.sortable = data?.meta?.['tvsSortable'] || false
+      this.dataTvs.sort = this.checkSort()
       this.$emit('setTab', { title: this.title })
       this.loading = true
 
@@ -364,6 +373,56 @@ export default {
       }
 
       return tvs
+    },
+
+    checkSort () {
+      let sort = '0'
+
+      sort = this.dataTvs.data.every((x, i) => {
+        return i === 0 || x.id >= this.dataTvs.data[i - 1].id
+      }) ? '1-9' : sort
+
+      sort = this.dataTvs.data.every((x, i) => {
+        return i === 0 || x.id < this.dataTvs.data[i - 1].id
+      }) ? '9-1' : sort
+
+      sort = this.dataTvs.data.every((x, i) => {
+        return i === 0 || x.name >= this.dataTvs.data[i - 1].name
+      }) ? 'a-z' : sort
+
+      sort = this.dataTvs.data.every((x, i) => {
+        return i === 0 || x.name < this.dataTvs.data[i - 1].name
+      }) ? 'z-a' : sort
+
+      return sort
+    },
+
+    sort (item, category) {
+      let values = Object.entries(category.actions.sort.values)
+
+      category.sortable = true
+
+      category.sort = values.map((i, k) => {
+        return i[0] === item ? (values[k + 1] ? values[k + 1][0] : values[1][0]) : false
+      }).filter(i => i)[0]
+
+      switch (category.sort) {
+        case '1-9':
+          category.data.sort((x, y) => x.id < y.id ? -1 : (x.id > y.id ? 1 : 0))
+          break
+
+        case '9-1':
+          category.data.sort((x, y) => x.id > y.id ? -1 : (x.id < y.id ? 1 : 0))
+          break
+
+        case 'a-z':
+          category.data.sort((x, y) => x.name < y.name ? -1 : (x.name > y.name ? 1 : 0))
+          break
+
+        case 'z-a':
+          category.data.sort((x, y) => x.name > y.name ? -1 : (x.name < y.name ? 1 : 0))
+          break
+      }
     }
   }
 }
