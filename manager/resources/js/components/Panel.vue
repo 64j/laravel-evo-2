@@ -52,12 +52,22 @@
                   @change="checkAll(category)"
                   class="mr-3 peer/check"/>
 
-              <span class="text-gray-600 mr-1 dark:text-gray-300">
+              <span class="text-gray-600 dark:text-gray-300">
                 <span class="font-extrabold">{{ category.name }}</span>
+                <span class="text-xs ml-1" v-if="category.id">({{ category.id }})</span>
                 <span class="text-xs block" v-if="category.description">{{ category.description }}</span>
               </span>
-              <span class="text-xs" v-if="category.id">({{ category.id }})</span>
             </label>
+            <div v-if="category.actions">
+              <i v-for="(action, k) in actions"
+                 :key="`category-` + category.id + `action-` + k"
+                 :class="[action.values ? action.values[category[k]].icon : action.icon]"
+                 class="ml-2"
+                 role="button"
+                 :title="[action.values ? action.values[category[k]].title : action.title]"
+                 @click="$emit('actionCategory', k, category)"
+              />
+            </div>
             <div v-if="category['prev_page_url'] || category['next_page_url']">
               <i
                   :class="{ 'pointer-events-none opacity-50' : !category['prev_page_url'] }"

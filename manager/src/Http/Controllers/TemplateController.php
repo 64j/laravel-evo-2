@@ -64,12 +64,15 @@ class TemplateController extends Controller
             ->where('templateid', $template->getKey())
             ->delete();
 
+        $sortableTvs = $request->input('sortableTvs');
         $tvsTemplates = $request->input('tvs', []);
-        foreach ($tvsTemplates as &$tvsTemplate) {
+        foreach ($tvsTemplates as $k => &$tvsTemplate) {
             $tvsTemplate = [
                 'tmplvarid' => $tvsTemplate,
                 'templateid' => $template->getKey(),
             ];
+
+            $tvsTemplate['rank'] = $sortableTvs ? $k + 1 : 0;
         }
 
         SiteTmplvarTemplate::query()->upsert($tvsTemplates, 'tmplvarid');
@@ -98,13 +101,20 @@ class TemplateController extends Controller
      */
     protected function getMeta(SiteTemplate $template): array
     {
+        $tvsSortable = [];
+
         $tvs = SiteTmplvarTemplate::query()
             ->with('tmplvar', fn($query) => $query->select('id', 'name', 'caption as description', 'description as intro'))
             ->where('templateid', $template->getKey())
+            ->orderBy('rank')
             ->get()
-            ->pluck('tmplvar')
-            ->map(function ($tv) {
+            ->map(function (SiteTmplvarTemplate $tv) use (&$tvsSortable) {
+                $rank = $tv->rank;
+                $tv = $tv->tmplvar->toArray();
                 $tv['@selected'] = true;
+                $tv['rank'] = $rank;
+
+                $tvsSortable[] = $rank;
 
                 return $tv;
             });
@@ -135,6 +145,7 @@ class TemplateController extends Controller
         return [
             'tvs' => $tvs,
             'categories' => !$filter && $categories->isEmpty() ? null : $categories,
+            'tvsSortable' => (bool) array_sum($tvsSortable),
         ];
     }
 }

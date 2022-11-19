@@ -225,9 +225,9 @@ export default {
         case 'save':
           this.loading = false
           if (this.data.id) {
-            this.update({ ...this.data, tvs: this.tvs(), sortable: this.dataTvs.sortable })
+            this.update({ ...this.data, tvs: this.tvs(), sortableTvs: this.dataTvs.sortable })
           } else {
-            this.create({ ...this.data, tvs: this.tvs(), sortable: this.dataTvs.sortable })
+            this.create({ ...this.data, tvs: this.tvs(), sortableTvs: this.dataTvs.sortable })
           }
           break
 
@@ -259,7 +259,7 @@ export default {
       this.data = data?.data || { category: 0, selectable: 1 }
       this.dataCategories = data?.meta?.categories || []
       this.dataTvs.data = data?.meta?.tvs || []
-      this.dataTvs.sortable = false
+      this.dataTvs.sortable = data?.meta?.['tvsSortable'] || false
       this.$emit('setTab', { title: this.title })
       this.loading = true
 
