@@ -108,7 +108,8 @@ const routes = [
     name: 'ModuleExec',
     component: () => import('@/views/Module/Exec'),
     meta: {
-      layout: 'Default'
+      layout: 'Default',
+      isIframe: true
     }
   },
   {
