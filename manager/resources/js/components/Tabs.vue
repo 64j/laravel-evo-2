@@ -55,7 +55,7 @@ export default {
     this.$watch('$route.query.' + this.$props.id + 'Tab', index => {
       this.tabs.forEach((i, k) => i.active = k === parseInt(index))
     })
-    if (this.tabs.length) {
+    if (this.tabs && this.tabs.length) {
       let index = parseInt(this.$route.query[this.$props.id + 'Tab'])
       if (!this.tabs[index]) {
         this.tabs[0].active = true

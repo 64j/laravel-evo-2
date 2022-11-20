@@ -52,7 +52,7 @@
 
             </li>
 
-            <li v-if="$root.hasPermissions('edit_snippet')" @mouseover="hoverSubItem" @mouseenter="getSubMenu('tvs', list.tvs)">
+            <li v-if="$root.hasPermissions('edit_snippet')" @mouseover="hoverSubItem" @mouseenter="getSubMenu('tv', list.tvs)">
 
               <router-link :to="{ name: 'ElementsIndex', query: { resourcesTab: 1 } }">
                 <i class="fa fa-list-alt mr-3"/>
@@ -81,7 +81,7 @@
 
             </li>
 
-            <li v-if="$root.hasPermissions('edit_chunk')" @mouseover="hoverSubItem" @mouseenter="getSubMenu('chunks', list.chunks)">
+            <li v-if="$root.hasPermissions('edit_chunk')" @mouseover="hoverSubItem" @mouseenter="getSubMenu('chunk', list.chunks)">
 
               <router-link :to="{ name: 'ElementsIndex', query: { resourcesTab: 2 } }">
                 <i class="fa fa-th-large mr-3"/>
@@ -112,7 +112,7 @@
 
             </li>
 
-            <li v-if="$root.hasPermissions('edit_snippet')" @mouseover="hoverSubItem" @mouseenter="getSubMenu('snippets', list.snippets)">
+            <li v-if="$root.hasPermissions('edit_snippet')" @mouseover="hoverSubItem" @mouseenter="getSubMenu('snippet', list.snippets)">
 
               <router-link :to="{ name: 'ElementsIndex', query: { resourcesTab: 3 } }">
                 <i class="fa fa-code mr-3"/>
@@ -142,7 +142,7 @@
 
             </li>
 
-            <li v-if="$root.hasPermissions('edit_plugin')" @mouseover="hoverSubItem" @mouseenter="getSubMenu('plugins', list.plugins)">
+            <li v-if="$root.hasPermissions('edit_plugin')" @mouseover="hoverSubItem" @mouseenter="getSubMenu('plugin', list.plugins)">
 
               <router-link :to="{ name: 'ElementsIndex', query: { resourcesTab: 4 } }">
                 <i class="fa fa-plug mr-3"/>
@@ -172,7 +172,7 @@
 
             </li>
 
-            <li v-if="$root.hasPermissions('edit_module')" @mouseover="hoverSubItem" @mouseenter="getSubMenu('modules', list.modules)">
+            <li v-if="$root.hasPermissions('edit_module')" @mouseover="hoverSubItem" @mouseenter="getSubMenu('module', list.modules)">
 
               <router-link :to="{ name: 'ElementsIndex', query: { resourcesTab: 5 } }">
                 <i class="fa fa-cubes mr-3"/>
@@ -206,7 +206,7 @@
 
         </li>
 
-        <li v-if="$root.hasPermissions('exec_module')" @mouseover="hoverItem" @mouseenter="getSubMenu('modules', list.modules)">
+        <li v-if="$root.hasPermissions('exec_module')" @mouseover="hoverItem" @mouseenter="getSubMenu('module', list.modules)">
 
           <div>
             <i class="fa fa-cubes md:hidden"/>
