@@ -37,16 +37,16 @@ export default {
                 icon: 'fa-solid fa-sort fa-fw'
               },
               '1-9': {
-                icon: 'fa fa-sort-numeric-asc fa-fw'
+                icon: 'fa-solid fa-arrow-up-1-9 fa-fw'
               },
               '9-1': {
-                icon: 'fa fa-sort-numeric-desc fa-fw'
+                icon: 'fa-solid fa-arrow-down-9-1 fa-fw'
               },
               'a-z': {
-                icon: 'fa fa-sort-alpha-asc fa-fw'
+                icon: 'fa-solid fa-arrow-up-a-z fa-fw'
               },
               'z-a': {
-                icon: 'fa fa-sort-alpha-desc fa-fw'
+                icon: 'fa-solid fa-arrow-down-z-a fa-fw'
               }
             }
           }
@@ -74,6 +74,7 @@ export default {
     async list (data) {
       let response = await axios.get('api/tvs/sort', data)
       this.data.data = response.data.data
+      this.data.sort = this.checkSort()
     },
 
     checkSort () {
