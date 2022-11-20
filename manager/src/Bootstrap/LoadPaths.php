@@ -15,9 +15,9 @@ class LoadPaths
      */
     public function bootstrap(Application $app): void
     {
-        $root = dirname($app->basePath());
-
-        $app->useEnvironmentPath($root);
-        //$app->useStoragePath($root . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'storage');
+//        $root = dirname($app->basePath());
+//
+//        $app->useEnvironmentPath($root);
+//        $app->useStoragePath($root . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'storage');
     }
 }
