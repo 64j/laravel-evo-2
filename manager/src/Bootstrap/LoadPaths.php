@@ -18,6 +18,6 @@ class LoadPaths
         $root = dirname($app->basePath());
 
         $app->useEnvironmentPath($root);
-        $app->useStoragePath($root . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'storage');
+        //$app->useStoragePath($root . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'storage');
     }
 }
