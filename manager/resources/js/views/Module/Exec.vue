@@ -12,7 +12,7 @@ export default {
     this.icon = 'fa fa-cube'
 
     return {
-      src: 'https://jsonplaceholder.typicode.com/users/' + this.$route.params.id,
+      src: 'https://jsonplaceholder.typicode.com/users',
       data: null
     }
   },
