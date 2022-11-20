@@ -15,6 +15,9 @@ $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 
+$app->useEnvironmentPath(dirname($app->basePath()));
+$app->useAppPath($app->basePath('src'));
+
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces
@@ -51,8 +54,5 @@ $app->singleton(
 | from the actual running of the application and sending responses.
 |
 */
-
-$app->useEnvironmentPath(dirname(__DIR__, 2));
-$app->useAppPath(dirname(__DIR__) . '/src');
 
 return $app;
