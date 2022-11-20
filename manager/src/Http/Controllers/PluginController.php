@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Manager\Http\Controllers;
 
 use App\Models\SitePlugin;
+use App\Models\SystemEventname;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Request;
 use Manager\Http\Requests\SnippetRequest;
 use Manager\Http\Resources\PluginResource;
 
@@ -65,5 +68,26 @@ class PluginController extends Controller
         $plugin->delete();
 
         return response()->noContent();
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function sort(Request $request): JsonResponse
+    {
+        return $this->ok(
+            SystemEventname::query()
+                ->with('plugins')
+                ->whereHas('plugins')
+                ->get()
+                ->map(function ($event) {
+                    $event['data'] = $event->plugins;
+                    unset($event->plugins);
+
+                    return $event;
+                })
+        );
     }
 }

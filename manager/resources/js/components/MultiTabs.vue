@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div class="grow overflow-hidden">
+    <div class="grow h-0 overflow-hidden">
       <div class="panel">
         <router-view v-slot="{ Component }">
           <CustomKeepAlive :include="keys">

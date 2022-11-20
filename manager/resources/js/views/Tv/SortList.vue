@@ -1,11 +1,11 @@
 <template>
   <div>
 
-    <ActionsButtons :data="['save']" @action="action"/>
+    <ActionsButtons :data="['save', 'cancel']" @action="action"/>
 
     <TitleView
-        :title="$root.lang('template_tv_edit_title')"
-        icon="fa fa-sort-numeric-asc"/>
+        :title="title"
+        :icon="icon"/>
 
     <Panel
         :data="[data]"
@@ -24,6 +24,8 @@ export default {
   components: { ActionsButtons, TitleView, Panel },
   data () {
     return {
+      title: this.$root.lang('template_tv_edit_title'),
+      icon: 'fa fa-sort-numeric-asc',
       data: {
         name: this.$root.lang('template_tv_edit'),
         description: this.$root.lang('tmplvars_rank_edit_message'),
@@ -55,18 +57,39 @@ export default {
     }
   },
   created () {
+    this.$emit('setTab', {
+      icon: this.icon,
+      title: this.title,
+      changed: false
+    })
+
     this.list({})
   },
   methods: {
     action (action, item, category) {
       switch (action) {
+        case 'save':
+          break
+
+        case 'cancel':
+          this.$emit('toTab', { name: 'ElementsIndex', query: { resourcesTab: 1 } }, true)
+          break
+
         case 'sortable':
           this.data.sortable = true
           this.data.sort = this.checkSort()
+
+          this.$emit('setTab', {
+            changed: true
+          })
           break
 
         case 'sort':
           this.sort(item, category)
+
+          this.$emit('setTab', {
+            changed: true
+          })
           break
       }
     },

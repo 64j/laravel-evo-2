@@ -13,7 +13,7 @@
 
       <Tabs
           id="template"
-          :tabs="[
+          :data="[
             { id: 'Template', title: $root.lang('settings_general'), active: true },
             { id: 'Tvs', title: $root.lang('template_assignedtv_tab') },
           ]"

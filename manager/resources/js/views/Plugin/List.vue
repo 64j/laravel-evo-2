@@ -5,6 +5,8 @@
     :search-input="true"
     link-name="PluginIndex"
     link-icon="fa fa-plug"
+    :txt-custom="$root.lang('plugin_priority')"
+    link-custom="PluginSort"
     :txt-new="$root.lang('new_plugin')"
     :txt-help="$root.lang('plugin_management_msg')"
     filter="ajax"

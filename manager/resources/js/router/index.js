@@ -88,6 +88,14 @@ const routes = [
     }
   },
   {
+    path: '/plugins/sort',
+    name: 'PluginSort',
+    component: () => import('@/views/Plugin/SortList'),
+    meta: {
+      layout: 'Default'
+    }
+  },
+  {
     path: '/module/:id?',
     name: 'ModuleIndex',
     component: () => import('@/views/Module/Index'),

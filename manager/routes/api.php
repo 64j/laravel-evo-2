@@ -22,9 +22,12 @@ Route::group([
 Route::apiResource('template', TemplateController::class);
 Route::apiResource('tv', TvController::class);
 Route::get('tvs/sort', [TvController::class, 'sort']);
+Route::post('tvs/sort', [TvController::class, 'sort']);
 Route::apiResource('chunk', ChunkController::class);
 Route::apiResource('snippet', SnippetController::class);
 Route::apiResource('plugin', PluginController::class);
+Route::get('plugins/sort', [PluginController::class, 'sort']);
+Route::post('plugins/sort', [PluginController::class, 'sort']);
 Route::apiResource('module', ModuleController::class);
 //Route::apiResource('category', CategoryController::class);
 Route::apiResource('category/list', CategoryListController::class);

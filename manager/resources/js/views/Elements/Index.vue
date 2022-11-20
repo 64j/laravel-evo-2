@@ -8,7 +8,7 @@
     <Tabs
         id="resources"
         :history="history"
-        :tabs="tabs"/>
+        :data="this.data.filter(i => !i.hidden)"/>
 
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
   data () {
     return {
       history: true,
-      tabs: [
+      data: [
         {
           id: 'Templates',
           title: this.$root.lang('templates'),
