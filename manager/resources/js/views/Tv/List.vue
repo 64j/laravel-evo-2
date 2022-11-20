@@ -5,7 +5,7 @@
       :search-input="true"
       link-name="TvIndex"
       link-icon="fa fa-list-alt"
-      :txt-custom="$root.lang('template_tv_edit')"
+      :txt-custom="`<i class='fa fa-sort fa-fw'></i><span class='hidden md:inline-block'>${$root.lang('template_tv_edit')}</span>`"
       link-custom="TvSort"
       :txt-new="$root.lang('new_tmplvars')"
       :txt-help="$root.lang('tmplvars_management_msg')"

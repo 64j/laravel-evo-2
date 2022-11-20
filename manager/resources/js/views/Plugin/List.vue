@@ -5,7 +5,7 @@
     :search-input="true"
     link-name="PluginIndex"
     link-icon="fa fa-plug"
-    :txt-custom="$root.lang('plugin_priority')"
+    :txt-custom="`<i class='fa fa-sort fa-fw'></i><span class='hidden md:inline-block'>${$root.lang('plugin_priority')}</span>`"
     link-custom="PluginSort"
     :txt-new="$root.lang('new_plugin')"
     :txt-help="$root.lang('plugin_management_msg')"

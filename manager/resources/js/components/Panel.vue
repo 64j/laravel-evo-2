@@ -7,7 +7,7 @@
         <input type="text"
                :placeholder="$root.lang('element_filter_msg')"
                @keyup="setFilter"
-               class="py-1 pl-2 pr-5 w-full md:w-80 text-xs peer/filter"
+               class="h-8 pl-2 pr-5 w-full md:w-80 text-sm peer/filter"
                autofocus>
         <i
             class="fa fa-circle-xmark text-gray-300 hover:text-rose-500 cursor-pointer absolute right-0 mx-1 invisible peer-[.active]/filter:visible dark:text-gray-500"
@@ -18,14 +18,12 @@
       <router-link
           v-if="txtNew"
           :to="{ name: linkName, params: { id : '' } }"
-          class="btn-sm btn-green md:mr-1 text-xs">
+          class="btn-sm btn-green md:mr-1 text-sm">
         <i class="fa fa-plus-circle fa-fw"/>
         <span class="hidden md:inline-block pl-2">{{ txtNew }}</span>
       </router-link>
 
-      <router-link :to="{ name: linkCustom }" v-if="txtCustom" class="btn-sm btn-gray md:mr-1 text-xs">
-        {{ txtCustom }}
-      </router-link>
+      <router-link :to="{ name: linkCustom }" v-if="txtCustom" class="btn-sm btn-gray md:mr-1 text-xs" v-html="txtCustom"/>
 
       <span v-if="txtHelp"
             class="btn-sm btn-gray"
