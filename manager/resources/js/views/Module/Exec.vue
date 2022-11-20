@@ -1,12 +1,10 @@
 <template>
   <div>
-    <iframe :src="data" class="w-full h-full overflow-auto border-none"/>
+    <iframe :src="src" class="w-full h-full overflow-auto border-none"/>
   </div>
 </template>
 
 <script>
-import http from '@/utils/http'
-
 export default {
   name: 'ModuleExec',
   data () {
@@ -14,6 +12,7 @@ export default {
     this.icon = 'fa fa-cube'
 
     return {
+      src: 'https://jsonplaceholder.typicode.com/users/' + this.$route.params.id,
       data: null
     }
   },
@@ -31,11 +30,11 @@ export default {
   },
   methods: {
     get (id) {
-      http.post(this.controller, { id: id }).then(result => {
-        this.data = result.data.result || ''
-        this.$emit('titleTab', result.data.title)
-        this.loading = true
-      })
+      // http.post(this.controller, { id: id }).then(result => {
+      //   this.data = result.data.result || ''
+      //   this.$emit('titleTab', result.data.title)
+      //   this.loading = true
+      // })
     }
   }
 }
