@@ -94,10 +94,14 @@ export default {
 
 <style scoped>
 .tab-row-container {
-  @apply overflow-hidden relative h-12 px-6
+  @apply overflow-hidden relative h-12 px-6 bg-slate-100 dark:bg-evo-800
+}
+.tab-row-container::after {
+  @apply absolute z-10 left-0 bottom-0 right-0 border-t border-gray-200 dark:border-evo-600;
+  content: "";
 }
 .tab-row {
-  @apply overflow-hidden overflow-x-auto h-20 flex flex-nowrap
+  @apply relative z-20 overflow-hidden overflow-x-auto h-20 flex flex-nowrap
 }
 .tab-pane .tab {
   @apply py-3 px-4 h-12 whitespace-nowrap cursor-pointer border-l border-t border-r border-transparent uppercase select-none
@@ -124,6 +128,6 @@ export default {
   @apply right-0
 }
 .tab-page {
-  @apply -mt-[1px] bg-gray-50 pb-4 border-t border-b border-gray-200 dark:bg-evo-700 dark:border-evo-600
+  @apply pb-4
 }
 </style>

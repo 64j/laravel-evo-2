@@ -1,5 +1,5 @@
 <template>
-  <div class="py-4 px-5">
+  <div class="py-4 px-5 bg-slate-100 dark:bg-evo-800">
     <h1 class="title h4 m-0">
       <i v-if="icon" class="mr-2 text-lg dark:text-gray-600" :class="icon"/>
       <span v-html="title" class="text-xl font-bold"/>

@@ -23,9 +23,9 @@
         <span class="hidden md:inline-block pl-2">{{ txtNew }}</span>
       </router-link>
 
-      <a v-if="txtCustom" :href="linkCustom" class="btn-sm btn-gray md:mr-1 text-xs">
+      <router-link :to="{ name: linkCustom }" v-if="txtCustom" class="btn-sm btn-gray md:mr-1 text-xs">
         {{ txtCustom }}
-      </a>
+      </router-link>
 
       <span v-if="txtHelp"
             class="btn-sm btn-gray"

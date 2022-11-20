@@ -6,7 +6,7 @@
       link-name="TvIndex"
       link-icon="fa fa-list-alt"
       :txt-custom="$root.lang('template_tv_edit')"
-      link-custom="tvs/sort"
+      link-custom="TvSort"
       :txt-new="$root.lang('new_tmplvars')"
       :txt-help="$root.lang('tmplvars_management_msg')"
       filter="ajax"

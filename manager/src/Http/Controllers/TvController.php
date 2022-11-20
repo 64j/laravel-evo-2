@@ -79,7 +79,7 @@ class TvController extends Controller
         return $this->ok(
             SiteTmplvar::query()
                 ->orderBy('rank')
-                ->get(['id', 'name', 'rank'])
+                ->get(['id', 'name', 'caption as description', 'rank'])
         );
     }
 }

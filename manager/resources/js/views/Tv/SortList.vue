@@ -1,12 +1,11 @@
 <template>
   <div>
 
-    <ActionsButtons @action="action"/>
+    <ActionsButtons :data="['save']" @action="action"/>
 
     <TitleView
         :title="$root.lang('template_tv_edit_title')"
-        icon="fa fa-sort-numeric-asc"
-        :message="$root.lang('tmplvars_rank_edit_message')"/>
+        icon="fa fa-sort-numeric-asc"/>
 
     <Panel
         :data="[data]"
@@ -26,7 +25,8 @@ export default {
   data () {
     return {
       data: {
-        name: 'Name',
+        name: this.$root.lang('template_tv_edit'),
+        description: this.$root.lang('tmplvars_rank_edit_message'),
         draggable: true,
         data: [],
         sort: '1-9',
@@ -37,16 +37,16 @@ export default {
                 icon: 'fa-solid fa-sort fa-fw'
               },
               '1-9': {
-                icon: 'fa-solid fa-arrow-up-1-9 fa-fw'
+                icon: 'fa fa-sort-numeric-asc fa-fw'
               },
               '9-1': {
-                icon: 'fa-solid fa-arrow-down-1-9 fa-fw'
+                icon: 'fa fa-sort-numeric-desc fa-fw'
               },
               'a-z': {
-                icon: 'fa-solid fa-arrow-up-a-z fa-fw'
+                icon: 'fa fa-sort-alpha-asc fa-fw'
               },
               'z-a': {
-                icon: 'fa-solid fa-arrow-up-z-a fa-fw'
+                icon: 'fa fa-sort-alpha-desc fa-fw'
               }
             }
           }

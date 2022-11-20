@@ -197,16 +197,16 @@ export default {
                 icon: 'fa-solid fa-sort fa-fw'
               },
               '1-9': {
-                icon: 'fa-solid fa-arrow-up-1-9 fa-fw'
+                icon: 'fa fa-sort-numeric-asc fa-fw'
               },
               '9-1': {
-                icon: 'fa-solid fa-arrow-down-1-9 fa-fw'
+                icon: 'fa fa-sort-numeric-desc fa-fw'
               },
               'a-z': {
-                icon: 'fa-solid fa-arrow-up-a-z fa-fw'
+                icon: 'fa fa-sort-alpha-asc fa-fw'
               },
               'z-a': {
-                icon: 'fa-solid fa-arrow-up-z-a fa-fw'
+                icon: 'fa fa-sort-alpha-desc fa-fw'
               }
             }
           }

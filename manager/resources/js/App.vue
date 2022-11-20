@@ -95,7 +95,7 @@ export default {
 
 <style scoped>
 .app {
-  @apply flex flex-wrap flex-col h-full w-full dark:text-gray-300 bg-slate-100 dark:bg-evo-800
+  @apply flex flex-wrap flex-col h-full w-full dark:text-gray-300 bg-gray-50 dark:bg-evo-700
 }
 .app-header {
   @apply h-12 z-20 bg-evo-800 text-gray-300 shadow-md shadow-black/50
