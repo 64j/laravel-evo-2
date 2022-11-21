@@ -26,11 +26,13 @@
 
     <div class="grow h-0 overflow-hidden">
       <div class="panel">
+
         <router-view v-slot="{ Component }">
           <CustomKeepAlive :include="keys">
             <component
                 :key="key"
                 :is="Component"
+                v-if="!$route?.meta?.isIframe"
                 @toTab="toTab"
                 @setTab="setTab"
                 @closeTab="closeTab"
@@ -39,8 +41,15 @@
             />
           </CustomKeepAlive>
         </router-view>
+
+        <div v-for="{ path, matched: [{ components: { default: component }}] } in this.tabs.filter(i => i?.meta?.isIframe)"
+             v-show="$route.path === path">
+          <component
+              :key="path"
+              :is="component"/>
+        </div>
+
       </div>
-      <div class="frames"></div>
     </div>
 
   </div>
@@ -118,36 +127,11 @@ export default {
     addTab (route) {
       route = route || this.$route
       if (route.name && !route.meta['noTab']) {
-        this.$store.dispatch('MultiTabs/addTab', this.route(route)).then(tab => {
-          const key = this.tabKey(route)
-          const panel = this.$el.parentElement.querySelector('.panel')
-          const frames = this.$el.parentElement.querySelector('.frames')
-          let isFrame = false
-          let frame = frames.querySelector('iframe[data-key="' + key + '"]')
-          frames.querySelectorAll('iframe[data-key]').forEach(f => f.style.display = 'none')
-          if (frame) {
-            frame.style.display = ''
-            isFrame = true
-          }
-          frame = panel.querySelector('iframe')
-          if (frame) {
-            frame.style.display = ''
-            frame.dataset.key = key
-            frames.appendChild(frame)
-            isFrame = true
-          }
-          panel.style.display = isFrame ? 'none' : ''
-          frames.style.display = isFrame ? '' : 'none'
-        })
+        this.$store.dispatch('MultiTabs/addTab', this.route(route))
       }
     },
     closeTab (tab) {
       if (!tab['changed'] || tab['changed'] && confirm(this.$root.lang('close') + '?')) {
-        const key = this.tabKey(tab)
-        const frames = this.$el.parentElement.querySelector('.frames')
-        if (frames) {
-          frames.querySelectorAll('iframe[data-key="' + key + '"]').forEach(i => i.parentElement.removeChild(i))
-        }
         if (tab.active) {
           this.toPrevTab(tab, () => this.$store.dispatch('MultiTabs/delTab', tab))
         } else {

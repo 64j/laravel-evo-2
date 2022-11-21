@@ -216,7 +216,7 @@
           <ul v-if="list.modules.length">
 
             <li v-for="item in list.modules" :key="'item-module-exec-' + item.id" @mouseover="hoverSubItem" @mouseenter="subMenuEnter">
-              <router-link :to="{ name: 'ModuleExec', query: { id: item.id } }">
+              <router-link :to="{ name: 'ModuleExec', params: { id: item.id } }">
                 <i class="fa fa-cube mr-3"/>
                 {{ item.name }}
               </router-link>
